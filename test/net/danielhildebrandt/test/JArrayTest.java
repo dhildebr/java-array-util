@@ -30,23 +30,11 @@ import org.junit.runner.RunWith;
 
 import net.danielhildebrandt.IncompleteArrayException;
 
-/**
- * Contains all unit tests for the utility methods of
- * {@link net.danielhildebrandt.JArray}.
- */
 @RunWith(Enclosed.class)
 public final class JArrayTest
 {
-  /**
-   * Contains all unit tests for
-   * {@link net.danielhildebrandt.JArray#insert} .
-   */
   public static final class externalInsertTest
   {
-    /**
-     * Ensures the proper working of an external insertion when the empty
-     * element is a null reference.
-     */
     @Test
     public final void externalInsert_NullEmptyElement()
     {
@@ -57,10 +45,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures the proper working of an external insertion when the empty
-     * element is non-null.
-     */
     @Test
     public final void externalInsert_NonNullEmptyElement()
     {
@@ -71,10 +55,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void externalInsert_NullArray()
     {
@@ -82,11 +62,6 @@ public final class JArrayTest
       insert(arr, null, 0, 7);
     }
     
-    /**
-     * Ensures that an {@code IllegalArgumentException} is thrown if the array
-     * provided is of length zero, such that nothing could ever be inserted into
-     * it.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void externalInsert_EmptyArray()
     {
@@ -94,10 +69,6 @@ public final class JArrayTest
       insert(arr, "Empty!", 0, new Object());
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index of insertion is nonpositive.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void externalInsert_IndexBelowBounds()
     {
@@ -105,12 +76,6 @@ public final class JArrayTest
       insert(arr, "", -1, 9.75);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index of insertion is greater than that of the first empty element in the
-     * array's trailing end (that is, if the index exceeds the array's current
-     * "size," as the word is used with {@code ArrayList}s).
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void externalInsert_IndexAboveBounds()
     {
@@ -118,11 +83,6 @@ public final class JArrayTest
       insert(arr, null, 6, 7);
     }
     
-    /**
-     * Ensures that an {@code IncompleteArrayException} is thrown if the array
-     * provided is incomplete (in the sense that the array backing a binary heap
-     * is or is not complete).
-     */
     @Test(expected = IncompleteArrayException.class)
     public final void externalInsert_IncompleteArray()
     {
@@ -130,11 +90,6 @@ public final class JArrayTest
       insert(arr, "", 1, "Horcrux");
     }
     
-    /**
-     * Ensures that an {@code ArrayStoreException} is thrown if there is
-     * insufficient empty space at the end of the array, given the empty element
-     * defined, to insert another new element.
-     */
     @Test(expected = ArrayStoreException.class)
     public final void externalInsert_InsufficientSpace()
     {
@@ -143,11 +98,6 @@ public final class JArrayTest
       insert(arr, null, 0, "Post on Sundays");
     }
     
-    /**
-     * Ensures that an {@code ArrayStoreException} is thrown if the element to
-     * be inserted is the empty element, which would introduce the possibility
-     * of an incomplete array on return.
-     */
     @Test(expected = ArrayStoreException.class)
     public final void externalInsert_EmptyInsertion()
     {
@@ -156,16 +106,8 @@ public final class JArrayTest
     }
   }
   
-  /**
-   * Contains all unit tests for
-   * {@link net.danielhildebrandt.JArray#insertBlock}.
-   */
   public static final class externalInsertBlockTest
   {
-    /**
-     * Confirms the proper block-insertion of multiple elements when the empty
-     * element is equal to null.
-     */
     @Test
     public final void externalInsertBlock_NullEmptyElement()
     {
@@ -176,10 +118,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms the proper block-insertion of multiple elements when the empty
-     * element is non-null.
-     */
     @Test
     public final void externalInsertBlock_NonNullEmptyElement()
     {
@@ -190,9 +128,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms the legality of the insertion of zero elements.
-     */
     @Test
     public final void externalInsertBlock_EmptyInsertionArray()
     {
@@ -203,10 +138,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the receiving
-     * array is a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void externalInsertBlock_NullReceivingArray()
     {
@@ -214,10 +145,6 @@ public final class JArrayTest
       insertBlock(arr, null, 0, "Hydrogen");
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the array of
-     * new elements is a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void externalInsertBlock_NullInsertionArray()
     {
@@ -225,11 +152,6 @@ public final class JArrayTest
       insertBlock(arr, "", 1, (Object[]) null);
     }
     
-    /**
-     * Confirms that an {@code IllegalArgumentException} is thrown if the
-     * receiving array is empty, such that nothing could ever be inserted into
-     * it.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void externalInsertBlock_EmptyReceivingArray()
     {
@@ -237,10 +159,6 @@ public final class JArrayTest
       insertBlock(arr, null, 0, "Stardust", "Relativity", "Gravitation");
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index of first insertion is less than zero.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void externalInsertBlock_IndexBelowBounds()
     {
@@ -248,12 +166,6 @@ public final class JArrayTest
       insertBlock(arr, null, -1, "Comets", "67P");
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index of first insertion is greater than that of the first empty element
-     * in the receiving array's trailing end (that is, if the index exceeds the
-     * array's current "size," as the word is used with {@code ArrayList}s).
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void externalInsertBlock_IndexAboveBounds()
     {
@@ -261,11 +173,6 @@ public final class JArrayTest
       insertBlock(arr, null, 5, "Supermassive Black Hole", "Barred Spiral", "Bent Light");
     }
     
-    /**
-     * Confirms that an {@code IncompleteArrayException} is thrown if the
-     * receiving array is incomplete (in the sense that the array backing a
-     * binary heap is or is not complete).
-     */
     @Test(expected = IncompleteArrayException.class)
     public final void externalInsertBlock_IncompleteArray()
     {
@@ -273,11 +180,6 @@ public final class JArrayTest
       insertBlock(arr, "", 1, "67P");
     }
     
-    /**
-     * Confirms that an {@code ArrayStoreException} is thrown if there is
-     * insufficient empty space at the end of the array, given the empty element
-     * defined, to insert all the listed elements.
-     */
     @Test(expected = ArrayStoreException.class)
     public final void externalInsertBlock_InsufficientSpace()
     {
@@ -285,11 +187,6 @@ public final class JArrayTest
       insertBlock(arr, null, 2, "Cosmos", "Proton");
     }
     
-    /**
-     * Confirms that an {@code ArrayStoreException} is thrown if one of the
-     * elements to be inserted is the empty element, which would introduce the
-     * possibility of an incomplete array on return.
-     */
     @Test(expected = ArrayStoreException.class)
     public final void externalInsertBlock_EmptyInsertion()
     {
@@ -298,16 +195,8 @@ public final class JArrayTest
     }
   }
   
-  /**
-   * Contains all unit tests for
-   * {@link net.danielhildebrandt.JArray#remove} .
-   */
   public static final class dynamicRemoveTest
   {
-    /**
-     * Ensures that the dynamic removal of an element functions correctly when
-     * the empty element is a null reference.
-     */
     @Test
     public final void dynamicRemove_NullEmptyElement()
     {
@@ -318,10 +207,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that the dynamic removal of an element functions correctly when
-     * the empty element is non-null.
-     */
     @Test
     public final void dynamicRemove_NonNullEmptyElement()
     {
@@ -332,9 +217,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that the removed element is correctly returned.
-     */
     @Test
     public final void dynamicRemove_Return()
     {
@@ -344,10 +226,6 @@ public final class JArrayTest
       assertThat(remove(arr, null, 1), is(equalTo(removed)));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the provided
-     * array is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void dynamicRemove_NullArray()
     {
@@ -355,11 +233,6 @@ public final class JArrayTest
       remove(arr, null, 0);
     }
     
-    /**
-     * Ensures that an {@code IllegalArgumentException} is thrown if the
-     * provided array is of length zero, such that nothing could ever be removed
-     * from it.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void dynamicRemove_EmptyArray()
     {
@@ -367,10 +240,6 @@ public final class JArrayTest
       remove(arr, '\0', 0);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index of removal is negative.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void dynamicRemove_IndexBelowBounds()
     {
@@ -378,11 +247,6 @@ public final class JArrayTest
       remove(arr, null, -1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index of removal is greater than or equal to that of the first empty
-     * element, or the array's length if none exists.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void dynamicRemove_IndexAboveBounds()
     {
@@ -390,11 +254,6 @@ public final class JArrayTest
       remove(arr, null, 2);
     }
     
-    /**
-     * Ensures that an {@code IncompleteArrayException} is thrown if the array
-     * provided is incomplete, in the sense that this word is used to describe
-     * binary heaps.
-     */
     @Test(expected = IncompleteArrayException.class)
     public final void dynamicRemove_IncompleteArray()
     {
@@ -403,16 +262,8 @@ public final class JArrayTest
     }
   }
   
-  /**
-   * Contains all unit tests for
-   * {@link net.danielhildebrandt.JArray#removeRange}.
-   */
   public static final class dynamicRemoveRangeTest
   {
-    /**
-     * Checks that a range-removal functions correctly when the empty element is
-     * a null reference.
-     */
     @Test
     public final void dynamicRemoveRange_NullEmptyElement()
     {
@@ -423,10 +274,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Checks that a range-removal functions correctly when the empty element is
-     * non-null.
-     */
     @Test
     public final void dynamicRemoveRange_NonNullEmptyElement()
     {
@@ -437,9 +284,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Checks that a single element is removed when the indices are equal.
-     */
     @Test
     public final void dynamicRemoveRange_EqualIndices()
     {
@@ -450,10 +294,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Checks that the removed elements are correctly returned when removing a
-     * single element.
-     */
     @Test
     public final void dynamicRemoveRange_Return_Single()
     {
@@ -463,10 +303,6 @@ public final class JArrayTest
       assertThat(removeRange(arr, null, 3, 3), is(equalTo(removed)));
     }
     
-    /**
-     * Checks that the removed elements are correctly returned when removing
-     * multiple elements.
-     */
     @Test
     public final void dynamicRemoveRange_Return_Multiple()
     {
@@ -476,10 +312,6 @@ public final class JArrayTest
       assertThat(removeRange(arr, null, 0, 2), is(equalTo(removed)));
     }
     
-    /**
-     * Checks that a {@code NullPointerException} is thrown if the provided
-     * array is a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void dynamicRemoveRange_NullArray()
     {
@@ -487,10 +319,6 @@ public final class JArrayTest
       removeRange(arr, null, 0, 1);
     }
     
-    /**
-     * Checks that an {@code IllegalArgumentException} is thrown if the provided
-     * array is of length zero, such than nothing could ever be removed from it.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void dynamicRemoveRange_EmptyArray()
     {
@@ -498,10 +326,6 @@ public final class JArrayTest
       removeRange(arr, null, 0, 0);
     }
     
-    /**
-     * Checks that an {@code ArrayIndexOutOfBoundsException} is thrown if
-     * {@code fromIndex} is less than zero.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void dynamicRemoveRange_FromIndexBelowBounds()
     {
@@ -509,11 +333,6 @@ public final class JArrayTest
       removeRange(arr, "", -1, 0);
     }
     
-    /**
-     * Checks that an {@code ArrayIndexOutOfBoundsException} is thrown if
-     * {@code fromIndex} is greater than the index of the first empty element,
-     * or the array's length if there is none.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void dynamicRemoveRange_FromIndexAboveBounds()
     {
@@ -521,10 +340,6 @@ public final class JArrayTest
       removeRange(arr, null, 2, 2);
     }
     
-    /**
-     * Checks that an {@code ArrayIndexOutOfBoundsException} is thrown if
-     * {@code toIndex} is less than zero.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void dynamicRemoveRange_ToIndexBelowBounds()
     {
@@ -532,11 +347,6 @@ public final class JArrayTest
       removeRange(arr, null, -1, -1);
     }
     
-    /**
-     * Checks that an {@code ArrayIndexOutOfBoundsException} is thrown if
-     * {@code toIndex} is greater than the index of the first empty element, or
-     * the array's length if there is none.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void dynamicRemoveRange_ToIndexAboveBounds()
     {
@@ -544,10 +354,6 @@ public final class JArrayTest
       removeRange(arr, null, 0, 6);
     }
     
-    /**
-     * Checks that an {@code IllegalArgumentException} is thrown if
-     * {@code fromIndex} is greater than {@code toIndex}.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void dynamicRemoveRange_OutOfOrderIndices()
     {
@@ -555,11 +361,6 @@ public final class JArrayTest
       removeRange(arr, "", 3, 1);
     }
     
-    /**
-     * Checks that an {@code IncompleteArrayException} is thrown if the provided
-     * array is incomplete, in the sense that this word is used to refer to
-     * binary heaps.
-     */
     @Test(expected = IncompleteArrayException.class)
     public final void dynamicRemoveRange_IncompleteArray()
     {
@@ -568,16 +369,8 @@ public final class JArrayTest
     }
   }
   
-  /**
-   * Contains all unit tests for
-   * {@link net.danielhildebrandt.JArray#isComplete}.
-   */
   public static final class IsCompleteTest
   {
-    /**
-     * Confirms that a suitable array, with the empty element only at the
-     * trailing end, is complete.
-     */
     @Test
     public final void isComplete_TrailingEmpty()
     {
@@ -585,9 +378,6 @@ public final class JArrayTest
       assertThat(isComplete(arr, null), is(true));
     }
     
-    /**
-     * Confirms that a completely full array is considered complete.
-     */
     @Test
     public final void isComplete_FullArray()
     {
@@ -595,9 +385,6 @@ public final class JArrayTest
       assertThat(isComplete(arr, ""), is(true));
     }
     
-    /**
-     * Confirms that an empty array is considered complete.
-     */
     @Test
     public final void isComplete_EmptyArray()
     {
@@ -605,9 +392,6 @@ public final class JArrayTest
       assertThat(isComplete(arr, null), is(true));
     }
     
-    /**
-     * Confirms that an array with a hole in its midst is considered incomplete.
-     */
     @Test
     public final void isComplete_NotComplete()
     {
@@ -615,10 +399,6 @@ public final class JArrayTest
       assertThat(isComplete(arr, null), is(false));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void isComplete_NullArray()
     {
@@ -627,15 +407,8 @@ public final class JArrayTest
     }
   }
   
-  /**
-   * Contains all unit tests for
-   * {@link net.danielhildebrandt.JArray#isSorted}.
-   */
   public static final class IsSortedTest
   {
-    /**
-     * Confirms that a sorted array is properly detected as such.
-     */
     @Test
     public final void isSorted_Natural_Ordered()
     {
@@ -643,10 +416,6 @@ public final class JArrayTest
       assertThat(isSorted(arr), is(true));
     }
     
-    /**
-     * Confirms that a sorted array is properly detected as such, even when it
-     * has instances of {@code null} in its midst.
-     */
     @Test
     public final void isSorted_Natural_Ordered_NullHoles()
     {
@@ -654,9 +423,6 @@ public final class JArrayTest
       assertThat(isSorted(arr), is(true));
     }
     
-    /**
-     * Confirms that an out-of-order array is detected as such.
-     */
     @Test
     public final void isSorted_Natural_Unordered()
     {
@@ -664,10 +430,6 @@ public final class JArrayTest
       assertThat(isSorted(arr), is(false));
     }
     
-    /**
-     * Confirms that an out-of-order array is properly detected as such, even
-     * when it has instances of {@code null} in its midst.
-     */
     @Test
     public final void isSorted_Natural_Unordered_NullHoles()
     {
@@ -675,10 +437,6 @@ public final class JArrayTest
       assertThat(isSorted(arr), is(false));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void isSorted_Natural_NullArray()
     {
@@ -686,9 +444,6 @@ public final class JArrayTest
       isSorted(arr);
     }
     
-    /**
-     * Confirms that a sorted array is properly detected as such.
-     */
     @Test
     public final void isSorted_Total_Ordered()
     {
@@ -697,9 +452,6 @@ public final class JArrayTest
       assertThat(isSorted(arr, comp), is(true));
     }
     
-    /**
-     * Confirms that an out-of-order array is detected as such.
-     */
     @Test
     public final void isSorted_Total_Unordered()
     {
@@ -708,10 +460,6 @@ public final class JArrayTest
       assertThat(isSorted(arr, comp), is(false));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void isSorted_Total_NullArray()
     {
@@ -720,10 +468,6 @@ public final class JArrayTest
       isSorted(arr, comp);
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the comparator
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void isSorted_Total_NullComparator()
     {
@@ -733,17 +477,8 @@ public final class JArrayTest
     }
   }
   
-  /**
-   * Contains all unit tests for
-   * {@link net.danielhildebrandt.JArray#internalSwap}. Tests are included
-   * for all nine overloads: for arrays of the eight primitive types, and of
-   * generic reference types.
-   */
   public static final class InternalSwapTest
   {
-    /**
-     * Ensures that elements within an array are properly swapped.
-     */
     @Test
     public final void internalSwap_Byte()
     {
@@ -755,9 +490,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that no changes occur if the indices for swapping are equal.
-     */
     @Test
     public final void internalSwap_Byte_EqualIndices()
     {
@@ -769,10 +501,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void internalSwap_Byte_NullArray()
     {
@@ -780,10 +508,6 @@ public final class JArrayTest
       internalSwap(arr, 0, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code i} is below the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Byte_IBelowBounds()
     {
@@ -791,10 +515,6 @@ public final class JArrayTest
       internalSwap(arr, -1, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code i} is above the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Byte_IAboveBounds()
     {
@@ -802,10 +522,6 @@ public final class JArrayTest
       internalSwap(arr, 7, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code j} is below the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Byte_JBelowBounds()
     {
@@ -813,10 +529,6 @@ public final class JArrayTest
       internalSwap(arr, 0, -1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code j} is above the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Byte_JAboveBounds()
     {
@@ -824,9 +536,6 @@ public final class JArrayTest
       internalSwap(arr, 0, 7);
     }
     
-    /**
-     * Ensures that elements within an array are properly swapped.
-     */
     @Test
     public final void internalSwap_Short()
     {
@@ -838,9 +547,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that no changes occur if the indices for swapping are equal.
-     */
     @Test
     public final void internalSwap_Short_EqualIndices()
     {
@@ -852,10 +558,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void internalSwap_Short_NullArray()
     {
@@ -863,10 +565,6 @@ public final class JArrayTest
       internalSwap(arr, 0, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code i} is below the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Short_IBelowBounds()
     {
@@ -874,10 +572,6 @@ public final class JArrayTest
       internalSwap(arr, -1, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code i} is above the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Short_IAboveBounds()
     {
@@ -885,10 +579,6 @@ public final class JArrayTest
       internalSwap(arr, 7, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code j} is below the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Short_JBelowBounds()
     {
@@ -896,10 +586,6 @@ public final class JArrayTest
       internalSwap(arr, 0, -1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code j} is above the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Short_JAboveBounds()
     {
@@ -907,9 +593,6 @@ public final class JArrayTest
       internalSwap(arr, 0, 7);
     }
     
-    /**
-     * Ensures that elements within an array are properly swapped.
-     */
     @Test
     public final void internalSwap_Int()
     {
@@ -921,9 +604,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that no changes occur if the indices for swapping are equal.
-     */
     @Test
     public final void internalSwap_Int_EqualIndices()
     {
@@ -935,10 +615,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void internalSwap_Int_NullArray()
     {
@@ -946,10 +622,6 @@ public final class JArrayTest
       internalSwap(arr, 0, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code i} is below the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Int_IBelowBounds()
     {
@@ -957,10 +629,6 @@ public final class JArrayTest
       internalSwap(arr, -1, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code i} is above the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Int_IAboveBounds()
     {
@@ -968,10 +636,6 @@ public final class JArrayTest
       internalSwap(arr, 7, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code j} is below the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Int_JBelowBounds()
     {
@@ -979,10 +643,6 @@ public final class JArrayTest
       internalSwap(arr, 0, -1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code j} is above the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Int_JAboveBounds()
     {
@@ -990,9 +650,6 @@ public final class JArrayTest
       internalSwap(arr, 0, 7);
     }
     
-    /**
-     * Ensures that elements within an array are properly swapped.
-     */
     @Test
     public final void internalSwap_Long()
     {
@@ -1004,9 +661,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that no changes occur if the indices for swapping are equal.
-     */
     @Test
     public final void internalSwap_Long_EqualIndices()
     {
@@ -1018,10 +672,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void internalSwap_Long_NullArray()
     {
@@ -1029,10 +679,6 @@ public final class JArrayTest
       internalSwap(arr, 0, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code i} is below the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Long_IBelowBounds()
     {
@@ -1040,10 +686,6 @@ public final class JArrayTest
       internalSwap(arr, -1, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code i} is above the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Long_IAboveBounds()
     {
@@ -1051,10 +693,6 @@ public final class JArrayTest
       internalSwap(arr, 7, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code j} is below the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Long_JBelowBounds()
     {
@@ -1062,10 +700,6 @@ public final class JArrayTest
       internalSwap(arr, 0, -1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code j} is above the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Long_JAboveBounds()
     {
@@ -1073,9 +707,6 @@ public final class JArrayTest
       internalSwap(arr, 0, 7);
     }
     
-    /**
-     * Ensures that elements within an array are properly swapped.
-     */
     @Test
     public final void internalSwap_Float()
     {
@@ -1087,9 +718,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that no changes occur if the indices for swapping are equal.
-     */
     @Test
     public final void internalSwap_Float_EqualIndices()
     {
@@ -1101,10 +729,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void internalSwap_Float_NullArray()
     {
@@ -1112,10 +736,6 @@ public final class JArrayTest
       internalSwap(arr, 0, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code i} is below the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Float_IBelowBounds()
     {
@@ -1123,10 +743,6 @@ public final class JArrayTest
       internalSwap(arr, -1, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code i} is above the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Float_IAboveBounds()
     {
@@ -1134,10 +750,6 @@ public final class JArrayTest
       internalSwap(arr, 7, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code j} is below the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Float_JBelowBounds()
     {
@@ -1145,10 +757,6 @@ public final class JArrayTest
       internalSwap(arr, 0, -1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code j} is above the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Float_JAboveBounds()
     {
@@ -1156,9 +764,6 @@ public final class JArrayTest
       internalSwap(arr, 0, 7);
     }
     
-    /**
-     * Ensures that elements within an array are properly swapped.
-     */
     @Test
     public final void internalSwap_Double()
     {
@@ -1170,9 +775,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that no changes occur if the indices for swapping are equal.
-     */
     @Test
     public final void internalSwap_Double_EqualIndices()
     {
@@ -1184,10 +786,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void internalSwap_Double_NullArray()
     {
@@ -1195,10 +793,6 @@ public final class JArrayTest
       internalSwap(arr, 0, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code i} is below the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Double_IBelowBounds()
     {
@@ -1206,10 +800,6 @@ public final class JArrayTest
       internalSwap(arr, -1, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code i} is above the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Double_IAboveBounds()
     {
@@ -1217,10 +807,6 @@ public final class JArrayTest
       internalSwap(arr, 7, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code j} is below the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Double_JBelowBounds()
     {
@@ -1228,10 +814,6 @@ public final class JArrayTest
       internalSwap(arr, 0, -1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code j} is above the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Double_JAboveBounds()
     {
@@ -1239,9 +821,6 @@ public final class JArrayTest
       internalSwap(arr, 0, 7);
     }
     
-    /**
-     * Ensures that elements within an array are properly swapped.
-     */
     @Test
     public final void internalSwap_Boolean()
     {
@@ -1253,9 +832,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that no changes occur if the indices for swapping are equal.
-     */
     @Test
     public final void internalSwap_Boolean_EqualIndices()
     {
@@ -1267,10 +843,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void internalSwap_Boolean_NullArray()
     {
@@ -1278,10 +850,6 @@ public final class JArrayTest
       internalSwap(arr, 0, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code i} is below the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Boolean_IBelowBounds()
     {
@@ -1289,10 +857,6 @@ public final class JArrayTest
       internalSwap(arr, -1, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code i} is above the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Boolean_IAboveBounds()
     {
@@ -1300,10 +864,6 @@ public final class JArrayTest
       internalSwap(arr, 5, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code j} is below the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Boolean_JBelowBounds()
     {
@@ -1311,10 +871,6 @@ public final class JArrayTest
       internalSwap(arr, 0, -1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code j} is above the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Boolean_JAboveBounds()
     {
@@ -1322,9 +878,6 @@ public final class JArrayTest
       internalSwap(arr, 0, 5);
     }
     
-    /**
-     * Ensures that elements within an array are properly swapped.
-     */
     @Test
     public final void internalSwap_Char()
     {
@@ -1336,9 +889,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that no changes occur if the indices for swapping are equal.
-     */
     @Test
     public final void internalSwap_Char_EqualIndices()
     {
@@ -1350,10 +900,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void internalSwap_Char_NullArray()
     {
@@ -1361,10 +907,6 @@ public final class JArrayTest
       internalSwap(arr, 0, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code i} is below the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Char_IBelowBounds()
     {
@@ -1372,10 +914,6 @@ public final class JArrayTest
       internalSwap(arr, -1, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code i} is above the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Char_IAboveBounds()
     {
@@ -1383,10 +921,6 @@ public final class JArrayTest
       internalSwap(arr, 8, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code j} is below the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Char_JBelowBounds()
     {
@@ -1394,10 +928,6 @@ public final class JArrayTest
       internalSwap(arr, 0, -1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code j} is above the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Char_JAboveBounds()
     {
@@ -1405,9 +935,6 @@ public final class JArrayTest
       internalSwap(arr, 0, 7);
     }
     
-    /**
-     * Ensures that elements within an array are properly swapped.
-     */
     @Test
     public final void internalSwap_Object()
     {
@@ -1419,9 +946,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that no changes occur if the indices for swapping are equal.
-     */
     @Test
     public final void internalSwap_Object_EqualIndices()
     {
@@ -1433,10 +957,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void internalSwap_Object_NullArray()
     {
@@ -1444,10 +964,6 @@ public final class JArrayTest
       internalSwap(arr, 0, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code i} is below the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Object_IBelowBounds()
     {
@@ -1455,10 +971,6 @@ public final class JArrayTest
       internalSwap(arr, -1, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code i} is above the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Object_IAboveBounds()
     {
@@ -1466,10 +978,6 @@ public final class JArrayTest
       internalSwap(arr, 5, 1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code j} is below the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Object_JBelowBounds()
     {
@@ -1477,10 +985,6 @@ public final class JArrayTest
       internalSwap(arr, 0, -1);
     }
     
-    /**
-     * Ensures that an {@code ArrayIndexOutOfBoundsException} is thrown if the
-     * index {@code j} is above the bounds of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalSwap_Object_JAboveBounds()
     {
@@ -1489,18 +993,8 @@ public final class JArrayTest
     }
   }
   
-  /**
-   * Contains all unit tests for
-   * {@link net.danielhildebrandt.JArray#internalInsert}. Tests are
-   * included for all nine overloads: for arrays of the eight primitive types,
-   * and of generic reference types.
-   */
   public static final class InternalInsertTest
   {
-    /**
-     * Confirms the proper working of internal insertion when the destination
-     * index comes before the source index.
-     */
     @Test
     public final void internalInsert_Byte_ShiftBackward()
     {
@@ -1512,10 +1006,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms the proper working of internal insertion when the destination
-     * index comes after the source index.
-     */
     @Test
     public final void internalInsert_Byte_ShiftForward()
     {
@@ -1527,10 +1017,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms that nothing changes when the destination and source indices for
-     * internal insertion are equal.
-     */
     @Test
     public final void internalInsert_Byte_EqualIndices()
     {
@@ -1542,10 +1028,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the provided
-     * array is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void internalInsert_Byte_NullArray()
     {
@@ -1553,10 +1035,6 @@ public final class JArrayTest
       internalInsert(arr, 0, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the source index is negative.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Byte_FromIndexBelowBounds()
     {
@@ -1564,10 +1042,6 @@ public final class JArrayTest
       internalInsert(arr, -1, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the source index is greater than or equal to the length of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Byte_FromIndexAboveBounds()
     {
@@ -1575,10 +1049,6 @@ public final class JArrayTest
       internalInsert(arr, 7, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the destination index is negative.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Byte_ToIndexBelowBounds()
     {
@@ -1586,11 +1056,6 @@ public final class JArrayTest
       internalInsert(arr, 0, -1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the destination index is greater than or equal to the length of the
-     * array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Byte_ToIndexAboveBounds()
     {
@@ -1598,10 +1063,6 @@ public final class JArrayTest
       internalInsert(arr, 0, 7);
     }
     
-    /**
-     * Confirms the proper working of internal insertion when the destination
-     * index comes before the source index.
-     */
     @Test
     public final void internalInsert_Short_ShiftBackward()
     {
@@ -1613,10 +1074,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms the proper working of internal insertion when the destination
-     * index comes after the source index.
-     */
     @Test
     public final void internalInsert_Short_ShiftForward()
     {
@@ -1628,10 +1085,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms that nothing changes when the destination and source indices for
-     * internal insertion are equal.
-     */
     @Test
     public final void internalInsert_Short_EqualIndices()
     {
@@ -1643,10 +1096,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the provided
-     * array is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void internalInsert_Short_NullArray()
     {
@@ -1654,10 +1103,6 @@ public final class JArrayTest
       internalInsert(arr, 0, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the source index is negative.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Short_FromIndexBelowBounds()
     {
@@ -1665,10 +1110,6 @@ public final class JArrayTest
       internalInsert(arr, -1, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the source index is greater than or equal to the length of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Short_FromIndexAboveBounds()
     {
@@ -1676,10 +1117,6 @@ public final class JArrayTest
       internalInsert(arr, 7, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the destination index is negative.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Short_ToIndexBelowBounds()
     {
@@ -1687,11 +1124,6 @@ public final class JArrayTest
       internalInsert(arr, 0, -1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the destination index is greater than or equal to the length of the
-     * array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Short_ToIndexAboveBounds()
     {
@@ -1699,10 +1131,6 @@ public final class JArrayTest
       internalInsert(arr, 0, 7);
     }
     
-    /**
-     * Confirms the proper working of internal insertion when the destination
-     * index comes before the source index.
-     */
     @Test
     public final void internalInsert_Int_ShiftBackward()
     {
@@ -1714,10 +1142,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms the proper working of internal insertion when the destination
-     * index comes after the source index.
-     */
     @Test
     public final void internalInsert_Int_ShiftForward()
     {
@@ -1729,10 +1153,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms that nothing changes when the destination and source indices for
-     * internal insertion are equal.
-     */
     @Test
     public final void internalInsert_Int_EqualIndices()
     {
@@ -1744,10 +1164,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the provided
-     * array is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void internalInsert_Int_NullArray()
     {
@@ -1755,10 +1171,6 @@ public final class JArrayTest
       internalInsert(arr, 0, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the source index is negative.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Int_FromIndexBelowBounds()
     {
@@ -1766,10 +1178,6 @@ public final class JArrayTest
       internalInsert(arr, -1, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the source index is greater than or equal to the length of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Int_FromIndexAboveBounds()
     {
@@ -1777,10 +1185,6 @@ public final class JArrayTest
       internalInsert(arr, 7, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the destination index is negative.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Int_ToIndexBelowBounds()
     {
@@ -1788,11 +1192,6 @@ public final class JArrayTest
       internalInsert(arr, 0, -1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the destination index is greater than or equal to the length of the
-     * array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Int_ToIndexAboveBounds()
     {
@@ -1800,10 +1199,6 @@ public final class JArrayTest
       internalInsert(arr, 0, 7);
     }
     
-    /**
-     * Confirms the proper working of internal insertion when the destination
-     * index comes before the source index.
-     */
     @Test
     public final void internalInsert_Long_ShiftBackward()
     {
@@ -1815,10 +1210,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms the proper working of internal insertion when the destination
-     * index comes after the source index.
-     */
     @Test
     public final void internalInsert_Long_ShiftForward()
     {
@@ -1830,10 +1221,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms that nothing changes when the destination and source indices for
-     * internal insertion are equal.
-     */
     @Test
     public final void internalInsert_Long_EqualIndices()
     {
@@ -1845,10 +1232,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the provided
-     * array is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void internalInsert_Long_NullArray()
     {
@@ -1856,10 +1239,6 @@ public final class JArrayTest
       internalInsert(arr, 0, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the source index is negative.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Long_FromIndexBelowBounds()
     {
@@ -1867,10 +1246,6 @@ public final class JArrayTest
       internalInsert(arr, -1, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the source index is greater than or equal to the length of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Long_FromIndexAboveBounds()
     {
@@ -1878,10 +1253,6 @@ public final class JArrayTest
       internalInsert(arr, 7, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the destination index is negative.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Long_ToIndexBelowBounds()
     {
@@ -1889,11 +1260,6 @@ public final class JArrayTest
       internalInsert(arr, 0, -1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the destination index is greater than or equal to the length of the
-     * array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Long_ToIndexAboveBounds()
     {
@@ -1901,10 +1267,6 @@ public final class JArrayTest
       internalInsert(arr, 0, 7);
     }
     
-    /**
-     * Confirms the proper working of internal insertion when the destination
-     * index comes before the source index.
-     */
     @Test
     public final void internalInsert_Float_ShiftBackward()
     {
@@ -1916,10 +1278,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms the proper working of internal insertion when the destination
-     * index comes after the source index.
-     */
     @Test
     public final void internalInsert_Float_ShiftForward()
     {
@@ -1931,10 +1289,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms that nothing changes when the destination and source indices for
-     * internal insertion are equal.
-     */
     @Test
     public final void internalInsert_Float_EqualIndices()
     {
@@ -1946,10 +1300,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the provided
-     * array is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void internalInsert_Float_NullArray()
     {
@@ -1957,10 +1307,6 @@ public final class JArrayTest
       internalInsert(arr, 0, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the source index is negative.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Float_FromIndexBelowBounds()
     {
@@ -1968,10 +1314,6 @@ public final class JArrayTest
       internalInsert(arr, -1, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the source index is greater than or equal to the length of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Float_FromIndexAboveBounds()
     {
@@ -1979,10 +1321,6 @@ public final class JArrayTest
       internalInsert(arr, 7, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the destination index is negative.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Float_ToIndexBelowBounds()
     {
@@ -1990,11 +1328,6 @@ public final class JArrayTest
       internalInsert(arr, 0, -1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the destination index is greater than or equal to the length of the
-     * array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Float_ToIndexAboveBounds()
     {
@@ -2002,10 +1335,6 @@ public final class JArrayTest
       internalInsert(arr, 0, 7);
     }
     
-    /**
-     * Confirms the proper working of internal insertion when the destination
-     * index comes before the source index.
-     */
     @Test
     public final void internalInsert_Double_ShiftBackward()
     {
@@ -2017,10 +1346,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms the proper working of internal insertion when the destination
-     * index comes after the source index.
-     */
     @Test
     public final void internalInsert_Double_ShiftForward()
     {
@@ -2032,10 +1357,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms that nothing changes when the destination and source indices for
-     * internal insertion are equal.
-     */
     @Test
     public final void internalInsert_Double_EqualIndices()
     {
@@ -2047,10 +1368,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the provided
-     * array is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void internalInsert_Double_NullArray()
     {
@@ -2058,10 +1375,6 @@ public final class JArrayTest
       internalInsert(arr, 0, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the source index is negative.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Double_FromIndexBelowBounds()
     {
@@ -2069,10 +1382,6 @@ public final class JArrayTest
       internalInsert(arr, -1, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the source index is greater than or equal to the length of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Double_FromIndexAboveBounds()
     {
@@ -2080,10 +1389,6 @@ public final class JArrayTest
       internalInsert(arr, 7, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the destination index is negative.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Double_ToIndexBelowBounds()
     {
@@ -2091,11 +1396,6 @@ public final class JArrayTest
       internalInsert(arr, 0, -1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the destination index is greater than or equal to the length of the
-     * array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Double_ToIndexAboveBounds()
     {
@@ -2103,10 +1403,6 @@ public final class JArrayTest
       internalInsert(arr, 0, 7);
     }
     
-    /**
-     * Confirms the proper working of internal insertion when the destination
-     * index comes before the source index.
-     */
     @Test
     public final void internalInsert_Boolean_ShiftBackward()
     {
@@ -2118,10 +1414,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms the proper working of internal insertion when the destination
-     * index comes after the source index.
-     */
     @Test
     public final void internalInsert_Boolean_ShiftForward()
     {
@@ -2133,10 +1425,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms that nothing changes when the destination and source indices for
-     * internal insertion are equal.
-     */
     @Test
     public final void internalInsert_Boolean_EqualIndices()
     {
@@ -2148,10 +1436,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the provided
-     * array is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void internalInsert_Boolean_NullArray()
     {
@@ -2159,10 +1443,6 @@ public final class JArrayTest
       internalInsert(arr, 0, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the source index is negative.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Boolean_FromIndexBelowBounds()
     {
@@ -2170,10 +1450,6 @@ public final class JArrayTest
       internalInsert(arr, -1, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the source index is greater than or equal to the length of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Boolean_FromIndexAboveBounds()
     {
@@ -2181,10 +1457,6 @@ public final class JArrayTest
       internalInsert(arr, 5, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the destination index is negative.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Boolean_ToIndexBelowBounds()
     {
@@ -2192,11 +1464,6 @@ public final class JArrayTest
       internalInsert(arr, 0, -1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the destination index is greater than or equal to the length of the
-     * array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Boolean_ToIndexAboveBounds()
     {
@@ -2204,10 +1471,6 @@ public final class JArrayTest
       internalInsert(arr, 0, 5);
     }
     
-    /**
-     * Confirms the proper working of internal insertion when the destination
-     * index comes before the source index.
-     */
     @Test
     public final void internalInsert_Char_ShiftBackward()
     {
@@ -2219,10 +1482,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms the proper working of internal insertion when the destination
-     * index comes after the source index.
-     */
     @Test
     public final void internalInsert_Char_ShiftForward()
     {
@@ -2234,10 +1493,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms that nothing changes when the destination and source indices for
-     * internal insertion are equal.
-     */
     @Test
     public final void internalInsert_Char_EqualIndices()
     {
@@ -2249,10 +1504,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the provided
-     * array is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void internalInsert_Char_NullArray()
     {
@@ -2260,10 +1511,6 @@ public final class JArrayTest
       internalInsert(arr, 0, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the source index is negative.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Char_FromIndexBelowBounds()
     {
@@ -2271,10 +1518,6 @@ public final class JArrayTest
       internalInsert(arr, -1, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the source index is greater than or equal to the length of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Char_FromIndexAboveBounds()
     {
@@ -2282,10 +1525,6 @@ public final class JArrayTest
       internalInsert(arr, 5, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the destination index is negative.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Char_ToIndexBelowBounds()
     {
@@ -2293,11 +1532,6 @@ public final class JArrayTest
       internalInsert(arr, 0, -1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the destination index is greater than or equal to the length of the
-     * array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Char_ToIndexAboveBounds()
     {
@@ -2305,10 +1539,6 @@ public final class JArrayTest
       internalInsert(arr, 0, 7);
     }
     
-    /**
-     * Confirms the proper working of internal insertion when the destination
-     * index comes before the source index.
-     */
     @Test
     public final void internalInsert_Object_ShiftBackward()
     {
@@ -2320,10 +1550,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms the proper working of internal insertion when the destination
-     * index comes after the source index.
-     */
     @Test
     public final void internalInsert_Object_ShiftForward()
     {
@@ -2335,10 +1561,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms that nothing changes when the destination and source indices for
-     * internal insertion are equal.
-     */
     @Test
     public final void internalInsert_Object_EqualIndices()
     {
@@ -2350,10 +1572,6 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the provided
-     * array is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void internalInsert_Object_NullArray()
     {
@@ -2361,10 +1579,6 @@ public final class JArrayTest
       internalInsert(arr, 0, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the source index is negative.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Object_FromIndexBelowBounds()
     {
@@ -2372,10 +1586,6 @@ public final class JArrayTest
       internalInsert(arr, -1, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the source index is greater than or equal to the length of the array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Object_FromIndexAboveBounds()
     {
@@ -2383,10 +1593,6 @@ public final class JArrayTest
       internalInsert(arr, 3, 1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the destination index is negative.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Object_ToIndexBelowBounds()
     {
@@ -2394,11 +1600,6 @@ public final class JArrayTest
       internalInsert(arr, 0, -1);
     }
     
-    /**
-     * Confirms that an {@code ArrayIndexOutOfBoundsException} is thrown when
-     * the destination index is greater than or equal to the length of the
-     * array.
-     */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public final void internalInsert_Object_ToIndexAboveBounds()
     {
@@ -2407,18 +1608,8 @@ public final class JArrayTest
     }
   }
   
-  /**
-   * Contains all unit tests for
-   * {@link net.danielhildebrandt.JArray#contains}. Tests are included for
-   * all nine overloads: for arrays of the eight primitive types, and of generic
-   * reference types.
-   */
   public static final class ContainsTest
   {
-    /**
-     * Confirms the affirmative detection of an equal instance of something
-     * within an array.
-     */
     @Test
     public final void contains_Byte()
     {
@@ -2426,9 +1617,6 @@ public final class JArrayTest
       assertThat(contains(arr, (byte) 0), is(true));
     }
     
-    /**
-     * Confirms the detection of a lack of any equivalent instance in an array.
-     */
     @Test
     public final void contains_Byte_NoSuchInstance()
     {
@@ -2436,10 +1624,6 @@ public final class JArrayTest
       assertThat(contains(arr, (byte) -1), is(false));
     }
     
-    /**
-     * Confirms that empty arrays are valid input, albeit of such sort as would
-     * never contain anything.
-     */
     @Test
     public final void contains_Byte_EmptyArray()
     {
@@ -2447,10 +1631,6 @@ public final class JArrayTest
       assertThat(contains(arr, (byte) 42), is(false));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void contains_Byte_NullArray()
     {
@@ -2458,10 +1638,6 @@ public final class JArrayTest
       contains(arr, (byte) 42);
     }
     
-    /**
-     * Confirms the affirmative detection of an equal instance of something
-     * within an array.
-     */
     @Test
     public final void contains_Short()
     {
@@ -2469,9 +1645,6 @@ public final class JArrayTest
       assertThat(contains(arr, (short) 0), is(true));
     }
     
-    /**
-     * Confirms the detection of a lack of any equivalent instance in an array.
-     */
     @Test
     public final void contains_Short_NoSuchInstance()
     {
@@ -2479,10 +1652,6 @@ public final class JArrayTest
       assertThat(contains(arr, (short) -1), is(false));
     }
     
-    /**
-     * Confirms that empty arrays are valid input, albeit of such sort as would
-     * never contain anything.
-     */
     @Test
     public final void contains_Short_EmptyArray()
     {
@@ -2490,10 +1659,6 @@ public final class JArrayTest
       assertThat(contains(arr, (short) 42), is(false));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void contains_Short_NullArray()
     {
@@ -2501,10 +1666,6 @@ public final class JArrayTest
       contains(arr, (short) 42);
     }
     
-    /**
-     * Confirms the affirmative detection of an equal instance of something
-     * within an array.
-     */
     @Test
     public final void contains_Int()
     {
@@ -2512,9 +1673,6 @@ public final class JArrayTest
       assertThat(contains(arr, 0), is(true));
     }
     
-    /**
-     * Confirms the detection of a lack of any equivalent instance in an array.
-     */
     @Test
     public final void contains_Int_NoSuchInstance()
     {
@@ -2522,10 +1680,6 @@ public final class JArrayTest
       assertThat(contains(arr, -1), is(false));
     }
     
-    /**
-     * Confirms that empty arrays are valid input, albeit of such sort as would
-     * never contain anything.
-     */
     @Test
     public final void contains_Int_EmptyArray()
     {
@@ -2533,10 +1687,6 @@ public final class JArrayTest
       assertThat(contains(arr, 42), is(false));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void contains_Int_NullArray()
     {
@@ -2544,10 +1694,6 @@ public final class JArrayTest
       contains(arr, 42);
     }
     
-    /**
-     * Confirms the affirmative detection of an equal instance of something
-     * within an array.
-     */
     @Test
     public final void contains_Long()
     {
@@ -2555,9 +1701,6 @@ public final class JArrayTest
       assertThat(contains(arr, 0L), is(true));
     }
     
-    /**
-     * Confirms the detection of a lack of any equivalent instance in an array.
-     */
     @Test
     public final void contains_Long_NoSuchInstance()
     {
@@ -2565,10 +1708,6 @@ public final class JArrayTest
       assertThat(contains(arr, -1L), is(false));
     }
     
-    /**
-     * Confirms that empty arrays are valid input, albeit of such sort as would
-     * never contain anything.
-     */
     @Test
     public final void contains_Long_EmptyArray()
     {
@@ -2576,10 +1715,6 @@ public final class JArrayTest
       assertThat(contains(arr, 42L), is(false));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void contains_Long_NullArray()
     {
@@ -2587,10 +1722,6 @@ public final class JArrayTest
       contains(arr, 42L);
     }
     
-    /**
-     * Confirms the affirmative detection of an equal instance of something
-     * within an array.
-     */
     @Test
     public final void contains_Float()
     {
@@ -2598,9 +1729,6 @@ public final class JArrayTest
       assertThat(contains(arr, 42F), is(true));
     }
     
-    /**
-     * Confirms the detection of a lack of any equivalent instance in an array.
-     */
     @Test
     public final void contains_Float_NoSuchInstance()
     {
@@ -2608,10 +1736,6 @@ public final class JArrayTest
       assertThat(contains(arr, -1F), is(false));
     }
     
-    /**
-     * Confirms that empty arrays are valid input, albeit of such sort as would
-     * never contain anything.
-     */
     @Test
     public final void contains_Float_EmptyArray()
     {
@@ -2619,10 +1743,6 @@ public final class JArrayTest
       assertThat(contains(arr, 42F), is(false));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void contains_Float_NullArray()
     {
@@ -2630,10 +1750,6 @@ public final class JArrayTest
       contains(arr, 42F);
     }
     
-    /**
-     * Confirms the affirmative detection of an equal instance of something
-     * within an array.
-     */
     @Test
     public final void contains_Double()
     {
@@ -2641,9 +1757,6 @@ public final class JArrayTest
       assertThat(contains(arr, 42D), is(true));
     }
     
-    /**
-     * Confirms the detection of a lack of any equivalent instance in an array.
-     */
     @Test
     public final void contains_Double_NoSuchInstance()
     {
@@ -2651,10 +1764,6 @@ public final class JArrayTest
       assertThat(contains(arr, -1D), is(false));
     }
     
-    /**
-     * Confirms that empty arrays are valid input, albeit of such sort as would
-     * never contain anything.
-     */
     @Test
     public final void contains_Double_EmptyArray()
     {
@@ -2662,10 +1771,6 @@ public final class JArrayTest
       assertThat(contains(arr, 42D), is(false));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void contains_Double_NullArray()
     {
@@ -2673,10 +1778,6 @@ public final class JArrayTest
       contains(arr, 42D);
     }
     
-    /**
-     * Confirms the affirmative detection of an equal instance of something
-     * within an array.
-     */
     @Test
     public final void contains_Boolean()
     {
@@ -2684,9 +1785,6 @@ public final class JArrayTest
       assertThat(contains(arr, true), is(true));
     }
     
-    /**
-     * Confirms the detection of a lack of any equivalent instance in an array.
-     */
     @Test
     public final void contains_Boolean_NoSuchInstance()
     {
@@ -2694,10 +1792,6 @@ public final class JArrayTest
       assertThat(contains(arr, false), is(false));
     }
     
-    /**
-     * Confirms that empty arrays are valid input, albeit of such sort as would
-     * never contain anything.
-     */
     @Test
     public final void contains_Boolean_EmptyArray()
     {
@@ -2705,10 +1799,6 @@ public final class JArrayTest
       assertThat(contains(arr, true), is(false));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void contains_Boolean_NullArray()
     {
@@ -2716,10 +1806,6 @@ public final class JArrayTest
       contains(arr, true);
     }
     
-    /**
-     * Confirms the affirmative detection of an equal instance of something
-     * within an array.
-     */
     @Test
     public final void contains_Char()
     {
@@ -2727,9 +1813,6 @@ public final class JArrayTest
       assertThat(contains(arr, 'E'), is(true));
     }
     
-    /**
-     * Confirms the detection of a lack of any equivalent instance in an array.
-     */
     @Test
     public final void contains_Char_NoSuchInstance()
     {
@@ -2737,10 +1820,6 @@ public final class JArrayTest
       assertThat(contains(arr, 'Q'), is(false));
     }
     
-    /**
-     * Confirms that empty arrays are valid input, albeit of such sort as would
-     * never contain anything.
-     */
     @Test
     public final void contains_Char_EmptyArray()
     {
@@ -2748,10 +1827,6 @@ public final class JArrayTest
       assertThat(contains(arr, '*'), is(false));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void contains_Char_NullArray()
     {
@@ -2759,10 +1834,6 @@ public final class JArrayTest
       contains(arr, '\n');
     }
     
-    /**
-     * Confirms the affirmative detection of an equal instance of something
-     * within an array.
-     */
     @Test
     public final void contains_Object()
     {
@@ -2770,9 +1841,6 @@ public final class JArrayTest
       assertThat(contains(arr, "Boot"), is(true));
     }
     
-    /**
-     * Confirms the detection of a lack of any equivalent instance in an array.
-     */
     @Test
     public final void contains_Object_NoSuchInstance()
     {
@@ -2780,10 +1848,6 @@ public final class JArrayTest
       assertThat(contains(arr, "Apple pie"), is(false));
     }
     
-    /**
-     * Confirms that empty arrays are valid input, albeit of such sort as would
-     * never contain anything.
-     */
     @Test
     public final void contains_Object_EmptyArray()
     {
@@ -2791,10 +1855,6 @@ public final class JArrayTest
       assertThat(contains(arr, null), is(false));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown if the array
-     * provided is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void contains_Object_NullArray()
     {
@@ -2803,18 +1863,8 @@ public final class JArrayTest
     }
   }
   
-  /**
-   * Contains all unit tests for
-   * {@link net.danielhildebrandt.JArray#containsX}. Tests are included for
-   * all nine overloads: for arrays of the eight primitive types, and of generic
-   * reference types.
-   */
   public static final class ContainsXTest
   {
-    /**
-     * Tests the affirmative detection of X many equal instances within an
-     * array.
-     */
     @Test
     public final void containsX_Byte()
     {
@@ -2822,9 +1872,6 @@ public final class JArrayTest
       assertThat(containsX(arr, (byte) 1, 3), is(true));
     }
     
-    /**
-     * Tests the correct detection of an insufficient number of equal instances.
-     */
     @Test
     public final void containsX_Byte_InsufficientInstances()
     {
@@ -2832,10 +1879,6 @@ public final class JArrayTest
       assertThat(containsX(arr, (byte) 1, 4), is(false));
     }
     
-    /**
-     * Affirms that when {@code x} is zero, the returned value is equal to
-     * whether no such instance as the provided key exists in the array.
-     */
     @Test
     public final void containsX_Byte_ZeroX()
     {
@@ -2843,10 +1886,6 @@ public final class JArrayTest
       assertThat(containsX(arr, (byte) -1, 0), is(true));
     }
     
-    /**
-     * Checks that an {@code IllegalArgumentException} is thrown if {@code x} is
-     * negative.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void containsX_Byte_NegativeX()
     {
@@ -2854,10 +1893,6 @@ public final class JArrayTest
       containsX(arr, (byte) -1, -1);
     }
     
-    /**
-     * Confirms that an empty array is valid input, albeit of a sort as will
-     * never contain anything.
-     */
     @Test
     public final void containsX_Byte_EmptyArray()
     {
@@ -2865,10 +1900,6 @@ public final class JArrayTest
       assertThat(containsX(arr, (byte) 42, 1), is(false));
     }
     
-    /**
-     * Tests to ensure that a {@code NullPointerException} is thrown when the
-     * array given is a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void containsX_Byte_NullArray()
     {
@@ -2876,10 +1907,6 @@ public final class JArrayTest
       containsX(arr, (byte) 42, 1);
     }
     
-    /**
-     * Tests the affirmative detection of X many equal instances within an
-     * array.
-     */
     @Test
     public final void containsX_Short()
     {
@@ -2887,9 +1914,6 @@ public final class JArrayTest
       assertThat(containsX(arr, (short) 1, 3), is(true));
     }
     
-    /**
-     * Tests the correct detection of an insufficient number of equal instances.
-     */
     @Test
     public final void containsX_Short_InsufficientInstances()
     {
@@ -2897,10 +1921,6 @@ public final class JArrayTest
       assertThat(containsX(arr, (short) 1, 4), is(false));
     }
     
-    /**
-     * Affirms that when {@code x} is zero, the returned value is equal to
-     * whether no such instance as the provided key exists in the array.
-     */
     @Test
     public final void containsX_Short_ZeroX()
     {
@@ -2908,10 +1928,6 @@ public final class JArrayTest
       assertThat(containsX(arr, (short) -1, 0), is(true));
     }
     
-    /**
-     * Checks that an {@code IllegalArgumentException} is thrown if {@code x} is
-     * negative.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void containsX_Short_NegativeX()
     {
@@ -2919,10 +1935,6 @@ public final class JArrayTest
       containsX(arr, (short) -1, -1);
     }
     
-    /**
-     * Confirms that an empty array is valid input, albeit of a sort as will
-     * never contain anything.
-     */
     @Test
     public final void containsX_Short_EmptyArray()
     {
@@ -2930,10 +1942,6 @@ public final class JArrayTest
       assertThat(containsX(arr, (short) 42, 1), is(false));
     }
     
-    /**
-     * Tests to ensure that a {@code NullPointerException} is thrown when the
-     * array given is a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void containsX_Short_NullArray()
     {
@@ -2941,10 +1949,6 @@ public final class JArrayTest
       containsX(arr, (short) 42, 1);
     }
     
-    /**
-     * Tests the affirmative detection of X many equal instances within an
-     * array.
-     */
     @Test
     public final void containsX_Int()
     {
@@ -2952,9 +1956,6 @@ public final class JArrayTest
       assertThat(containsX(arr, 1, 3), is(true));
     }
     
-    /**
-     * Tests the correct detection of an insufficient number of equal instances.
-     */
     @Test
     public final void containsX_Int_InsufficientInstances()
     {
@@ -2962,10 +1963,6 @@ public final class JArrayTest
       assertThat(containsX(arr, 1, 4), is(false));
     }
     
-    /**
-     * Affirms that when {@code x} is zero, the returned value is equal to
-     * whether no such instance as the provided key exists in the array.
-     */
     @Test
     public final void containsX_Int_ZeroX()
     {
@@ -2973,10 +1970,6 @@ public final class JArrayTest
       assertThat(containsX(arr, -1, 0), is(true));
     }
     
-    /**
-     * Checks that an {@code IllegalArgumentException} is thrown if {@code x} is
-     * negative.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void containsX_Int_NegativeX()
     {
@@ -2984,10 +1977,6 @@ public final class JArrayTest
       containsX(arr, -1, -1);
     }
     
-    /**
-     * Confirms that an empty array is valid input, albeit of a sort as will
-     * never contain anything.
-     */
     @Test
     public final void containsX_Int_EmptyArray()
     {
@@ -2995,10 +1984,6 @@ public final class JArrayTest
       assertThat(containsX(arr, 42, 1), is(false));
     }
     
-    /**
-     * Tests to ensure that a {@code NullPointerException} is thrown when the
-     * array given is a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void containsX_Int_NullArray()
     {
@@ -3006,10 +1991,6 @@ public final class JArrayTest
       containsX(arr, 42, 1);
     }
     
-    /**
-     * Tests the affirmative detection of X many equal instances within an
-     * array.
-     */
     @Test
     public final void containsX_Long()
     {
@@ -3017,9 +1998,6 @@ public final class JArrayTest
       assertThat(containsX(arr, 1L, 3), is(true));
     }
     
-    /**
-     * Tests the correct detection of an insufficient number of equal instances.
-     */
     @Test
     public final void containsX_Long_InsufficientInstances()
     {
@@ -3027,10 +2005,6 @@ public final class JArrayTest
       assertThat(containsX(arr, 1L, 4), is(false));
     }
     
-    /**
-     * Affirms that when {@code x} is zero, the returned value is equal to
-     * whether no such instance as the provided key exists in the array.
-     */
     @Test
     public final void containsX_Long_ZeroX()
     {
@@ -3039,10 +2013,6 @@ public final class JArrayTest
       
     }
     
-    /**
-     * Checks that an {@code IllegalArgumentException} is thrown if {@code x} is
-     * negative.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void containsX_Long_NegativeX()
     {
@@ -3050,10 +2020,6 @@ public final class JArrayTest
       containsX(arr, -1L, -1);
     }
     
-    /**
-     * Confirms that an empty array is valid input, albeit of a sort as will
-     * never contain anything.
-     */
     @Test
     public final void containsX_Long_EmptyArray()
     {
@@ -3061,10 +2027,6 @@ public final class JArrayTest
       assertThat(containsX(arr, 42L, 1), is(false));
     }
     
-    /**
-     * Tests to ensure that a {@code NullPointerException} is thrown when the
-     * array given is a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void containsX_Long_NullArray()
     {
@@ -3072,10 +2034,6 @@ public final class JArrayTest
       containsX(arr, 42L, 1);
     }
     
-    /**
-     * Tests the affirmative detection of X many equal instances within an
-     * array.
-     */
     @Test
     public final void containsX_Float()
     {
@@ -3083,9 +2041,6 @@ public final class JArrayTest
       assertThat(containsX(arr, 42F, 3), is(true));
     }
     
-    /**
-     * Tests the correct detection of an insufficient number of equal instances.
-     */
     @Test
     public final void containsX_Float_InsufficientInstances()
     {
@@ -3093,10 +2048,6 @@ public final class JArrayTest
       assertThat(containsX(arr, 42F, 4), is(false));
     }
     
-    /**
-     * Affirms that when {@code x} is zero, the returned value is equal to
-     * whether no such instance as the provided key exists in the array.
-     */
     @Test
     public final void containsX_Float_ZeroX()
     {
@@ -3104,10 +2055,6 @@ public final class JArrayTest
       assertThat(containsX(arr, 16384F, 0), is(true));
     }
     
-    /**
-     * Checks that an {@code IllegalArgumentException} is thrown if {@code x} is
-     * negative.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void containsX_Float_NegativeX()
     {
@@ -3115,10 +2062,6 @@ public final class JArrayTest
       containsX(arr, -16384F, -1);
     }
     
-    /**
-     * Confirms that an empty array is valid input, albeit of a sort as will
-     * never contain anything.
-     */
     @Test
     public final void containsX_Float_EmptyArray()
     {
@@ -3126,10 +2069,6 @@ public final class JArrayTest
       assertThat(containsX(arr, 42F, 1), is(false));
     }
     
-    /**
-     * Tests to ensure that a {@code NullPointerException} is thrown when the
-     * array given is a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void containsX_Float_NullArray()
     {
@@ -3137,10 +2076,6 @@ public final class JArrayTest
       containsX(arr, 42F, 1);
     }
     
-    /**
-     * Tests the affirmative detection of X many equal instances within an
-     * array.
-     */
     @Test
     public final void containsX_Double()
     {
@@ -3148,9 +2083,6 @@ public final class JArrayTest
       assertThat(containsX(arr, 42D, 3), is(true));
     }
     
-    /**
-     * Tests the correct detection of an insufficient number of equal instances.
-     */
     @Test
     public final void containsX_Double_InsufficientInstances()
     {
@@ -3158,10 +2090,6 @@ public final class JArrayTest
       assertThat(containsX(arr, 42D, 4), is(false));
     }
     
-    /**
-     * Affirms that when {@code x} is zero, the returned value is equal to
-     * whether no such instance as the provided key exists in the array.
-     */
     @Test
     public final void containsX_Double_ZeroX()
     {
@@ -3169,10 +2097,6 @@ public final class JArrayTest
       assertThat(containsX(arr, 16384D, 0), is(true));
     }
     
-    /**
-     * Checks that an {@code IllegalArgumentException} is thrown if {@code x} is
-     * negative.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void containsX_Double_NegativeX()
     {
@@ -3180,10 +2104,6 @@ public final class JArrayTest
       containsX(arr, -16384D, -1);
     }
     
-    /**
-     * Confirms that an empty array is valid input, albeit of a sort as will
-     * never contain anything.
-     */
     @Test
     public final void containsX_Double_EmptyArray()
     {
@@ -3191,10 +2111,6 @@ public final class JArrayTest
       assertThat(containsX(arr, 42D, 1), is(false));
     }
     
-    /**
-     * Tests to ensure that a {@code NullPointerException} is thrown when the
-     * array given is a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void containsX_Double_NullArray()
     {
@@ -3202,10 +2118,6 @@ public final class JArrayTest
       containsX(arr, 42D, 1);
     }
     
-    /**
-     * Tests the affirmative detection of X many equal instances within an
-     * array.
-     */
     @Test
     public final void containsX_Boolean()
     {
@@ -3213,9 +2125,6 @@ public final class JArrayTest
       assertThat(containsX(arr, false, 2), is(true));
     }
     
-    /**
-     * Tests the correct detection of an insufficient number of equal instances.
-     */
     @Test
     public final void containsX_Boolean_InsufficientInstances()
     {
@@ -3223,10 +2132,6 @@ public final class JArrayTest
       assertThat(containsX(arr, false, 3), is(false));
     }
     
-    /**
-     * Affirms that when {@code x} is zero, the returned value is equal to
-     * whether no such instance as the provided key exists in the array.
-     */
     @Test
     public final void containsX_Boolean_ZeroX()
     {
@@ -3234,10 +2139,6 @@ public final class JArrayTest
       assertThat(containsX(arr, true, 0), is(false));
     }
     
-    /**
-     * Checks that an {@code IllegalArgumentException} is thrown if {@code x} is
-     * negative.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void containsX_Boolean_NegativeX()
     {
@@ -3245,10 +2146,6 @@ public final class JArrayTest
       containsX(arr, true, -1);
     }
     
-    /**
-     * Confirms that an empty array is valid input, albeit of a sort as will
-     * never contain anything.
-     */
     @Test
     public final void containsX_Boolean_EmptyArray()
     {
@@ -3256,10 +2153,6 @@ public final class JArrayTest
       assertThat(containsX(arr, true, 1), is(false));
     }
     
-    /**
-     * Tests to ensure that a {@code NullPointerException} is thrown when the
-     * array given is a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void containsX_Boolean_NullArray()
     {
@@ -3267,10 +2160,6 @@ public final class JArrayTest
       containsX(arr, true, 1);
     }
     
-    /**
-     * Tests the affirmative detection of X many equal instances within an
-     * array.
-     */
     @Test
     public final void containsX_Char()
     {
@@ -3278,9 +2167,6 @@ public final class JArrayTest
       assertThat(containsX(arr, 'A', 2), is(true));
     }
     
-    /**
-     * Tests the correct detection of an insufficient number of equal instances.
-     */
     @Test
     public final void containsX_Char_InsufficientInstances()
     {
@@ -3288,10 +2174,6 @@ public final class JArrayTest
       assertThat(containsX(arr, 'A', 2), is(false));
     }
     
-    /**
-     * Affirms that when {@code x} is zero, the returned value is equal to
-     * whether no such instance as the provided key exists in the array.
-     */
     @Test
     public final void containsX_Char_ZeroX()
     {
@@ -3299,10 +2181,6 @@ public final class JArrayTest
       assertThat(containsX(arr, 'Q', 0), is(true));
     }
     
-    /**
-     * Checks that an {@code IllegalArgumentException} is thrown if {@code x} is
-     * negative.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void containsX_Char_NegativeX()
     {
@@ -3310,10 +2188,6 @@ public final class JArrayTest
       containsX(arr, '\r', -1);
     }
     
-    /**
-     * Confirms that an empty array is valid input, albeit of a sort as will
-     * never contain anything.
-     */
     @Test
     public final void containsX_Char_EmptyArray()
     {
@@ -3321,10 +2195,6 @@ public final class JArrayTest
       assertThat(containsX(arr, 'Q', 1), is(false));
     }
     
-    /**
-     * Tests to ensure that a {@code NullPointerException} is thrown when the
-     * array given is a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void containsX_Char_NullArray()
     {
@@ -3332,10 +2202,6 @@ public final class JArrayTest
       containsX(arr, 'Q', 1);
     }
     
-    /**
-     * Tests the affirmative detection of X many equal instances within an
-     * array.
-     */
     @Test
     public final void containsX_Object()
     {
@@ -3343,9 +2209,6 @@ public final class JArrayTest
       assertThat(containsX(arr, "Hyet.", 3), is(true));
     }
     
-    /**
-     * Tests the correct detection of an insufficient number of equal instances.
-     */
     @Test
     public final void containsX_Object_InsufficientInstances()
     {
@@ -3353,10 +2216,6 @@ public final class JArrayTest
       assertThat(containsX(arr, "Hyet.", 4), is(false));
     }
     
-    /**
-     * Affirms that when {@code x} is zero, the returned value is equal to
-     * whether no such instance as the provided key exists in the array.
-     */
     @Test
     public final void containsX_Object_ZeroX()
     {
@@ -3364,10 +2223,6 @@ public final class JArrayTest
       assertThat(containsX(arr, "Hello.", 0), is(true));
     }
     
-    /**
-     * Checks that an {@code IllegalArgumentException} is thrown if {@code x} is
-     * negative.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void containsX_Object_NegativeX()
     {
@@ -3375,10 +2230,6 @@ public final class JArrayTest
       containsX(arr, "Hero of Time", -1);
     }
     
-    /**
-     * Confirms that an empty array is valid input, albeit of a sort as will
-     * never contain anything.
-     */
     @Test
     public final void containsX_Object_EmptyArray()
     {
@@ -3386,10 +2237,6 @@ public final class JArrayTest
       assertThat(containsX(arr, null, 1), is(false));
     }
     
-    /**
-     * Tests to ensure that a {@code NullPointerException} is thrown when the
-     * array given is a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void containsX_Object_NullArray()
     {
@@ -3398,17 +2245,8 @@ public final class JArrayTest
     }
   }
   
-  /**
-   * Contains all unit tests for
-   * {@link net.danielhildebrandt.JArray#indexOf}. Tests are included for
-   * all nine overloads: for arrays of the eight primitive types, and of generic
-   * reference types.
-   */
   public static final class IndexOfTest
   {
-    /**
-     * Tests the detection of the first equivalent object or value in an array.
-     */
     @Test
     public final void indexOf_Byte()
     {
@@ -3416,10 +2254,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, (byte) 1), is(equalTo(1)));
     }
     
-    /**
-     * Tests to ensure that when the array contains no such element, the
-     * (obviously invalid) index of {@code -1} is returned.
-     */
     @Test
     public final void indexOf_Byte_NoSuchInstance()
     {
@@ -3427,10 +2261,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, (byte) -1), is(equalTo(-1)));
     }
     
-    /**
-     * Tests to ensure that an empty array is considered as valid input, albeit
-     * one that will never contain any instances of anything.
-     */
     @Test
     public final void indexOf_Byte_EmptyArray()
     {
@@ -3438,10 +2268,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, (byte) 42), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when the array
-     * provided is, in fact, only a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void indexOf_Byte_NullArray()
     {
@@ -3449,9 +2275,6 @@ public final class JArrayTest
       indexOf(arr, (byte) 42);
     }
     
-    /**
-     * Tests the detection of the first equivalent object or value in an array.
-     */
     @Test
     public final void indexOf_Short()
     {
@@ -3459,10 +2282,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, (short) 1), is(equalTo(1)));
     }
     
-    /**
-     * Tests to ensure that when the array contains no such element, the
-     * (obviously invalid) index of {@code -1} is returned.
-     */
     @Test
     public final void indexOf_Short_NoSuchInstance()
     {
@@ -3470,10 +2289,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, (short) -1), is(equalTo(-1)));
     }
     
-    /**
-     * Tests to ensure that an empty array is considered as valid input, albeit
-     * one that will never contain any instances of anything.
-     */
     @Test
     public final void indexOf_Short_EmptyArray()
     {
@@ -3481,10 +2296,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, (short) 42), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when the array
-     * provided is, in fact, only a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void indexOf_Short_NullArray()
     {
@@ -3492,9 +2303,6 @@ public final class JArrayTest
       indexOf(arr, (short) 42);
     }
     
-    /**
-     * Tests the detection of the first equivalent object or value in an array.
-     */
     @Test
     public final void indexOf_Int()
     {
@@ -3502,10 +2310,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, 1), is(equalTo(1)));
     }
     
-    /**
-     * Tests to ensure that when the array contains no such element, the
-     * (obviously invalid) index of {@code -1} is returned.
-     */
     @Test
     public final void indexOf_Int_NoSuchInstance()
     {
@@ -3513,10 +2317,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, -1), is(equalTo(-1)));
     }
     
-    /**
-     * Tests to ensure that an empty array is considered as valid input, albeit
-     * one that will never contain any instances of anything.
-     */
     @Test
     public final void indexOf_Int_EmptyArray()
     {
@@ -3524,10 +2324,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, 42), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when the array
-     * provided is, in fact, only a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void indexOf_Int_NullArray()
     {
@@ -3535,9 +2331,6 @@ public final class JArrayTest
       indexOf(arr, 42);
     }
     
-    /**
-     * Tests the detection of the first equivalent object or value in an array.
-     */
     @Test
     public final void indexOf_Long()
     {
@@ -3545,10 +2338,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, 1L), is(equalTo(1)));
     }
     
-    /**
-     * Tests to ensure that when the array contains no such element, the
-     * (obviously invalid) index of {@code -1} is returned.
-     */
     @Test
     public final void indexOf_Long_NoSuchInstance()
     {
@@ -3556,10 +2345,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, -1L), is(equalTo(-1)));
     }
     
-    /**
-     * Tests to ensure that an empty array is considered as valid input, albeit
-     * one that will never contain any instances of anything.
-     */
     @Test
     public final void indexOf_Long_EmptyArray()
     {
@@ -3567,10 +2352,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, 42L), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when the array
-     * provided is, in fact, only a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void indexOf_Long_NullArray()
     {
@@ -3578,9 +2359,6 @@ public final class JArrayTest
       indexOf(arr, 42L);
     }
     
-    /**
-     * Tests the detection of the first equivalent object or value in an array.
-     */
     @Test
     public final void indexOf_Float()
     {
@@ -3588,10 +2366,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, 1F), is(equalTo(1)));
     }
     
-    /**
-     * Tests to ensure that when the array contains no such element, the
-     * (obviously invalid) index of {@code -1} is returned.
-     */
     @Test
     public final void indexOf_Float_NoSuchInstance()
     {
@@ -3599,10 +2373,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, -1F), is(equalTo(-1)));
     }
     
-    /**
-     * Tests to ensure that an empty array is considered as valid input, albeit
-     * one that will never contain any instances of anything.
-     */
     @Test
     public final void indexOf_Float_EmptyArray()
     {
@@ -3610,10 +2380,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, 42F), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when the array
-     * provided is, in fact, only a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void indexOf_Float_NullArray()
     {
@@ -3621,9 +2387,6 @@ public final class JArrayTest
       indexOf(arr, 42F);
     }
     
-    /**
-     * Tests the detection of the first equivalent object or value in an array.
-     */
     @Test
     public final void indexOf_Double()
     {
@@ -3631,10 +2394,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, 1D), is(equalTo(1)));
     }
     
-    /**
-     * Tests to ensure that when the array contains no such element, the
-     * (obviously invalid) index of {@code -1} is returned.
-     */
     @Test
     public final void indexOf_Double_NoSuchInstance()
     {
@@ -3642,10 +2401,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, -1D), is(equalTo(-1)));
     }
     
-    /**
-     * Tests to ensure that an empty array is considered as valid input, albeit
-     * one that will never contain any instances of anything.
-     */
     @Test
     public final void indexOf_Double_EmptyArray()
     {
@@ -3653,10 +2408,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, 42D), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when the array
-     * provided is, in fact, only a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void indexOf_Double_NullArray()
     {
@@ -3664,9 +2415,6 @@ public final class JArrayTest
       indexOf(arr, 42D);
     }
     
-    /**
-     * Tests the detection of the first equivalent object or value in an array.
-     */
     @Test
     public final void indexOf_Boolean()
     {
@@ -3674,10 +2422,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, false), is(equalTo(2)));
     }
     
-    /**
-     * Tests to ensure that when the array contains no such element, the
-     * (obviously invalid) index of {@code -1} is returned.
-     */
     @Test
     public final void indexOf_Boolean_NoSuchInstance()
     {
@@ -3685,10 +2429,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, true), is(equalTo(-1)));
     }
     
-    /**
-     * Tests to ensure that an empty array is considered as valid input, albeit
-     * one that will never contain any instances of anything.
-     */
     @Test
     public final void indexOf_Boolean_EmptyArray()
     {
@@ -3696,10 +2436,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, true), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when the array
-     * provided is, in fact, only a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void indexOf_Boolean_NullArray()
     {
@@ -3707,9 +2443,6 @@ public final class JArrayTest
       indexOf(arr, true);
     }
     
-    /**
-     * Tests the detection of the first equivalent object or value in an array.
-     */
     @Test
     public final void indexOf_Char()
     {
@@ -3717,10 +2450,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, 'A'), is(equalTo(1)));
     }
     
-    /**
-     * Tests to ensure that when the array contains no such element, the
-     * (obviously invalid) index of {@code -1} is returned.
-     */
     @Test
     public final void indexOf_Char_NoSuchInstance()
     {
@@ -3728,10 +2457,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, 'Q'), is(equalTo(-1)));
     }
     
-    /**
-     * Tests to ensure that an empty array is considered as valid input, albeit
-     * one that will never contain any instances of anything.
-     */
     @Test
     public final void indexOf_Char_EmptyArray()
     {
@@ -3739,10 +2464,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, 'Q'), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when the array
-     * provided is, in fact, only a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void indexOf_Char_NullArray()
     {
@@ -3750,9 +2471,6 @@ public final class JArrayTest
       indexOf(arr, 'Q');
     }
     
-    /**
-     * Tests the detection of the first equivalent object or value in an array.
-     */
     @Test
     public final void indexOf_Object()
     {
@@ -3760,10 +2478,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, "Into the rabbit hole"), is(equalTo(1)));
     }
     
-    /**
-     * Tests to ensure that when the array contains no such element, the
-     * (obviously invalid) index of {@code -1} is returned.
-     */
     @Test
     public final void indexOf_Object_NoSuchInstance()
     {
@@ -3771,10 +2485,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, "Wicked Witch of the East"), is(equalTo(-1)));
     }
     
-    /**
-     * Tests to ensure that an empty array is considered as valid input, albeit
-     * one that will never contain any instances of anything.
-     */
     @Test
     public final void indexOf_Object_EmptyArray()
     {
@@ -3782,10 +2492,6 @@ public final class JArrayTest
       assertThat(indexOf(arr, null), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when the array
-     * provided is, in fact, only a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void indexOf_Object_NullArray()
     {
@@ -3794,18 +2500,8 @@ public final class JArrayTest
     }
   }
   
-  /**
-   * Contains all unit tests for
-   * {@link net.danielhildebrandt.JArray#lastIndexOf}. Tests are included
-   * for all nine overloads: for arrays of the eight primitive types, and of
-   * generic reference types.
-   */
   public static final class LastIndexOfTest
   {
-    /**
-     * Tests the detection of the last instance of an object or value in an
-     * array.
-     */
     @Test
     public final void lastIndexOf_Byte()
     {
@@ -3813,10 +2509,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, (byte) 0), is(equalTo(4)));
     }
     
-    /**
-     * Tests to ensure that when the array contains no such element, the
-     * (obviously invalid) index of {@code -1} is returned.
-     */
     @Test
     public final void lastIndexOf_Byte_NoSuchInstance()
     {
@@ -3824,10 +2516,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, (byte) -1), is(equalTo(-1)));
     }
     
-    /**
-     * Tests to ensure that an empty array is considered as valid input, albeit
-     * one that will never contain any instances of anything.
-     */
     @Test
     public final void lastIndexOf_Byte_EmptyArray()
     {
@@ -3835,10 +2523,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, (byte) 0), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when the array
-     * provided is, in fact, only a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void lastIndexOf_Byte_NullArray()
     {
@@ -3846,10 +2530,6 @@ public final class JArrayTest
       lastIndexOf(arr, (byte) 0);
     }
     
-    /**
-     * Tests the detection of the last instance of an object or value in an
-     * array.
-     */
     @Test
     public final void lastIndexOf_Short()
     {
@@ -3857,10 +2537,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, (short) 0), is(equalTo(4)));
     }
     
-    /**
-     * Tests to ensure that when the array contains no such element, the
-     * (obviously invalid) index of {@code -1} is returned.
-     */
     @Test
     public final void lastIndexOf_Short_NoSuchInstance()
     {
@@ -3868,10 +2544,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, (short) -1), is(equalTo(-1)));
     }
     
-    /**
-     * Tests to ensure that an empty array is considered as valid input, albeit
-     * one that will never contain any instances of anything.
-     */
     @Test
     public final void lastIndexOf_Short_EmptyArray()
     {
@@ -3879,10 +2551,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, (short) 0), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when the array
-     * provided is, in fact, only a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void lastIndexOf_Short_NullArray()
     {
@@ -3890,10 +2558,6 @@ public final class JArrayTest
       lastIndexOf(arr, (short) 0);
     }
     
-    /**
-     * Tests the detection of the last instance of an object or value in an
-     * array.
-     */
     @Test
     public final void lastIndexOf_Int()
     {
@@ -3901,10 +2565,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, 0), is(equalTo(4)));
     }
     
-    /**
-     * Tests to ensure that when the array contains no such element, the
-     * (obviously invalid) index of {@code -1} is returned.
-     */
     @Test
     public final void lastIndexOf_Int_NoSuchInstance()
     {
@@ -3912,10 +2572,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, -1), is(equalTo(-1)));
     }
     
-    /**
-     * Tests to ensure that an empty array is considered as valid input, albeit
-     * one that will never contain any instances of anything.
-     */
     @Test
     public final void lastIndexOf_Int_EmptyArray()
     {
@@ -3923,10 +2579,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, 0), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when the array
-     * provided is, in fact, only a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void lastIndexOf_Int_NullArray()
     {
@@ -3934,10 +2586,6 @@ public final class JArrayTest
       lastIndexOf(arr, 0);
     }
     
-    /**
-     * Tests the detection of the last instance of an object or value in an
-     * array.
-     */
     @Test
     public final void lastIndexOf_Long()
     {
@@ -3945,10 +2593,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, 0L), is(equalTo(4)));
     }
     
-    /**
-     * Tests to ensure that when the array contains no such element, the
-     * (obviously invalid) index of {@code -1} is returned.
-     */
     @Test
     public final void lastIndexOf_Long_NoSuchInstance()
     {
@@ -3956,10 +2600,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, -1L), is(equalTo(-1)));
     }
     
-    /**
-     * Tests to ensure that an empty array is considered as valid input, albeit
-     * one that will never contain any instances of anything.
-     */
     @Test
     public final void lastIndexOf_Long_EmptyArray()
     {
@@ -3967,10 +2607,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, 0L), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when the array
-     * provided is, in fact, only a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void lastIndexOf_Long_NullArray()
     {
@@ -3978,10 +2614,6 @@ public final class JArrayTest
       lastIndexOf(arr, 0L);
     }
     
-    /**
-     * Tests the detection of the last instance of an object or value in an
-     * array.
-     */
     @Test
     public final void lastIndexOf_Float()
     {
@@ -3989,10 +2621,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, 0F), is(equalTo(4)));
     }
     
-    /**
-     * Tests to ensure that when the array contains no such element, the
-     * (obviously invalid) index of {@code -1} is returned.
-     */
     @Test
     public final void lastIndexOf_Float_NoSuchInstance()
     {
@@ -4000,10 +2628,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, -1F), is(equalTo(-1)));
     }
     
-    /**
-     * Tests to ensure that an empty array is considered as valid input, albeit
-     * one that will never contain any instances of anything.
-     */
     @Test
     public final void lastIndexOf_Float_EmptyArray()
     {
@@ -4011,10 +2635,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, 0F), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when the array
-     * provided is, in fact, only a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void lastIndexOf_Float_NullArray()
     {
@@ -4022,10 +2642,6 @@ public final class JArrayTest
       lastIndexOf(arr, 0F);
     }
     
-    /**
-     * Tests the detection of the last instance of an object or value in an
-     * array.
-     */
     @Test
     public final void lastIndexOf_Double()
     {
@@ -4033,10 +2649,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, 0D), is(equalTo(4)));
     }
     
-    /**
-     * Tests to ensure that when the array contains no such element, the
-     * (obviously invalid) index of {@code -1} is returned.
-     */
     @Test
     public final void lastIndexOf_Double_NoSuchInstance()
     {
@@ -4044,10 +2656,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, -1D), is(equalTo(-1)));
     }
     
-    /**
-     * Tests to ensure that an empty array is considered as valid input, albeit
-     * one that will never contain any instances of anything.
-     */
     @Test
     public final void lastIndexOf_Double_EmptyArray()
     {
@@ -4055,10 +2663,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, 0D), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when the array
-     * provided is, in fact, only a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void lastIndexOf_Double_NullArray()
     {
@@ -4066,10 +2670,6 @@ public final class JArrayTest
       lastIndexOf(arr, 0D);
     }
     
-    /**
-     * Tests the detection of the last instance of an object or value in an
-     * array.
-     */
     @Test
     public final void lastIndexOf_Boolean()
     {
@@ -4077,10 +2677,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, false), is(equalTo(3)));
     }
     
-    /**
-     * Tests to ensure that when the array contains no such element, the
-     * (obviously invalid) index of {@code -1} is returned.
-     */
     @Test
     public final void lastIndexOf_Boolean_NoSuchInstance()
     {
@@ -4088,10 +2684,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, true), is(equalTo(-1)));
     }
     
-    /**
-     * Tests to ensure that an empty array is considered as valid input, albeit
-     * one that will never contain any instances of anything.
-     */
     @Test
     public final void lastIndexOf_Boolean_EmptyArray()
     {
@@ -4099,10 +2691,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, false), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when the array
-     * provided is, in fact, only a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void lastIndexOf_Boolean_NullArray()
     {
@@ -4110,10 +2698,6 @@ public final class JArrayTest
       lastIndexOf(arr, true);
     }
     
-    /**
-     * Tests the detection of the last instance of an object or value in an
-     * array.
-     */
     @Test
     public final void lastIndexOf_Char()
     {
@@ -4121,10 +2705,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, 'O'), is(equalTo(4)));
     }
     
-    /**
-     * Tests to ensure that when the array contains no such element, the
-     * (obviously invalid) index of {@code -1} is returned.
-     */
     @Test
     public final void lastIndexOf_Char_NoSuchInstance()
     {
@@ -4132,10 +2712,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, '\0'), is(equalTo(-1)));
     }
     
-    /**
-     * Tests to ensure that an empty array is considered as valid input, albeit
-     * one that will never contain any instances of anything.
-     */
     @Test
     public final void lastIndexOf_Char_EmptyArray()
     {
@@ -4143,10 +2719,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, 'Q'), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when the array
-     * provided is, in fact, only a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void lastIndexOf_Char_NullArray()
     {
@@ -4154,10 +2726,6 @@ public final class JArrayTest
       lastIndexOf(arr, '\n');
     }
     
-    /**
-     * Tests the detection of the last instance of an object or value in an
-     * array.
-     */
     @Test
     public final void lastIndexOf_Object()
     {
@@ -4165,10 +2733,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, "All of time and space"), is(equalTo(4)));
     }
     
-    /**
-     * Tests to ensure that when the array contains no such element, the
-     * (obviously invalid) index of {@code -1} is returned.
-     */
     @Test
     public final void lastIndexOf_Object_NoSuchInstance()
     {
@@ -4176,10 +2740,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, "Gallifrei"), is(equalTo(-1)));
     }
     
-    /**
-     * Tests to ensure that an empty array is considered as valid input, albeit
-     * one that will never contain any instances of anything.
-     */
     @Test
     public final void lastIndexOf_Object_EmptyArray()
     {
@@ -4187,10 +2747,6 @@ public final class JArrayTest
       assertThat(lastIndexOf(arr, null), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when the array
-     * provided is, in fact, only a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void lastIndexOf_Object_NullArray()
     {
@@ -4199,18 +2755,8 @@ public final class JArrayTest
     }
   }
   
-  /**
-   * Contains all unit tests for
-   * {@link net.danielhildebrandt.JArray#nthIndexOf}. Tests are included
-   * for all nine overloads: for arrays of the eight primitive types, and of
-   * generic reference types.
-   */
   public static final class NthIndexOfTest
   {
-    /**
-     * Tests the detection of the n<sup>th</sup> occurrence of the given object
-     * or value in an array.
-     */
     @Test
     public final void nthIndexOf_Byte()
     {
@@ -4218,10 +2764,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, (byte) 0, 2), is(equalTo(1)));
     }
     
-    /**
-     * Tests to see that the correct negative number is returned when there are
-     * fewer than {@code n} repetitions of the given value.
-     */
     @Test
     public final void nthIndexOf_Byte_InsufficientInstances()
     {
@@ -4229,11 +2771,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, (byte) 0, 4), is(equalTo(-4)));
     }
     
-    /**
-     * Tests to ensure that an empty array is still perfectly valid input, and
-     * that as it contains no instances of anything, {@code -1} is returned as
-     * expected.
-     */
     @Test
     public final void nthIndexOf_Byte_EmptyArray()
     {
@@ -4241,11 +2778,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, (byte) 0, 1), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code nthIndexOf(byte[], byte, int)} is passed a null reference instead
-     * of an array.
-     */
     @Test(expected = NullPointerException.class)
     public final void nthIndexOf_Byte_NullArray()
     {
@@ -4253,11 +2785,6 @@ public final class JArrayTest
       nthIndexOf(arr, (byte) 42, 7);
     }
     
-    /**
-     * Confirms that an {@code IllegalArgumentException} is thrown when
-     * {@code nthIndexOf(byte[], byte, int)} is given a nonpositive value for
-     * {@code n}.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void nthIndexOf_Byte_NonpositiveN()
     {
@@ -4265,10 +2792,6 @@ public final class JArrayTest
       nthIndexOf(arr, (byte) 1, 0);
     }
     
-    /**
-     * Tests the detection of the n<sup>th</sup> occurrence of the given object
-     * or value in an array.
-     */
     @Test
     public final void nthIndexOf_Short()
     {
@@ -4276,10 +2799,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, (short) 0, 2), is(equalTo(1)));
     }
     
-    /**
-     * Tests to see that the correct negative number is returned when there are
-     * fewer than {@code n} repetitions of the given value.
-     */
     @Test
     public final void nthIndexOf_Short_InsufficientInstances()
     {
@@ -4287,11 +2806,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, (short) 0, 4), is(equalTo(-4)));
     }
     
-    /**
-     * Tests to ensure that an empty array is still perfectly valid input, and
-     * that as it contains no instances of anything, {@code -1} is returned as
-     * expected.
-     */
     @Test
     public final void nthIndexOf_Short_EmptyArray()
     {
@@ -4299,11 +2813,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, (short) 0, 1), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code nthIndexOf(short[], short, int)} is passed a null reference
-     * instead of an array.
-     */
     @Test(expected = NullPointerException.class)
     public final void nthIndexOf_Short_NullArray()
     {
@@ -4311,11 +2820,6 @@ public final class JArrayTest
       nthIndexOf(arr, (short) 42, 7);
     }
     
-    /**
-     * Confirms that an {@code IllegalArgumentException} is thrown when
-     * {@code nthIndexOf(short[], short, int)} is given a nonpositive value for
-     * {@code n}.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void nthIndexOf_Short_NonpositiveN()
     {
@@ -4323,10 +2827,6 @@ public final class JArrayTest
       nthIndexOf(arr, (short) 1, 0);
     }
     
-    /**
-     * Tests the detection of the n<sup>th</sup> occurrence of the given object
-     * or value in an array.
-     */
     @Test
     public final void nthIndexOf_Int()
     {
@@ -4334,10 +2834,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, 0, 2), is(equalTo(1)));
     }
     
-    /**
-     * Tests to see that the correct negative number is returned when there are
-     * fewer than {@code n} repetitions of the given value.
-     */
     @Test
     public final void nthIndexOf_Int_InsufficientInstances()
     {
@@ -4345,11 +2841,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, 0, 4), is(equalTo(-4)));
     }
     
-    /**
-     * Tests to ensure that an empty array is still perfectly valid input, and
-     * that as it contains no instances of anything, {@code -1} is returned as
-     * expected.
-     */
     @Test
     public final void nthIndexOf_Int_EmptyArray()
     {
@@ -4357,11 +2848,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, 0, 1), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code nthIndexOf(int[], int, int)} is passed a null reference instead of
-     * an array.
-     */
     @Test(expected = NullPointerException.class)
     public final void nthIndexOf_Int_NullArray()
     {
@@ -4369,11 +2855,6 @@ public final class JArrayTest
       nthIndexOf(arr, 42, 7);
     }
     
-    /**
-     * Confirms that an {@code IllegalArgumentException} is thrown when
-     * {@code nthIndexOf(int[], int, int)} is given a nonpositive value for
-     * {@code n}.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void nthIndexOf_Int_NonpositiveN()
     {
@@ -4381,10 +2862,6 @@ public final class JArrayTest
       nthIndexOf(arr, (int) 1, 0);
     }
     
-    /**
-     * Tests the detection of the n<sup>th</sup> occurrence of the given object
-     * or value in an array.
-     */
     @Test
     public final void nthIndexOf_Long()
     {
@@ -4392,10 +2869,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, 0L, 2), is(equalTo(1)));
     }
     
-    /**
-     * Tests to see that the correct negative number is returned when there are
-     * fewer than {@code n} repetitions of the given value.
-     */
     @Test
     public final void nthIndexOf_Long_InsufficientInstances()
     {
@@ -4403,11 +2876,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, 0L, 4), is(equalTo(-4)));
     }
     
-    /**
-     * Tests to ensure that an empty array is still perfectly valid input, and
-     * that as it contains no instances of anything, {@code -1} is returned as
-     * expected.
-     */
     @Test
     public final void nthIndexOf_Long_EmptyArray()
     {
@@ -4415,11 +2883,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, 0L, 1), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code nthIndexOf(long[], long, int)} is passed a null reference instead
-     * of an array.
-     */
     @Test(expected = NullPointerException.class)
     public final void nthIndexOf_Long_NullArray()
     {
@@ -4427,11 +2890,6 @@ public final class JArrayTest
       nthIndexOf(arr, 42L, 7);
     }
     
-    /**
-     * Confirms that an {@code IllegalArgumentException} is thrown when
-     * {@code nthIndexOf(long[], long, int)} is given a nonpositive value for
-     * {@code n}.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void nthIndexOf_Long_NonpositiveN()
     {
@@ -4439,10 +2897,6 @@ public final class JArrayTest
       nthIndexOf(arr, (long) 1, 0);
     }
     
-    /**
-     * Tests the detection of the n<sup>th</sup> occurrence of the given object
-     * or value in an array.
-     */
     @Test
     public final void nthIndexOf_Float()
     {
@@ -4450,10 +2904,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, 0F, 2), is(equalTo(1)));
     }
     
-    /**
-     * Tests to see that the correct negative number is returned when there are
-     * fewer than {@code n} repetitions of the given value.
-     */
     @Test
     public final void nthIndexOf_Float_InsufficientInstances()
     {
@@ -4461,11 +2911,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, 0F, 4), is(equalTo(-4)));
     }
     
-    /**
-     * Tests to ensure that an empty array is still perfectly valid input, and
-     * that as it contains no instances of anything, {@code -1} is returned as
-     * expected.
-     */
     @Test
     public final void nthIndexOf_Float_EmptyArray()
     {
@@ -4473,11 +2918,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, 0F, 1), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code nthIndexOf(float[], float, int)} is passed a null reference
-     * instead of an array.
-     */
     @Test(expected = NullPointerException.class)
     public final void nthIndexOf_Float_NullArray()
     {
@@ -4485,11 +2925,6 @@ public final class JArrayTest
       nthIndexOf(arr, 42F, 7);
     }
     
-    /**
-     * Confirms that an {@code IllegalArgumentException} is thrown when
-     * {@code nthIndexOf(float[], float, int)} is given a nonpositive value for
-     * {@code n}.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void nthIndexOf_Float_NonpositiveN()
     {
@@ -4497,10 +2932,6 @@ public final class JArrayTest
       nthIndexOf(arr, 1F, 0);
     }
     
-    /**
-     * Tests the detection of the n<sup>th</sup> occurrence of the given object
-     * or value in an array.
-     */
     @Test
     public final void nthIndexOf_Double()
     {
@@ -4508,10 +2939,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, 0D, 2), is(equalTo(1)));
     }
     
-    /**
-     * Tests to see that the correct negative number is returned when there are
-     * fewer than {@code n} repetitions of the given value.
-     */
     @Test
     public final void nthIndexOf_Double_InsufficientInstances()
     {
@@ -4519,11 +2946,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, 0D, 4), is(equalTo(-4)));
     }
     
-    /**
-     * Tests to ensure that an empty array is still perfectly valid input, and
-     * that as it contains no instances of anything, {@code -1} is returned as
-     * expected.
-     */
     @Test
     public final void nthIndexOf_Double_EmptyArray()
     {
@@ -4531,11 +2953,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, 0D, 1), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code nthIndexOf(double[], double, int)} is passed a null reference
-     * instead of an array.
-     */
     @Test(expected = NullPointerException.class)
     public final void nthIndexOf_Double_NullArray()
     {
@@ -4543,11 +2960,6 @@ public final class JArrayTest
       nthIndexOf(arr, 42D, 7);
     }
     
-    /**
-     * Confirms that an {@code IllegalArgumentException} is thrown when
-     * {@code nthIndexOf(double[], double, int)} is given a nonpositive value
-     * for {@code n}.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void nthIndexOf_Double_NonpositiveN()
     {
@@ -4555,10 +2967,6 @@ public final class JArrayTest
       nthIndexOf(arr, 1D, 0);
     }
     
-    /**
-     * Tests the detection of the n<sup>th</sup> occurrence of the given object
-     * or value in an array.
-     */
     @Test
     public final void nthIndexOf_Boolean()
     {
@@ -4566,10 +2974,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, true, 2), is(equalTo(1)));
     }
     
-    /**
-     * Tests to see that the correct negative number is returned when there are
-     * fewer than {@code n} repetitions of the given value.
-     */
     @Test
     public final void nthIndexOf_Boolean_InsufficientInstances()
     {
@@ -4577,11 +2981,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, true, 4), is(equalTo(-4)));
     }
     
-    /**
-     * Tests to ensure that an empty array is still perfectly valid input, and
-     * that as it contains no instances of anything, {@code -1} is returned as
-     * expected.
-     */
     @Test
     public final void nthIndexOf_Boolean_EmptyArray()
     {
@@ -4589,11 +2988,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, true, 1), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code nthIndexOf(boolean[], boolean, int)} is passed a null reference
-     * instead of an array.
-     */
     @Test(expected = NullPointerException.class)
     public final void nthIndexOf_Boolean_NullArray()
     {
@@ -4601,11 +2995,6 @@ public final class JArrayTest
       nthIndexOf(arr, true, 7);
     }
     
-    /**
-     * Confirms that an {@code IllegalArgumentException} is thrown when
-     * {@code nthIndexOf(boolean[], boolean, int)} is given a nonpositive value
-     * for {@code n}.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void nthIndexOf_Boolean_NonpositiveN()
     {
@@ -4613,10 +3002,6 @@ public final class JArrayTest
       nthIndexOf(arr, false, 0);
     }
     
-    /**
-     * Tests the detection of the n<sup>th</sup> occurrence of the given object
-     * or value in an array.
-     */
     @Test
     public final void nthIndexOf_Char()
     {
@@ -4624,10 +3009,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, '\0', 2), is(equalTo(3)));
     }
     
-    /**
-     * Tests to see that the correct negative number is returned when there are
-     * fewer than {@code n} repetitions of the given value.
-     */
     @Test
     public final void nthIndexOf_Char_InsufficientInstances()
     {
@@ -4635,11 +3016,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, '\0', 4), is(equalTo(-4)));
     }
     
-    /**
-     * Tests to ensure that an empty array is still perfectly valid input, and
-     * that as it contains no instances of anything, {@code -1} is returned as
-     * expected.
-     */
     @Test
     public final void nthIndexOf_Char_EmptyArray()
     {
@@ -4647,11 +3023,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, '*', 1), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code nthIndexOf(char[], char, int)} is passed a null reference instead
-     * of an array.
-     */
     @Test(expected = NullPointerException.class)
     public final void nthIndexOf_Char_NullArray()
     {
@@ -4659,11 +3030,6 @@ public final class JArrayTest
       nthIndexOf(arr, '*', 7);
     }
     
-    /**
-     * Confirms that an {@code IllegalArgumentException} is thrown when
-     * {@code nthIndexOf(char[], char, int)} is given a nonpositive value for
-     * {@code n}.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void nthIndexOf_Char_NonpositiveN()
     {
@@ -4671,10 +3037,6 @@ public final class JArrayTest
       nthIndexOf(arr, 'B', 0);
     }
     
-    /**
-     * Tests the detection of the n<sup>th</sup> occurrence of the given object
-     * or value in an array.
-     */
     @Test
     public final void nthIndexOf_Object()
     {
@@ -4682,10 +3044,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, 42, 3), is(equalTo(4)));
     }
     
-    /**
-     * Tests to see that the correct negative number is returned when there are
-     * fewer than {@code n} repetitions of the given value.
-     */
     @Test
     public final void nthIndexOf_Object_InsufficientInstances()
     {
@@ -4693,11 +3051,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, 42, 5), is(equalTo(-5)));
     }
     
-    /**
-     * Tests to ensure that an empty array is still perfectly valid input, and
-     * that as it contains no instances of anything, {@code -1} is returned as
-     * expected.
-     */
     @Test
     public final void nthIndexOf_Object_EmptyArray()
     {
@@ -4705,11 +3058,6 @@ public final class JArrayTest
       assertThat(nthIndexOf(arr, 42, 1), is(equalTo(-1)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code nthIndexOf(Object[], Object, int)} is passed a null reference
-     * instead of an array.
-     */
     @Test(expected = NullPointerException.class)
     public final void nthIndexOf_Object_NullArray()
     {
@@ -4717,11 +3065,6 @@ public final class JArrayTest
       nthIndexOf(arr, (byte) 42, 7);
     }
     
-    /**
-     * Confirms that an {@code IllegalArgumentException} is thrown when
-     * {@code nthIndexOf(Object[], Object, int)} is given a nonpositive value
-     * for {@code n}.
-     */
     @Test(expected = IllegalArgumentException.class)
     public final void nthIndexOf_Object_NonpositiveN()
     {
@@ -4730,18 +3073,8 @@ public final class JArrayTest
     }
   }
   
-  /**
-   * Contains all unit tests for
-   * {@link net.danielhildebrandt.JArray#indexOfAll}. Tests are included
-   * for all nine overloads: for arrays of the eight primitive types, and of
-   * generic reference types.
-   */
   public static final class IndexOfAllTest
   {
-    /**
-     * Ensures that the index of each element matching the given key is indeed
-     * correctly found.
-     */
     @Test
     public final void indexOfAll_Byte()
     {
@@ -4751,10 +3084,6 @@ public final class JArrayTest
       assertThat(indexOfAll(arr, (byte) 0), is(indices));
     }
     
-    /**
-     * Confirms that an empty array is a perfectly legal argument, albeit a
-     * useless one which can never contain anything.
-     */
     @Test
     public final void indexOfAll_Byte_EmptyArray()
     {
@@ -4764,10 +3093,6 @@ public final class JArrayTest
       assertThat(indexOfAll(arr, (byte) 0), is(indices));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the provided
-     * array is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void indexOfAll_Byte_NullArray()
     {
@@ -4775,10 +3100,6 @@ public final class JArrayTest
       indexOfAll(arr, (byte) 0);
     }
     
-    /**
-     * Ensures that the index of each element matching the given key is indeed
-     * correctly found.
-     */
     @Test
     public final void indexOfAll_Short()
     {
@@ -4788,10 +3109,6 @@ public final class JArrayTest
       assertThat(indexOfAll(arr, (short) 0), is(indices));
     }
     
-    /**
-     * Confirms that an empty array is a perfectly legal argument, albeit a
-     * useless one which can never contain anything.
-     */
     @Test
     public final void indexOfAll_Short_EmptyArray()
     {
@@ -4801,10 +3118,6 @@ public final class JArrayTest
       assertThat(indexOfAll(arr, (short) 0), is(indices));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the provided
-     * array is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void indexOfAll_Short_NullArray()
     {
@@ -4812,10 +3125,6 @@ public final class JArrayTest
       indexOfAll(arr, (short) 0);
     }
     
-    /**
-     * Ensures that the index of each element matching the given key is indeed
-     * correctly found.
-     */
     @Test
     public final void indexOfAll_Int()
     {
@@ -4825,10 +3134,6 @@ public final class JArrayTest
       assertThat(indexOfAll(arr, 0), is(indices));
     }
     
-    /**
-     * Confirms that an empty array is a perfectly legal argument, albeit a
-     * useless one which can never contain anything.
-     */
     @Test
     public final void indexOfAll_Int_EmptyArray()
     {
@@ -4838,10 +3143,6 @@ public final class JArrayTest
       assertThat(indexOfAll(arr, 0), is(indices));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the provided
-     * array is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void indexOfAll_Int_NullArray()
     {
@@ -4849,10 +3150,6 @@ public final class JArrayTest
       indexOfAll(arr, 0);
     }
     
-    /**
-     * Ensures that the index of each element matching the given key is indeed
-     * correctly found.
-     */
     @Test
     public final void indexOfAll_Long()
     {
@@ -4862,10 +3159,6 @@ public final class JArrayTest
       assertThat(indexOfAll(arr, 0L), is(indices));
     }
     
-    /**
-     * Confirms that an empty array is a perfectly legal argument, albeit a
-     * useless one which can never contain anything.
-     */
     @Test
     public final void indexOfAll_Long_EmptyArray()
     {
@@ -4875,10 +3168,6 @@ public final class JArrayTest
       assertThat(indexOfAll(arr, 0L), is(indices));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the provided
-     * array is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void indexOfAll_Long_NullArray()
     {
@@ -4886,10 +3175,6 @@ public final class JArrayTest
       indexOfAll(arr, 0L);
     }
     
-    /**
-     * Ensures that the index of each element matching the given key is indeed
-     * correctly found.
-     */
     @Test
     public final void indexOfAll_Float()
     {
@@ -4899,10 +3184,6 @@ public final class JArrayTest
       assertThat(indexOfAll(arr, 0F), is(indices));
     }
     
-    /**
-     * Confirms that an empty array is a perfectly legal argument, albeit a
-     * useless one which can never contain anything.
-     */
     @Test
     public final void indexOfAll_Float_EmptyArray()
     {
@@ -4912,10 +3193,6 @@ public final class JArrayTest
       assertThat(indexOfAll(arr, 0F), is(indices));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the provided
-     * array is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void indexOfAll_Float_NullArray()
     {
@@ -4923,10 +3200,6 @@ public final class JArrayTest
       indexOfAll(arr, 0F);
     }
     
-    /**
-     * Ensures that the index of each element matching the given key is indeed
-     * correctly found.
-     */
     @Test
     public final void indexOfAll_Double()
     {
@@ -4936,10 +3209,6 @@ public final class JArrayTest
       assertThat(indexOfAll(arr, 0D), is(indices));
     }
     
-    /**
-     * Confirms that an empty array is a perfectly legal argument, albeit a
-     * useless one which can never contain anything.
-     */
     @Test
     public final void indexOfAll_Double_EmptyArray()
     {
@@ -4949,10 +3218,6 @@ public final class JArrayTest
       assertThat(indexOfAll(arr, 0D), is(indices));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the provided
-     * array is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void indexOfAll_Double_NullArray()
     {
@@ -4960,10 +3225,6 @@ public final class JArrayTest
       indexOfAll(arr, 0D);
     }
     
-    /**
-     * Ensures that the index of each element matching the given key is indeed
-     * correctly found.
-     */
     @Test
     public final void indexOfAll_Boolean()
     {
@@ -4973,10 +3234,6 @@ public final class JArrayTest
       assertThat(indexOfAll(arr, true), is(indices));
     }
     
-    /**
-     * Confirms that an empty array is a perfectly legal argument, albeit a
-     * useless one which can never contain anything.
-     */
     @Test
     public final void indexOfAll_Boolean_EmptyArray()
     {
@@ -4986,10 +3243,6 @@ public final class JArrayTest
       assertThat(indexOfAll(arr, false), is(indices));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the provided
-     * array is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void indexOfAll_Boolean_NullArray()
     {
@@ -4997,10 +3250,6 @@ public final class JArrayTest
       indexOfAll(arr, false);
     }
     
-    /**
-     * Ensures that the index of each element matching the given key is indeed
-     * correctly found.
-     */
     @Test
     public final void indexOfAll_Char()
     {
@@ -5010,10 +3259,6 @@ public final class JArrayTest
       assertThat(indexOfAll(arr, 'S'), is(indices));
     }
     
-    /**
-     * Confirms that an empty array is a perfectly legal argument, albeit a
-     * useless one which can never contain anything.
-     */
     @Test
     public final void indexOfAll_Char_EmptyArray()
     {
@@ -5023,10 +3268,6 @@ public final class JArrayTest
       assertThat(indexOfAll(arr, '\0'), is(indices));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the provided
-     * array is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void indexOfAll_Char_NullArray()
     {
@@ -5034,10 +3275,6 @@ public final class JArrayTest
       indexOfAll(arr, '\0');
     }
     
-    /**
-     * Ensures that the index of each element matching the given key is indeed
-     * correctly found.
-     */
     @Test
     public final void indexOfAll_Object()
     {
@@ -5047,10 +3284,6 @@ public final class JArrayTest
       assertThat(indexOfAll(arr, "Misunderestimate"), is(indices));
     }
     
-    /**
-     * Confirms that an empty array is a perfectly legal argument, albeit a
-     * useless one which can never contain anything.
-     */
     @Test
     public final void indexOfAll_Object_EmptyArray()
     {
@@ -5060,10 +3293,6 @@ public final class JArrayTest
       assertThat(indexOfAll(arr, "Fetus killing fields"), is(indices));
     }
     
-    /**
-     * Ensures that a {@code NullPointerException} is thrown if the provided
-     * array is merely a null reference.
-     */
     @Test(expected = NullPointerException.class)
     public final void indexOfAll_Object_NullArray()
     {
@@ -5072,18 +3301,8 @@ public final class JArrayTest
     }
   }
   
-  /**
-   * Contains all unit tests for
-   * {@link net.danielhildebrandt.JArray#numberOf}. Tests are included for
-   * all nine overloads: for arrays of the eight primitive types, and of generic
-   * reference types.
-   */
   public static final class NumberOfTest
   {
-    /**
-     * Tests the detection of the number of equal instances in an array of
-     * primitive {@code byte} values.
-     */
     @Test
     public final void numberOf_Byte()
     {
@@ -5091,10 +3310,6 @@ public final class JArrayTest
       assertThat(numberOf(arr, (byte) 0), is(equalTo(3)));
     }
     
-    /**
-     * Tests to ensure that empty arrays are perfectly valid input, albeit ones
-     * which will never contain any "number of" any element.
-     */
     @Test
     public final void numberOf_Byte_EmptyArray()
     {
@@ -5102,11 +3317,6 @@ public final class JArrayTest
       assertThat(numberOf(arr, (byte) 0), is(equalTo(0)));
     }
     
-    /**
-     * Confirms that {@code numberOf(byte[], byte)} throws a
-     * {@code NullPointerException} if passed a null reference instead of an
-     * array.
-     */
     @Test(expected = NullPointerException.class)
     public final void numberOf_Byte_NullArray()
     {
@@ -5114,10 +3324,6 @@ public final class JArrayTest
       numberOf(arr, (byte) 0);
     }
     
-    /**
-     * Tests the detection of the number of equal instances in an array of
-     * primitive {@code short} values.
-     */
     @Test
     public final void numberOf_Short()
     {
@@ -5125,10 +3331,6 @@ public final class JArrayTest
       assertThat(numberOf(arr, (short) 0), is(equalTo(3)));
     }
     
-    /**
-     * Tests to ensure that empty arrays are perfectly valid input, albeit ones
-     * which will never contain any "number of" any element.
-     */
     @Test
     public final void numberOf_Short_EmptyArray()
     {
@@ -5136,11 +3338,6 @@ public final class JArrayTest
       assertThat(numberOf(arr, (short) 0), is(equalTo(0)));
     }
     
-    /**
-     * Confirms that {@code numberOf(short[], short)} throws a
-     * {@code NullPointerException} if passed a null reference instead of an
-     * array.
-     */
     @Test(expected = NullPointerException.class)
     public final void numberOf_Short_NullArray()
     {
@@ -5148,10 +3345,6 @@ public final class JArrayTest
       numberOf(arr, (short) 0);
     }
     
-    /**
-     * Tests the detection of the number of equal instances in an array of
-     * primitive {@code int} values.
-     */
     @Test
     public final void numberOf_Int()
     {
@@ -5159,10 +3352,6 @@ public final class JArrayTest
       assertThat(numberOf(arr, 0), is(equalTo(3)));
     }
     
-    /**
-     * Tests to ensure that empty arrays are perfectly valid input, albeit ones
-     * which will never contain any "number of" any element.
-     */
     @Test
     public final void numberOf_Int_EmptyArray()
     {
@@ -5170,11 +3359,6 @@ public final class JArrayTest
       assertThat(numberOf(arr, 0), is(equalTo(0)));
     }
     
-    /**
-     * Confirms that {@code numberOf(int[], int)} throws an
-     * {@code NullPointerException} if passed a null reference instead of an
-     * array.
-     */
     @Test(expected = NullPointerException.class)
     public final void numberOf_Int_NullArray()
     {
@@ -5182,10 +3366,6 @@ public final class JArrayTest
       numberOf(arr, 0);
     }
     
-    /**
-     * Tests the detection of the number of equal instances in an array of
-     * primitive {@code long} values.
-     */
     @Test
     public final void numberOf_Long()
     {
@@ -5193,10 +3373,6 @@ public final class JArrayTest
       assertThat(numberOf(arr, 0L), is(equalTo(3)));
     }
     
-    /**
-     * Tests to ensure that empty arrays are perfectly valid input, albeit ones
-     * which will never contain any "number of" any element.
-     */
     @Test
     public final void numberOf_Long_EmptyArray()
     {
@@ -5204,11 +3380,6 @@ public final class JArrayTest
       assertThat(numberOf(arr, 0L), is(equalTo(0)));
     }
     
-    /**
-     * Confirms that {@code numberOf(long[], long)} throws a
-     * {@code NullPointerException} if passed a null reference instead of an
-     * array.
-     */
     @Test(expected = NullPointerException.class)
     public final void numberOf_Long_NullArray()
     {
@@ -5216,10 +3387,6 @@ public final class JArrayTest
       numberOf(arr, 0L);
     }
     
-    /**
-     * Tests the detection of the number of equal instances in an array of
-     * primitive {@code float} values.
-     */
     @Test
     public final void numberOf_Float()
     {
@@ -5227,10 +3394,6 @@ public final class JArrayTest
       assertThat(numberOf(arr, 0F), is(equalTo(3)));
     }
     
-    /**
-     * Tests to ensure that empty arrays are perfectly valid input, albeit ones
-     * which will never contain any "number of" any element.
-     */
     @Test
     public final void numberOf_Float_EmptyArray()
     {
@@ -5238,11 +3401,6 @@ public final class JArrayTest
       assertThat(numberOf(arr, 0F), is(equalTo(0)));
     }
     
-    /**
-     * Confirms that {@code numberOf(float[], float)} throws a
-     * {@code NullPointerException} if passed a null reference instead of an
-     * array.
-     */
     @Test(expected = NullPointerException.class)
     public final void numberOf_Float_NullArray()
     {
@@ -5250,10 +3408,6 @@ public final class JArrayTest
       numberOf(arr, 0F);
     }
     
-    /**
-     * Tests the detection of the number of equal instances in an array of
-     * primitive {@code double} values.
-     */
     @Test
     public final void numberOf_Double()
     {
@@ -5261,10 +3415,6 @@ public final class JArrayTest
       assertThat(numberOf(arr, 0D), is(equalTo(3)));
     }
     
-    /**
-     * Tests to ensure that empty arrays are perfectly valid input, albeit ones
-     * which will never contain any "number of" any element.
-     */
     @Test
     public final void numberOf_Double_EmptyArray()
     {
@@ -5272,11 +3422,6 @@ public final class JArrayTest
       assertThat(numberOf(arr, 0D), is(equalTo(0)));
     }
     
-    /**
-     * Confirms that {@code numberOf(double[], double)} throws a
-     * {@code NullPointerException} if passed a null reference instead of an
-     * array.
-     */
     @Test(expected = NullPointerException.class)
     public final void numberOf_Double_NullArray()
     {
@@ -5284,10 +3429,6 @@ public final class JArrayTest
       numberOf(arr, 0D);
     }
     
-    /**
-     * Tests the detection of the number of equal instances in an array of
-     * primitive {@code boolean} values.
-     */
     @Test
     public final void numberOf_Boolean()
     {
@@ -5295,10 +3436,6 @@ public final class JArrayTest
       assertThat(numberOf(arr, true), is(equalTo(5)));
     }
     
-    /**
-     * Tests to ensure that empty arrays are perfectly valid input, albeit ones
-     * which will never contain any "number of" any element.
-     */
     @Test
     public final void numberOf_Boolean_EmptyArray()
     {
@@ -5306,11 +3443,6 @@ public final class JArrayTest
       assertThat(numberOf(arr, false), is(equalTo(0)));
     }
     
-    /**
-     * Confirms that {@code numberOf(boolean[], boolean)} throws a
-     * {@code NullPointerException} if passed a null reference instead of an
-     * array.
-     */
     @Test(expected = NullPointerException.class)
     public final void numberOf_Boolean_NullArray()
     {
@@ -5318,10 +3450,6 @@ public final class JArrayTest
       numberOf(arr, false);
     }
     
-    /**
-     * Tests the detection of the number of equal instances in an array of
-     * primitive {@code char} values.
-     */
     @Test
     public final void numberOf_Char()
     {
@@ -5329,10 +3457,6 @@ public final class JArrayTest
       assertThat(numberOf(arr, 'b'), is(equalTo(2)));
     }
     
-    /**
-     * Tests to ensure that empty arrays are perfectly valid input, albeit ones
-     * which will never contain any "number of" any element.
-     */
     @Test
     public final void numberOf_Char_EmptyArray()
     {
@@ -5340,11 +3464,6 @@ public final class JArrayTest
       assertThat(numberOf(arr, '\0'), is(equalTo(0)));
     }
     
-    /**
-     * Confirms that {@code numberOf(char[], char)} throws a
-     * {@code NullPointerException} if passed a null reference instead of an
-     * array.
-     */
     @Test(expected = NullPointerException.class)
     public final void numberOf_Char_NullArray()
     {
@@ -5352,10 +3471,6 @@ public final class JArrayTest
       numberOf(arr, '\0');
     }
     
-    /**
-     * Tests the detection of the number of equal instances in an array of
-     * arbitrary objects.
-     */
     @Test
     public final void numberOf_Object()
     {
@@ -5363,10 +3478,6 @@ public final class JArrayTest
       assertThat(numberOf(arr, "Ahoy!"), is(equalTo(3)));
     }
     
-    /**
-     * Tests to ensure that empty arrays are perfectly valid input, albeit ones
-     * which will never contain any "number of" any element.
-     */
     @Test
     public final void numberOf_Object_EmptyArray()
     {
@@ -5374,11 +3485,6 @@ public final class JArrayTest
       assertThat(numberOf(arr, "Davy Jones' Locker."), is(equalTo(0)));
     }
     
-    /**
-     * Confirms that {@code numberOf(Object[], Object)} throws a
-     * {@code NullPointerException} if passed a null reference instead of an
-     * array.
-     */
     @Test(expected = NullPointerException.class)
     public final void numberOf_Object_NullArray()
     {
@@ -5387,18 +3493,8 @@ public final class JArrayTest
     }
   }
   
-  /**
-   * Contains all unit tests for
-   * {@link net.danielhildebrandt.JArray#toPrimitiveArray}. Tests are
-   * included for all eight overloads, covering the wrapper types for each of
-   * the eight primitive type.
-   */
   public static final class ToPrimitiveArrayTest
   {
-    /**
-     * Tests the unboxing of arrays of {@code Byte} into new arrays of their
-     * corresponding primitive type.
-     */
     @Test
     public final void toPrimitiveArray_Byte()
     {
@@ -5407,10 +3503,6 @@ public final class JArrayTest
       assertThat(toPrimitiveArray(wrap), is(equalTo(prim)));
     }
     
-    /**
-     * Tests the unboxing of empty arrays, which should be perfectly valid,
-     * rather than throwing an exception.
-     */
     @Test
     public final void toPrimitiveArray_Byte_EmptyArray()
     {
@@ -5419,11 +3511,6 @@ public final class JArrayTest
       assertThat(toPrimitiveArray(wrap), is(equalTo(prim)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code toPrimitiveArray(Byte[])} is passed a null reference instead of an
-     * array.
-     */
     @Test(expected = NullPointerException.class)
     public final void toPrimitiveArray_Byte_NullArray()
     {
@@ -5431,11 +3518,6 @@ public final class JArrayTest
       toPrimitiveArray(arr);
     }
     
-    /**
-     * Confirms that an {@code ArrayStoreException} is thrown when
-     * {@code toPrimitiveArray(Byte[])} is given an array which contains
-     * {@code null}, since this cannot be converted into a primitive value.
-     */
     @Test(expected = ArrayStoreException.class)
     public final void toPrimitiveArray_Byte_ContainsNull()
     {
@@ -5443,10 +3525,6 @@ public final class JArrayTest
       toPrimitiveArray(arr);
     }
     
-    /**
-     * Tests the unboxing of arrays of {@code Short} into new arrays of their
-     * corresponding primitive type.
-     */
     @Test
     public final void toPrimitiveArray_Short()
     {
@@ -5455,10 +3533,6 @@ public final class JArrayTest
       assertThat(toPrimitiveArray(wrap), is(equalTo(prim)));
     }
     
-    /**
-     * Tests the unboxing of empty arrays, which should be perfectly valid,
-     * rather than throwing an exception.
-     */
     @Test
     public final void toPrimitiveArray_Short_EmptyArray()
     {
@@ -5467,11 +3541,6 @@ public final class JArrayTest
       assertThat(toPrimitiveArray(wrap), is(equalTo(prim)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code toPrimitiveArray(Short[])} is passed a null reference instead of
-     * an array.
-     */
     @Test(expected = NullPointerException.class)
     public final void toPrimitiveArray_Short_NullArray()
     {
@@ -5479,11 +3548,6 @@ public final class JArrayTest
       toPrimitiveArray(arr);
     }
     
-    /**
-     * Confirms that an {@code ArrayStoreException} is thrown when
-     * {@code toPrimitiveArray(Short[])} is given an array which contains
-     * {@code null}, since this cannot be converted into a primitive value.
-     */
     @Test(expected = ArrayStoreException.class)
     public final void toPrimitiveArray_Short_ContainsNull()
     {
@@ -5491,10 +3555,6 @@ public final class JArrayTest
       toPrimitiveArray(arr);
     }
     
-    /**
-     * Tests the unboxing of arrays of {@code Integer} into new arrays of their
-     * corresponding primitive type.
-     */
     @Test
     public final void toPrimitiveArray_Integer()
     {
@@ -5503,10 +3563,6 @@ public final class JArrayTest
       assertThat(toPrimitiveArray(wrap), is(equalTo(prim)));
     }
     
-    /**
-     * Tests the unboxing of empty arrays, which should be perfectly valid,
-     * rather than throwing an exception.
-     */
     @Test
     public final void toPrimitiveArray_Integer_EmptyArray()
     {
@@ -5515,11 +3571,6 @@ public final class JArrayTest
       assertThat(toPrimitiveArray(wrap), is(equalTo(prim)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code toPrimitiveArray(Integer[])} is passed a null reference instead of
-     * an array.
-     */
     @Test(expected = NullPointerException.class)
     public final void toPrimitiveArray_Integer_NullArray()
     {
@@ -5527,11 +3578,6 @@ public final class JArrayTest
       toPrimitiveArray(arr);
     }
     
-    /**
-     * Confirms that an {@code ArrayStoreException} is thrown when
-     * {@code toPrimitiveArray(Integer[])} is given an array which contains
-     * {@code null}, since this cannot be converted into a primitive value.
-     */
     @Test(expected = ArrayStoreException.class)
     public final void toPrimitiveArray_Integer_ContainsNull()
     {
@@ -5539,10 +3585,6 @@ public final class JArrayTest
       toPrimitiveArray(arr);
     }
     
-    /**
-     * Tests the unboxing of arrays of {@code Long} into new arrays of their
-     * corresponding primitive type.
-     */
     @Test
     public final void toPrimitiveArray_Long()
     {
@@ -5551,10 +3593,6 @@ public final class JArrayTest
       assertThat(toPrimitiveArray(wrap), is(equalTo(prim)));
     }
     
-    /**
-     * Tests the unboxing of empty arrays, which should be perfectly valid,
-     * rather than throwing an exception.
-     */
     @Test
     public final void toPrimitiveArray_Long_EmptyArray()
     {
@@ -5563,11 +3601,6 @@ public final class JArrayTest
       assertThat(toPrimitiveArray(wrap), is(equalTo(prim)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code toPrimitiveArray(Long[])} is passed a null reference instead of an
-     * array.
-     */
     @Test(expected = NullPointerException.class)
     public final void toPrimitiveArray_Long_NullArray()
     {
@@ -5575,11 +3608,6 @@ public final class JArrayTest
       toPrimitiveArray(arr);
     }
     
-    /**
-     * Confirms that an {@code ArrayStoreException} is thrown when
-     * {@code toPrimitiveArray(Long[])} is given an array which contains
-     * {@code null}, since this cannot be converted into a primitive value.
-     */
     @Test(expected = ArrayStoreException.class)
     public final void toPrimitiveArray_Long_ContainsNull()
     {
@@ -5587,10 +3615,6 @@ public final class JArrayTest
       toPrimitiveArray(arr);
     }
     
-    /**
-     * Tests the unboxing of arrays of {@code Float} into new arrays of their
-     * corresponding primitive type.
-     */
     @Test
     public final void toPrimitiveArray_Float()
     {
@@ -5599,10 +3623,6 @@ public final class JArrayTest
       assertThat(toPrimitiveArray(wrap), is(equalTo(prim)));
     }
     
-    /**
-     * Tests the unboxing of empty arrays, which should be perfectly valid,
-     * rather than throwing an exception.
-     */
     @Test
     public final void toPrimitiveArray_Float_EmptyArray()
     {
@@ -5611,11 +3631,6 @@ public final class JArrayTest
       assertThat(toPrimitiveArray(wrap), is(equalTo(prim)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code toPrimitiveArray(Float[])} is passed a null reference instead of
-     * an array.
-     */
     @Test(expected = NullPointerException.class)
     public final void toPrimitiveArray_Float_NullArray()
     {
@@ -5623,11 +3638,6 @@ public final class JArrayTest
       toPrimitiveArray(arr);
     }
     
-    /**
-     * Confirms that an {@code ArrayStoreException} is thrown when
-     * {@code toPrimitiveArray(Float[])} is given an array which contains
-     * {@code null}, since this cannot be converted into a primitive value.
-     */
     @Test(expected = ArrayStoreException.class)
     public final void toPrimitiveArray_Float_ContainsNull()
     {
@@ -5635,10 +3645,6 @@ public final class JArrayTest
       toPrimitiveArray(arr);
     }
     
-    /**
-     * Tests the unboxing of arrays of {@code Double} into new arrays of their
-     * corresponding primitive type.
-     */
     @Test
     public final void toPrimitiveArray_Double()
     {
@@ -5647,10 +3653,6 @@ public final class JArrayTest
       assertThat(toPrimitiveArray(wrap), is(equalTo(prim)));
     }
     
-    /**
-     * Tests the unboxing of empty arrays, which should be perfectly valid,
-     * rather than throwing an exception.
-     */
     @Test
     public final void toPrimitiveArray_Double_EmptyArray()
     {
@@ -5659,11 +3661,6 @@ public final class JArrayTest
       assertThat(toPrimitiveArray(wrap), is(equalTo(prim)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code toPrimitiveArray(Double[])} is passed a null reference instead of
-     * an array.
-     */
     @Test(expected = NullPointerException.class)
     public final void toPrimitiveArray_Double_NullArray()
     {
@@ -5671,11 +3668,6 @@ public final class JArrayTest
       toPrimitiveArray(arr);
     }
     
-    /**
-     * Confirms that an {@code ArrayStoreException} is thrown when
-     * {@code toPrimitiveArray(Double[])} is given an array which contains
-     * {@code null}, since this cannot be converted into a primitive value.
-     */
     @Test(expected = ArrayStoreException.class)
     public final void toPrimitiveArray_Double_ContainsNull()
     {
@@ -5683,10 +3675,6 @@ public final class JArrayTest
       toPrimitiveArray(arr);
     }
     
-    /**
-     * Tests the unboxing of arrays of {@code Boolean} into new arrays of their
-     * corresponding primitive type.
-     */
     @Test
     public final void toPrimitiveArray_Boolean()
     {
@@ -5695,10 +3683,6 @@ public final class JArrayTest
       assertThat(toPrimitiveArray(wrap), is(equalTo(prim)));
     }
     
-    /**
-     * Tests the unboxing of empty arrays, which should be perfectly valid,
-     * rather than throwing an exception.
-     */
     @Test
     public final void toPrimitiveArray_Boolean_EmptyArray()
     {
@@ -5707,11 +3691,6 @@ public final class JArrayTest
       assertThat(toPrimitiveArray(wrap), is(equalTo(prim)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code toPrimitiveArray(Boolean[])} is passed a null reference instead of
-     * an array.
-     */
     @Test(expected = NullPointerException.class)
     public final void toPrimitiveArray_Boolean_NullArray()
     {
@@ -5719,11 +3698,6 @@ public final class JArrayTest
       toPrimitiveArray(arr);
     }
     
-    /**
-     * Confirms that an {@code ArrayStoreException} is thrown when
-     * {@code toPrimitiveArray(Boolean[])} is given an array which contains
-     * {@code null}, since this cannot be converted into a primitive value.
-     */
     @Test(expected = ArrayStoreException.class)
     public final void toPrimitiveArray_Boolean_ContainsNull()
     {
@@ -5731,10 +3705,6 @@ public final class JArrayTest
       toPrimitiveArray(arr);
     }
     
-    /**
-     * Tests the unboxing of arrays of {@code Character} into new arrays of
-     * their corresponding primitive type.
-     */
     @Test
     public final void toPrimitiveArray_Character()
     {
@@ -5743,10 +3713,6 @@ public final class JArrayTest
       assertThat(toPrimitiveArray(wrap), is(equalTo(prim)));
     }
     
-    /**
-     * Tests the unboxing of empty arrays, which should be perfectly valid,
-     * rather than throwing an exception.
-     */
     @Test
     public final void toPrimitiveArray_Character_EmptyArray()
     {
@@ -5755,11 +3721,6 @@ public final class JArrayTest
       assertThat(toPrimitiveArray(wrap), is(equalTo(prim)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code toPrimitiveArray(Character[])} is passed a null reference instead
-     * of an array.
-     */
     @Test(expected = NullPointerException.class)
     public final void toPrimitiveArray_Character_NullArray()
     {
@@ -5767,11 +3728,6 @@ public final class JArrayTest
       toPrimitiveArray(arr);
     }
     
-    /**
-     * Confirms that an {@code ArrayStoreException} is thrown when
-     * {@code toPrimitiveArray(Character[])} is given an array which contains
-     * {@code null}, since this cannot be converted into a primitive value.
-     */
     @Test(expected = ArrayStoreException.class)
     public final void toPrimitiveArray_Character_ContainsNull()
     {
@@ -5780,18 +3736,8 @@ public final class JArrayTest
     }
   }
   
-  /**
-   * Contains all unit tests for
-   * {@link net.danielhildebrandt.JArray#toWrapperArray}. Tests are
-   * included for all eight overloads, covering arrays of each of the eight
-   * primitive types.
-   */
   public static final class ToWrapperArrayTest
   {
-    /**
-     * Tests the boxing of an array of primitive {@code byte} values into an
-     * equivalent one of the wrapper type {@code Byte}.
-     */
     @Test
     public final void toWrapperArray_Byte()
     {
@@ -5800,10 +3746,6 @@ public final class JArrayTest
       assertThat(toWrapperArray(prim), is(equalTo(wrap)));
     }
     
-    /**
-     * Tests the boxing of empty arrays, which should be perfectly valid, rather
-     * than throwing an exception.
-     */
     @Test
     public final void toWrapperArray_Byte_EmptyArray()
     {
@@ -5812,11 +3754,6 @@ public final class JArrayTest
       assertThat(toWrapperArray(prim), is(equalTo(wrap)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code toWrapperArray(byte[])} is passed a null reference instead of an
-     * array.
-     */
     @Test(expected = NullPointerException.class)
     public final void toWrapperArray_Byte_NullArray()
     {
@@ -5824,10 +3761,6 @@ public final class JArrayTest
       toWrapperArray(arr);
     }
     
-    /**
-     * Tests the boxing of an array of primitive {@code short} values into an
-     * equivalent one of the wrapper type {@code Short}.
-     */
     @Test
     public final void toWrapperArray_Short()
     {
@@ -5836,10 +3769,6 @@ public final class JArrayTest
       assertThat(toWrapperArray(prim), is(equalTo(wrap)));
     }
     
-    /**
-     * Tests the boxing of empty arrays, which should be perfectly valid, rather
-     * than throwing an exception.
-     */
     @Test
     public final void toWrapperArray_Short_EmptyArray()
     {
@@ -5848,11 +3777,6 @@ public final class JArrayTest
       assertThat(toWrapperArray(prim), is(equalTo(wrap)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code toWrapperArray(short[])} is passed a null reference instead of an
-     * array.
-     */
     @Test(expected = NullPointerException.class)
     public final void toWrapperArray_Short_NullArray()
     {
@@ -5860,10 +3784,6 @@ public final class JArrayTest
       toWrapperArray(arr);
     }
     
-    /**
-     * Tests the boxing of an array of primitive {@code int} values into an
-     * equivalent one of the wrapper type {@code Integer}.
-     */
     @Test
     public final void toWrapperArray_Int()
     {
@@ -5872,10 +3792,6 @@ public final class JArrayTest
       assertThat(toWrapperArray(prim), is(equalTo(wrap)));
     }
     
-    /**
-     * Tests the boxing of empty arrays, which should be perfectly valid, rather
-     * than throwing an exception.
-     */
     @Test
     public final void toWrapperArray_Int_EmptyArray()
     {
@@ -5884,11 +3800,6 @@ public final class JArrayTest
       assertThat(toWrapperArray(prim), is(equalTo(wrap)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code toWrapperArray(int[])} is passed a null reference instead of an
-     * array.
-     */
     @Test(expected = NullPointerException.class)
     public final void toWrapperArray_Int_NullArray()
     {
@@ -5896,10 +3807,6 @@ public final class JArrayTest
       toWrapperArray(arr);
     }
     
-    /**
-     * Tests the boxing of an array of primitive {@code long} values into an
-     * equivalent one of the wrapper type {@code Long}.
-     */
     @Test
     public final void toWrapperArray_Long()
     {
@@ -5908,10 +3815,6 @@ public final class JArrayTest
       assertThat(toWrapperArray(prim), is(equalTo(wrap)));
     }
     
-    /**
-     * Tests the boxing of empty arrays, which should be perfectly valid, rather
-     * than throwing an exception.
-     */
     @Test
     public final void toWrapperArray_Long_EmptyArray()
     {
@@ -5920,11 +3823,6 @@ public final class JArrayTest
       assertThat(toWrapperArray(prim), is(equalTo(wrap)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code toWrapperArray(long[])} is passed a null reference instead of an
-     * array.
-     */
     @Test(expected = NullPointerException.class)
     public final void toWrapperArray_Long_NullArray()
     {
@@ -5932,10 +3830,6 @@ public final class JArrayTest
       toWrapperArray(arr);
     }
     
-    /**
-     * Tests the boxing of an array of primitive {@code float} values into an
-     * equivalent one of the wrapper type {@code Float}.
-     */
     @Test
     public final void toWrapperArray_Float()
     {
@@ -5944,10 +3838,6 @@ public final class JArrayTest
       assertThat(toWrapperArray(prim), is(equalTo(wrap)));
     }
     
-    /**
-     * Tests the boxing of empty arrays, which should be perfectly valid, rather
-     * than throwing an exception.
-     */
     @Test
     public final void toWrapperArray_Float_EmptyArray()
     {
@@ -5956,11 +3846,6 @@ public final class JArrayTest
       assertThat(toWrapperArray(prim), is(equalTo(wrap)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code toWrapperArray(float[])} is passed a null reference instead of an
-     * array.
-     */
     @Test(expected = NullPointerException.class)
     public final void toWrapperArray_Float_NullArray()
     {
@@ -5968,10 +3853,6 @@ public final class JArrayTest
       toWrapperArray(arr);
     }
     
-    /**
-     * Tests the boxing of an array of primitive {@code double} values into an
-     * equivalent one of the wrapper type {@code Double}.
-     */
     @Test
     public final void toWrapperArray_Double()
     {
@@ -5980,10 +3861,6 @@ public final class JArrayTest
       assertThat(toWrapperArray(prim), is(equalTo(wrap)));
     }
     
-    /**
-     * Tests the boxing of empty arrays, which should be perfectly valid, rather
-     * than throwing an exception.
-     */
     @Test
     public final void toWrapperArray_Double_EmptyArray()
     {
@@ -5992,11 +3869,6 @@ public final class JArrayTest
       assertThat(toWrapperArray(prim), is(equalTo(wrap)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code toWrapperArray(double[])} is passed a null reference instead of an
-     * array.
-     */
     @Test(expected = NullPointerException.class)
     public final void toWrapperArray_Double_NullArray()
     {
@@ -6004,10 +3876,6 @@ public final class JArrayTest
       toWrapperArray(arr);
     }
     
-    /**
-     * Tests the boxing of an array of primitive {@code boolean} values into an
-     * equivalent one of the wrapper type {@code Boolean}.
-     */
     @Test
     public final void toWrapperArray_Boolean()
     {
@@ -6016,10 +3884,6 @@ public final class JArrayTest
       assertThat(toWrapperArray(prim), is(equalTo(wrap)));
     }
     
-    /**
-     * Tests the boxing of empty arrays, which should be perfectly valid, rather
-     * than throwing an exception.
-     */
     @Test
     public final void toWrapperArray_Boolean_EmptyArray()
     {
@@ -6028,11 +3892,6 @@ public final class JArrayTest
       assertThat(toWrapperArray(prim), is(equalTo(wrap)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code toWrapperArray(boolean[])} is passed a null reference instead of
-     * an array.
-     */
     @Test(expected = NullPointerException.class)
     public final void toWrapperArray_Boolean_NullArray()
     {
@@ -6040,10 +3899,6 @@ public final class JArrayTest
       toWrapperArray(arr);
     }
     
-    /**
-     * Tests the boxing of an array of primitive {@code char} values into an
-     * equivalent one of the wrapper type {@code Character}.
-     */
     @Test
     public final void toWrapperArray_Char()
     {
@@ -6052,10 +3907,6 @@ public final class JArrayTest
       assertThat(toWrapperArray(prim), is(equalTo(wrap)));
     }
     
-    /**
-     * Tests the boxing of empty arrays, which should be perfectly valid, rather
-     * than throwing an exception.
-     */
     @Test
     public final void toWrapperArray_Char_EmptyArray()
     {
@@ -6064,11 +3915,6 @@ public final class JArrayTest
       assertThat(toWrapperArray(prim), is(equalTo(wrap)));
     }
     
-    /**
-     * Confirms that a {@code NullPointerException} is thrown when
-     * {@code toWrapperArray(char[])} is passed a null reference instead of an
-     * array.
-     */
     @Test(expected = NullPointerException.class)
     public final void toWrapperArray_Char_NullArray()
     {
