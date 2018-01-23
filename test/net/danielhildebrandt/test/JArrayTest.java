@@ -33,10 +33,10 @@ import net.danielhildebrandt.IncompleteArrayException;
 @RunWith(Enclosed.class)
 public final class JArrayTest
 {
-  public static final class externalInsertTest
+  public static final class InsertTest
   {
     @Test
-    public final void externalInsert_NullEmptyElement()
+    public final void insert_NullEmptyElement()
     {
       Object[] before = {"Quidditch", 7, "Azcaban", "Albus Percival Wulfric Brian Dumbledor", null, null, null};
       Object[] after = {"Quidditch", 7, "Tom Riddle", "Azcaban", "Albus Percival Wulfric Brian Dumbledor", null, null};
@@ -46,7 +46,7 @@ public final class JArrayTest
     }
     
     @Test
-    public final void externalInsert_NonNullEmptyElement()
+    public final void insert_NonNullEmptyElement()
     {
       String[] before = {"Severus Snape", "Ravenclaw", "Sirius Black", "Patronus", "", "", ""};
       String[] after = {"Severus Snape", "Ravenclaw", "Whomping Willow", "Sirius Black", "Patronus", "", ""};
@@ -56,42 +56,42 @@ public final class JArrayTest
     }
     
     @Test(expected = NullPointerException.class)
-    public final void externalInsert_NullArray()
+    public final void insert_NullArray()
     {
       Number[] arr = null;
       insert(arr, null, 0, 7);
     }
     
     @Test(expected = IllegalArgumentException.class)
-    public final void externalInsert_EmptyArray()
+    public final void insert_EmptyArray()
     {
       Object[] arr = {};
       insert(arr, "Empty!", 0, new Object());
     }
     
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public final void externalInsert_IndexBelowBounds()
+    public final void insert_IndexBelowBounds()
     {
       Object[] arr = {"Sorting Hat", "Slytherin", "Gryffindor", "Centaur", "Divination", "", ""};
       insert(arr, "", -1, 9.75);
     }
     
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public final void externalInsert_IndexAboveBounds()
+    public final void insert_IndexAboveBounds()
     {
       Integer[] arr = {7, 7, 7, 7, 7, null, null};
       insert(arr, null, 6, 7);
     }
     
     @Test(expected = IncompleteArrayException.class)
-    public final void externalInsert_IncompleteArray()
+    public final void insert_IncompleteArray()
     {
       String[] arr = {"Hufflepuff", "Hogwarts", "Potter", "", "", "Potions", ""};
       insert(arr, "", 1, "Horcrux");
     }
     
     @Test(expected = ArrayStoreException.class)
-    public final void externalInsert_InsufficientSpace()
+    public final void insert_InsufficientSpace()
     {
       Object[] arr = {"Every-Flavour Beans", "Dementors", "Hedwig", "Chocolate Frogs", "Centaurs", "Wands",
           "Invisibility Cloak"};
@@ -99,17 +99,17 @@ public final class JArrayTest
     }
     
     @Test(expected = ArrayStoreException.class)
-    public final void externalInsert_EmptyInsertion()
+    public final void insert_EmptyInsertion()
     {
       String[] arr = {"Weasley", "Granger", "Riddle", "Potter", null, null, null};
       insert(arr, null, 0, null);
     }
   }
   
-  public static final class externalInsertBlockTest
+  public static final class InsertBlockTest
   {
     @Test
-    public final void externalInsertBlock_NullEmptyElement()
+    public final void insertBlock_NullEmptyElement()
     {
       String[] before = {"Mercury", "Venus", "Earth", "Mars", null, null, null};
       String[] after = {"Ceres", "Luna", "Sol", "Mercury", "Venus", "Earth", "Mars"};
@@ -119,7 +119,7 @@ public final class JArrayTest
     }
     
     @Test
-    public final void externalInsertBlock_NonNullEmptyElement()
+    public final void insertBlock_NonNullEmptyElement()
     {
       Object[] before = {"Jupiter", "Saturn", "Uranus", "Neptune", "", "", ""};
       Object[] after = {"Jupiter", "Saturn", "Europa", "Io", "Uranus", "Neptune", ""};
@@ -129,7 +129,7 @@ public final class JArrayTest
     }
     
     @Test
-    public final void externalInsertBlock_EmptyInsertionArray()
+    public final void insertBlock_EmptyInsertionArray()
     {
       String[] before = {"Betelgeuse", "Sirius", "Proxima Centauri", "", ""};
       String[] after = {"Betelgeuse", "Sirius", "Proxima Centauri", "", ""};
@@ -139,66 +139,66 @@ public final class JArrayTest
     }
     
     @Test(expected = NullPointerException.class)
-    public final void externalInsertBlock_NullReceivingArray()
+    public final void insertBlock_NullReceivingArray()
     {
       Object[] arr = null;
       insertBlock(arr, null, 0, "Hydrogen");
     }
     
     @Test(expected = NullPointerException.class)
-    public final void externalInsertBlock_NullInsertionArray()
+    public final void insertBlock_NullInsertionArray()
     {
       Object[] arr = {"Fusion", "Fission", ""};
       insertBlock(arr, "", 1, (Object[]) null);
     }
     
     @Test(expected = IllegalArgumentException.class)
-    public final void externalInsertBlock_EmptyReceivingArray()
+    public final void insertBlock_EmptyReceivingArray()
     {
       Object[] arr = {};
       insertBlock(arr, null, 0, "Stardust", "Relativity", "Gravitation");
     }
     
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public final void externalInsertBlock_IndexBelowBounds()
+    public final void insertBlock_IndexBelowBounds()
     {
       String[] arr = {"Asteroids", "Kuiper Belt", "Oort Cloud", null, null};
       insertBlock(arr, null, -1, "Comets", "67P");
     }
     
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public final void externalInsertBlock_IndexAboveBounds()
+    public final void insertBlock_IndexAboveBounds()
     {
       Object[] arr = {"Light-years", "Parsecs", "Warp bubble", "Galatic Core", null, null, null};
       insertBlock(arr, null, 5, "Supermassive Black Hole", "Barred Spiral", "Bent Light");
     }
     
     @Test(expected = IncompleteArrayException.class)
-    public final void externalInsertBlock_IncompleteArray()
+    public final void insertBlock_IncompleteArray()
     {
       Object[] arr = {"Rosetta", "", "Philae", "Churyumov-Gerasimenko", ""};
       insertBlock(arr, "", 1, "67P");
     }
     
     @Test(expected = ArrayStoreException.class)
-    public final void externalInsertBlock_InsufficientSpace()
+    public final void insertBlock_InsufficientSpace()
     {
       Object[] arr = {"Atlas", "Redstone", "Saturn", "V-2", "R-7"};
       insertBlock(arr, null, 2, "Cosmos", "Proton");
     }
     
     @Test(expected = ArrayStoreException.class)
-    public final void externalInsertBlock_EmptyInsertion()
+    public final void insertBlock_EmptyInsertion()
     {
       Object[] arr = {"Perceus", "Saggitarius", null, null, null};
       insertBlock(arr, null, 2, "Andromeda", null, "Nemesis");
     }
   }
   
-  public static final class dynamicRemoveTest
+  public static final class RemoveTest
   {
     @Test
-    public final void dynamicRemove_NullEmptyElement()
+    public final void remove_NullEmptyElement()
     {
       String[] before = {"Arithmetic", "Algebra", "Geometry", "Calculus", null};
       String[] after = {"Arithmetic", "Algebra", "Geometry", null, null};
@@ -208,7 +208,7 @@ public final class JArrayTest
     }
     
     @Test
-    public final void dynamicRemove_NonNullEmptyElement()
+    public final void remove_NonNullEmptyElement()
     {
       Object[] before = {"Boolean Algebra", "Linear Algebra", "Induction", "", ""};
       Object[] after = {"Boolean Algebra", "Induction", "", "", ""};
@@ -218,7 +218,7 @@ public final class JArrayTest
     }
     
     @Test
-    public final void dynamicRemove_Return()
+    public final void remove_Return()
     {
       Object[] arr = {Math.E, Math.PI, 'i', 1, null};
       Object removed = Math.PI;
@@ -227,45 +227,45 @@ public final class JArrayTest
     }
     
     @Test(expected = NullPointerException.class)
-    public final void dynamicRemove_NullArray()
+    public final void remove_NullArray()
     {
       Class<?>[] arr = null;
       remove(arr, null, 0);
     }
     
     @Test(expected = IllegalArgumentException.class)
-    public final void dynamicRemove_EmptyArray()
+    public final void remove_EmptyArray()
     {
       Character[] arr = {};
       remove(arr, '\0', 0);
     }
     
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public final void dynamicRemove_IndexBelowBounds()
+    public final void remove_IndexBelowBounds()
     {
       String[] arr = {"Root", "Funtion", "Exponent", null, null};
       remove(arr, null, -1);
     }
     
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public final void dynamicRemove_IndexAboveBounds()
+    public final void remove_IndexAboveBounds()
     {
       Object[] arr = {"Index", "Logarithm", null, null, null};
       remove(arr, null, 2);
     }
     
     @Test(expected = IncompleteArrayException.class)
-    public final void dynamicRemove_IncompleteArray()
+    public final void remove_IncompleteArray()
     {
       Object[] arr = {"Asymptote", "", "Complex Plane", "Natural Logarithm", "Polynomial"};
       remove(arr, "", 3);
     }
   }
   
-  public static final class dynamicRemoveRangeTest
+  public static final class RemoveRangeTest
   {
     @Test
-    public final void dynamicRemoveRange_NullEmptyElement()
+    public final void removeRange_NullEmptyElement()
     {
       Object[] before = {"Bag of Holding", "Quadratic Wizards", "Linear Warriors", "D20", "Throws"};
       Object[] after = {"Bag of Holding", "D20", "Throws", null, null};
@@ -275,7 +275,7 @@ public final class JArrayTest
     }
     
     @Test
-    public final void dynamicRemoveRange_NonNullEmptyElement()
+    public final void removeRange_NonNullEmptyElement()
     {
       String[] before = {"Chthulu", "His Noodly Appendage", "Monk", "Warlock", ""};
       String[] after = {"Warlock", "", "", "", ""};
@@ -285,7 +285,7 @@ public final class JArrayTest
     }
     
     @Test
-    public final void dynamicRemoveRange_EqualIndices()
+    public final void removeRange_EqualIndices()
     {
       Object[] before = {"Demiplane", "True Neutral", "GM", null, null};
       Object[] after = {"Demiplane", "GM", null, null, null};
@@ -295,7 +295,7 @@ public final class JArrayTest
     }
     
     @Test
-    public final void dynamicRemoveRange_Return_Single()
+    public final void removeRange_Return_Single()
     {
       Object[] arr = {"D6", "Lawful Neutral", "Chaotic Evil", "Pathfinder", "Paladin"};
       Object[] removed = {"Pathfinder"};
@@ -304,7 +304,7 @@ public final class JArrayTest
     }
     
     @Test
-    public final void dynamicRemoveRange_Return_Multiple()
+    public final void removeRange_Return_Multiple()
     {
       String[] arr = {"Lich", "Berserker", null, null, null};
       String[] removed = {"Lich", "Berserker"};
@@ -313,56 +313,56 @@ public final class JArrayTest
     }
     
     @Test(expected = NullPointerException.class)
-    public final void dynamicRemoveRange_NullArray()
+    public final void removeRange_NullArray()
     {
       Object[] arr = null;
       removeRange(arr, null, 0, 1);
     }
     
     @Test(expected = IllegalArgumentException.class)
-    public final void dynamicRemoveRange_EmptyArray()
+    public final void removeRange_EmptyArray()
     {
       Number[] arr = {};
       removeRange(arr, null, 0, 0);
     }
     
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public final void dynamicRemoveRange_FromIndexBelowBounds()
+    public final void removeRange_FromIndexBelowBounds()
     {
       Object[] arr = {"Dungeons", "Dragons", "Satanic Worship", "", ""};
       removeRange(arr, "", -1, 0);
     }
     
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public final void dynamicRemoveRange_FromIndexAboveBounds()
+    public final void removeRange_FromIndexAboveBounds()
     {
       Object[] arr = {"Lawful Evil", "Chaotic Good", null, null, null};
       removeRange(arr, null, 2, 2);
     }
     
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public final void dynamicRemoveRange_ToIndexBelowBounds()
+    public final void removeRange_ToIndexBelowBounds()
     {
       Object[] arr = {"Druid", "Fighter", "Sword of Striking", "Chaotic Evil", null};
       removeRange(arr, null, -1, -1);
     }
     
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public final void dynamicRemoveRange_ToIndexAboveBounds()
+    public final void removeRange_ToIndexAboveBounds()
     {
       Object[] arr = {"Ring of Wielding", "Hammer of Smashing", "Bag of Holding", null, null};
       removeRange(arr, null, 0, 6);
     }
     
     @Test(expected = IllegalArgumentException.class)
-    public final void dynamicRemoveRange_OutOfOrderIndices()
+    public final void removeRange_OutOfOrderIndices()
     {
       String[] arr = {"Neutral Good", "Chaotic Neutral", "Neutral Evil", "Lawful Neutral", "True Neutral"};
       removeRange(arr, "", 3, 1);
     }
     
     @Test(expected = IncompleteArrayException.class)
-    public final void dynamicRemoveRange_IncompleteArray()
+    public final void removeRange_IncompleteArray()
     {
       Object[] arr = {"Necromancy", null, "Magic Missile", "Fireball", "Wild Gesticulations"};
       removeRange(arr, null, 0, 4);
