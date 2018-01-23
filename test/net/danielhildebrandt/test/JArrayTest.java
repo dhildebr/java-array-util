@@ -1,22 +1,22 @@
 package net.danielhildebrandt.test;
 
-import static net.danielhildebrandt.ArrayStructs.contains;
-import static net.danielhildebrandt.ArrayStructs.containsX;
-import static net.danielhildebrandt.ArrayStructs.indexOf;
-import static net.danielhildebrandt.ArrayStructs.indexOfAll;
-import static net.danielhildebrandt.ArrayStructs.insert;
-import static net.danielhildebrandt.ArrayStructs.insertBlock;
-import static net.danielhildebrandt.ArrayStructs.internalInsert;
-import static net.danielhildebrandt.ArrayStructs.internalSwap;
-import static net.danielhildebrandt.ArrayStructs.isComplete;
-import static net.danielhildebrandt.ArrayStructs.isSorted;
-import static net.danielhildebrandt.ArrayStructs.lastIndexOf;
-import static net.danielhildebrandt.ArrayStructs.nthIndexOf;
-import static net.danielhildebrandt.ArrayStructs.numberOf;
-import static net.danielhildebrandt.ArrayStructs.remove;
-import static net.danielhildebrandt.ArrayStructs.removeRange;
-import static net.danielhildebrandt.ArrayStructs.toPrimitiveArray;
-import static net.danielhildebrandt.ArrayStructs.toWrapperArray;
+import static net.danielhildebrandt.JArray.contains;
+import static net.danielhildebrandt.JArray.containsX;
+import static net.danielhildebrandt.JArray.indexOf;
+import static net.danielhildebrandt.JArray.indexOfAll;
+import static net.danielhildebrandt.JArray.insert;
+import static net.danielhildebrandt.JArray.insertBlock;
+import static net.danielhildebrandt.JArray.internalInsert;
+import static net.danielhildebrandt.JArray.internalSwap;
+import static net.danielhildebrandt.JArray.isComplete;
+import static net.danielhildebrandt.JArray.isSorted;
+import static net.danielhildebrandt.JArray.lastIndexOf;
+import static net.danielhildebrandt.JArray.nthIndexOf;
+import static net.danielhildebrandt.JArray.numberOf;
+import static net.danielhildebrandt.JArray.remove;
+import static net.danielhildebrandt.JArray.removeRange;
+import static net.danielhildebrandt.JArray.toPrimitiveArray;
+import static net.danielhildebrandt.JArray.toWrapperArray;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -32,14 +32,14 @@ import net.danielhildebrandt.IncompleteArrayException;
 
 /**
  * Contains all unit tests for the utility methods of
- * {@link net.danielhildebrandt.ArrayStructs}.
+ * {@link net.danielhildebrandt.JArray}.
  */
 @RunWith(Enclosed.class)
-public final class ArrayStructsTest
+public final class JArrayTest
 {
   /**
    * Contains all unit tests for
-   * {@link net.danielhildebrandt.ArrayStructs#insert} .
+   * {@link net.danielhildebrandt.JArray#insert} .
    */
   public static final class externalInsertTest
   {
@@ -158,7 +158,7 @@ public final class ArrayStructsTest
   
   /**
    * Contains all unit tests for
-   * {@link net.danielhildebrandt.ArrayStructs#insertBlock}.
+   * {@link net.danielhildebrandt.JArray#insertBlock}.
    */
   public static final class externalInsertBlockTest
   {
@@ -300,7 +300,7 @@ public final class ArrayStructsTest
   
   /**
    * Contains all unit tests for
-   * {@link net.danielhildebrandt.ArrayStructs#remove} .
+   * {@link net.danielhildebrandt.JArray#remove} .
    */
   public static final class dynamicRemoveTest
   {
@@ -405,7 +405,7 @@ public final class ArrayStructsTest
   
   /**
    * Contains all unit tests for
-   * {@link net.danielhildebrandt.ArrayStructs#removeRange}.
+   * {@link net.danielhildebrandt.JArray#removeRange}.
    */
   public static final class dynamicRemoveRangeTest
   {
@@ -570,7 +570,7 @@ public final class ArrayStructsTest
   
   /**
    * Contains all unit tests for
-   * {@link net.danielhildebrandt.ArrayStructs#isComplete}.
+   * {@link net.danielhildebrandt.JArray#isComplete}.
    */
   public static final class IsCompleteTest
   {
@@ -629,7 +629,7 @@ public final class ArrayStructsTest
   
   /**
    * Contains all unit tests for
-   * {@link net.danielhildebrandt.ArrayStructs#isSorted}.
+   * {@link net.danielhildebrandt.JArray#isSorted}.
    */
   public static final class IsSortedTest
   {
@@ -735,7 +735,7 @@ public final class ArrayStructsTest
   
   /**
    * Contains all unit tests for
-   * {@link net.danielhildebrandt.ArrayStructs#internalSwap}. Tests are included
+   * {@link net.danielhildebrandt.JArray#internalSwap}. Tests are included
    * for all nine overloads: for arrays of the eight primitive types, and of
    * generic reference types.
    */
@@ -1491,7 +1491,7 @@ public final class ArrayStructsTest
   
   /**
    * Contains all unit tests for
-   * {@link net.danielhildebrandt.ArrayStructs#internalInsert}. Tests are
+   * {@link net.danielhildebrandt.JArray#internalInsert}. Tests are
    * included for all nine overloads: for arrays of the eight primitive types,
    * and of generic reference types.
    */
@@ -2409,7 +2409,7 @@ public final class ArrayStructsTest
   
   /**
    * Contains all unit tests for
-   * {@link net.danielhildebrandt.ArrayStructs#contains}. Tests are included for
+   * {@link net.danielhildebrandt.JArray#contains}. Tests are included for
    * all nine overloads: for arrays of the eight primitive types, and of generic
    * reference types.
    */
@@ -2805,7 +2805,7 @@ public final class ArrayStructsTest
   
   /**
    * Contains all unit tests for
-   * {@link net.danielhildebrandt.ArrayStructs#containsX}. Tests are included for
+   * {@link net.danielhildebrandt.JArray#containsX}. Tests are included for
    * all nine overloads: for arrays of the eight primitive types, and of generic
    * reference types.
    */
@@ -3400,7 +3400,7 @@ public final class ArrayStructsTest
   
   /**
    * Contains all unit tests for
-   * {@link net.danielhildebrandt.ArrayStructs#indexOf}. Tests are included for
+   * {@link net.danielhildebrandt.JArray#indexOf}. Tests are included for
    * all nine overloads: for arrays of the eight primitive types, and of generic
    * reference types.
    */
@@ -3796,7 +3796,7 @@ public final class ArrayStructsTest
   
   /**
    * Contains all unit tests for
-   * {@link net.danielhildebrandt.ArrayStructs#lastIndexOf}. Tests are included
+   * {@link net.danielhildebrandt.JArray#lastIndexOf}. Tests are included
    * for all nine overloads: for arrays of the eight primitive types, and of
    * generic reference types.
    */
@@ -4201,7 +4201,7 @@ public final class ArrayStructsTest
   
   /**
    * Contains all unit tests for
-   * {@link net.danielhildebrandt.ArrayStructs#nthIndexOf}. Tests are included
+   * {@link net.danielhildebrandt.JArray#nthIndexOf}. Tests are included
    * for all nine overloads: for arrays of the eight primitive types, and of
    * generic reference types.
    */
@@ -4732,7 +4732,7 @@ public final class ArrayStructsTest
   
   /**
    * Contains all unit tests for
-   * {@link net.danielhildebrandt.ArrayStructs#indexOfAll}. Tests are included
+   * {@link net.danielhildebrandt.JArray#indexOfAll}. Tests are included
    * for all nine overloads: for arrays of the eight primitive types, and of
    * generic reference types.
    */
@@ -5074,7 +5074,7 @@ public final class ArrayStructsTest
   
   /**
    * Contains all unit tests for
-   * {@link net.danielhildebrandt.ArrayStructs#numberOf}. Tests are included for
+   * {@link net.danielhildebrandt.JArray#numberOf}. Tests are included for
    * all nine overloads: for arrays of the eight primitive types, and of generic
    * reference types.
    */
@@ -5389,7 +5389,7 @@ public final class ArrayStructsTest
   
   /**
    * Contains all unit tests for
-   * {@link net.danielhildebrandt.ArrayStructs#toPrimitiveArray}. Tests are
+   * {@link net.danielhildebrandt.JArray#toPrimitiveArray}. Tests are
    * included for all eight overloads, covering the wrapper types for each of
    * the eight primitive type.
    */
@@ -5782,7 +5782,7 @@ public final class ArrayStructsTest
   
   /**
    * Contains all unit tests for
-   * {@link net.danielhildebrandt.ArrayStructs#toWrapperArray}. Tests are
+   * {@link net.danielhildebrandt.JArray#toWrapperArray}. Tests are
    * included for all eight overloads, covering arrays of each of the eight
    * primitive types.
    */

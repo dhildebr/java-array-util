@@ -12,7 +12,7 @@ import java.util.Arrays;
  * occurs only on the trailing end of it, or not at all. Thus, a complete array
  * will not have "holes" in the middle.
  * 
- * @see ArrayStructs#isComplete(Object[], Object)
+ * @see JArray#isComplete(Object[], Object)
  */
 public final class IncompleteArrayException extends RuntimeException
 {

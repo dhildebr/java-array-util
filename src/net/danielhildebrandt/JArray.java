@@ -19,12 +19,12 @@ import java.util.Comparator;
  * 
  * @see java.util.Arrays
  */
-public final class ArrayStructs
+public final class JArray
 {
   /**
    * Prevents instantiation of the utility class.
    */
-  private ArrayStructs()
+  private JArray()
   {
     throw new UnsupportedOperationException("Unsupported operation: uninstantiable utility class.");
   }
