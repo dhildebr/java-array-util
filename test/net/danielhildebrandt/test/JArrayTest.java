@@ -55,6 +55,16 @@ public final class JArrayTest
       assertThat(before, is(equalTo(after)));
     }
     
+    @Test
+    public final void insert_EmptyElemFilledReceivingArray()
+    {
+    	String[] before = {"", "", ""};
+    	String[] after = {"Expeliarmus", "", ""};
+    	
+    	insert(before, "", 0, "Expeliarmus");
+    	assertThat(before, is(equalTo(after)));
+    }
+    
     @Test(expected = NullPointerException.class)
     public final void insert_NullArray()
     {
@@ -126,6 +136,16 @@ public final class JArrayTest
       
       insertBlock(before, "", 2, "Europa", "Io");
       assertThat(before, is(equalTo(after)));
+    }
+    
+    @Test
+    public final void insertBlock_EmptyElemFilledReceivingArray()
+    {
+    	String[] before = {null, null, null, null, null};
+    	String[] after = {"Gravitational slingshot", "Cassini", null, null, null};
+    	
+    	insertBlock(before, null, 0, "Gravitational slingshot", "Cassini");
+    	assertThat(before, is(equalTo(after)));
     }
     
     @Test
