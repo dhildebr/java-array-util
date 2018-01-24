@@ -414,6 +414,13 @@ public final class JArrayTest
     }
     
     @Test
+    public final void isComplete_EmptyElemFilledArray()
+    {
+      Object[] arr = {null, null, null, null, null};
+      assertThat(isComplete(arr, null), is(true));
+    }
+    
+    @Test
     public final void isComplete_NotComplete()
     {
       Object[] arr = {"Polemic", "Brouhaha", "Snafu", null, "Scandal", "Kerfuffle", "Bungle"};
