@@ -37,10 +37,10 @@ public final class JArray
    * element to be inserted is equal to the empty element, as this could cause
    * holes in the array.
    * <p>
-   * This method ensures that the array is "complete" both before and after the
-   * its execution. Completeness is defined by the array in question having all
-   * instances of the empty element placed only at its trailing end. Refer also
-   * to {@link #isComplete(Object[], Object)}.
+   * This method ensures that the receiving array is complete both before and
+   * after its execution. Completeness is defined by the array in question
+   * having all instances of the empty element placed only at its trailing end.
+   * Refer also to {@link #isComplete(Object[], Object) isComplete}.
    * 
    * @param arr the array inserted into; the receiving array
    * @param emptyElem the element representing "nothing" in the array
@@ -51,8 +51,7 @@ public final class JArray
    * @throws ArrayStoreException if the receiving array is already full, or if
    * the element to be inserted is equal to the empty element
    * @throws IllegalArgumentException if the receiving array is empty
-   * @throws IncompleteArrayException if the receiving array is not "complete,"
-   * due to having one or more "holes" in it
+   * @throws IncompleteArrayException if the receiving array is not complete
    * @throws NullPointerException if the receiving array is a null reference
    * 
    * @see #isComplete(Object[], Object)
@@ -64,13 +63,15 @@ public final class JArray
   
   /**
    * <p>
-   * Inserts one or more elements into the array provided, moving subsequent
+   * Inserts zero or more elements into the array provided, moving subsequent
    * elements out of the way to make room. The index provided signifies the
    * point at which the first element in the varargs-array will be inserted;
    * subsequent elements will be placed in the following spaces. The "empty
    * element" is the element used in the array to represent an empty spot - this
    * is often simply {@code null}, but can also be a pseudo-empty element if
-   * {@code null} is to be considered a valid element.
+   * {@code null} is to be considered a valid element. If the array of inserted
+   * elements is of zero length, this method will return without modification
+   * nor error.
    * <p>
    * This method will not reallocate the array if there is insufficient space to
    * store the new elements in it; the user must check its capacity prior to
@@ -79,23 +80,22 @@ public final class JArray
    * include one or more instances of the empty element, as this could create
    * holes in the array.
    * <p>
-   * This method ensures that the array is "complete" both before and after the
-   * its execution. Completeness is defined by the array in question having all
-   * instances of the empty element placed only at its trailing end. Refer also
-   * to {@link #isComplete(Object[], Object)}.
+   * This method ensures that the receiving array is complete both before and
+   * after its execution. Completeness is defined by the array in question
+   * having all instances of the empty element placed only at its trailing end.
+   * Refer also to {@link #isComplete(Object[], Object) isComplete}.
    * 
    * @param arr the array inserted into; the receiving array
    * @param emptyElem the element representing "nothing" in the array
    * @param index the index where the first element will be inserted
-   * @param newElems one or more elements to collectively insert into the array
+   * @param newElems zero or more elements to collectively insert into the array
    * @throws ArrayIndexOutOfBoundsException if the index is less than zero or is
    * greater than the index of the first empty element in the receiving array
    * @throws ArrayStoreException if the receiving array has insufficient space
    * to store the new elements, or if one or more of the elements to be inserted
    * is equal to the empty element
    * @throws IllegalArgumentException if the receiving array is empty
-   * @throws IncompleteArrayException if the receiving array is not "complete,"
-   * due to having one or more "holes" in it
+   * @throws IncompleteArrayException if the receiving array is not complete
    * @throws NullPointerException if the receiving array or the array of new
    * elements is a null reference
    * 
@@ -131,18 +131,18 @@ public final class JArray
   
   /**
    * <p>
-   * Removes the element at the given index of the provided array, shifting
+   * Removes the element at the given index from the provided array, shifting
    * subsequent elements into the gap. This method then also returns the element
    * removed. The "empty element" is the element used in the array to represent
    * an empty spot - this is often simply {@code null}, but can also be a
    * pseudo-empty element if {@code null} is to be considered a valid element.
    * <p>
-   * This method ensures that the array is "complete" both before and after the
-   * its execution. Completeness is defined by the array in question having all
+   * This method ensures that the array is complete both before and after its
+   * execution. Completeness is defined by the array in question having all
    * instances of the empty element placed only at its trailing end. Refer also
-   * to {@link #isComplete(Object[], Object)}.
+   * to {@link #isComplete(Object[], Object) isComplete}.
    * 
-   * @param arr the array from which remove an element
+   * @param arr the array from which to remove an element
    * @param emptyElem the element representing "nothing" in the array
    * @param index the index of the element to be removed
    * @return the removed element
@@ -150,8 +150,7 @@ public final class JArray
    * greater than the index of the first empty element - or the array's length,
    * if there is none
    * @throws IllegalArgumentException if the array provided is empty
-   * @throws IncompleteArrayException if the array removed from is not
-   * "complete", due to having one or more "holes" in it
+   * @throws IncompleteArrayException if the array removed from is not complete
    * @throws NullPointerException if the array provided is a null reference
    * 
    * @see #isComplete(Object[], Object)
@@ -166,19 +165,19 @@ public final class JArray
    * Removes all elements from {@code fromIndex}, inclusive, to {@code toIndex},
    * exclusive, shifting subsequent elements into the gap. This method then also
    * returns an array containing the removed elements, in the order in which
-   * they previously occurred. The "empty element" is the element used in the
-   * array to represent an empty spot - this is often simply {@code null}, but
-   * can also be a pseudo-empty element if {@code null} is to be considered a
-   * valid element.
+   * they were previously found in the removal array. The "empty element" is the
+   * element used in the array to represent an empty spot - this is often simply
+   * {@code null}, but can also be a pseudo-empty element if {@code null} is to
+   * be considered a valid element.
    * <p>
    * If {@code fromIndex} and {@code toIndex} are equal, the single element at
    * this shared index will be removed and returned (in other words, the lower
    * bound's closed-ness will take precedence).
    * <p>
-   * This method ensures that the array is "complete" both before and after the
-   * its execution. Completeness is defined by the array in question having all
+   * This method ensures that the array is complete both before and after its
+   * execution. Completeness is defined by the array in question having all
    * instances of the empty element placed only at its trailing end. Refer also
-   * to {@link #isComplete(Object[], Object)}.
+   * to {@link #isComplete(Object[], Object) isComplete}.
    * 
    * @param arr the array from which to remove one or more elements
    * @param emptyElem the element representing "nothing" in the array
@@ -188,11 +187,10 @@ public final class JArray
    * @throws ArrayIndexOutOfBoundsException if either {@code fromIndex} or
    * {@code toIndex} is negative; if {@code fromIndex} is greater than or equal
    * to the index of the first empty element; or if {@code toIndex} is strictly
-   * greater than that same index
+   * greater than that same empty-index
    * @throws IllegalArgumentException if the array provided is empty, or if
    * {@code fromIndex > toIndex}
-   * @throws IncompleteArrayException if the array removed from is not
-   * "complete", due to having one or more "holes" in it
+   * @throws IncompleteArrayException if the array removed from is not complete
    * @throws NullPointerException if the array provided is a null reference
    * 
    * @see #isComplete(Object[], Object)
@@ -250,6 +248,17 @@ public final class JArray
    * would be the value {@code null}. This could alternatively be taken as
    * saying that the complete array has no holes in its midst. An empty array is
    * considered as complete.
+   * <p>
+   * Examples of complete arrays:<br />
+   * ["one", "two", "three", "four", "five"]<br />
+   * ["one", "two", "three", null, null]<br />
+   * [null, null, null, null, null]<br />
+   * [ ]
+   * <p>
+   * Example of incomplete arrays:<br />
+   * ["one", null, "three", "four", "five"]<br />
+   * ["one", null, "three", "four", null]<br />
+   * [null, "two", "three", "four", "five"]
    * 
    * @param arr the array checked for completeness
    * @param emptyElem the element representing "nothing" in the array
