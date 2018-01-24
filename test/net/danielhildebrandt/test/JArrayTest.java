@@ -39,7 +39,8 @@ public final class JArrayTest
     public final void insert_NullEmptyElement()
     {
       Object[] before = {"Quidditch", 7, "Azcaban", "Albus Percival Wulfric Brian Dumbledor", null, null, null};
-      Object[] after = {"Quidditch", 7, "Tom Riddle", "Azcaban", "Albus Percival Wulfric Brian Dumbledor", null, null};
+      Object[] after = {"Quidditch", 7, "Tom Riddle", "Azcaban", "Albus Percival Wulfric Brian Dumbledor", null,
+          null};
       
       insert(before, null, 2, "Tom Riddle");
       assertThat(before, is(equalTo(after)));
@@ -58,11 +59,11 @@ public final class JArrayTest
     @Test
     public final void insert_EmptyElemFilledReceivingArray()
     {
-    	String[] before = {"", "", ""};
-    	String[] after = {"Expeliarmus", "", ""};
-    	
-    	insert(before, "", 0, "Expeliarmus");
-    	assertThat(before, is(equalTo(after)));
+      String[] before = {"", "", ""};
+      String[] after = {"Expeliarmus", "", ""};
+      
+      insert(before, "", 0, "Expeliarmus");
+      assertThat(before, is(equalTo(after)));
     }
     
     @Test(expected = NullPointerException.class)
@@ -141,11 +142,11 @@ public final class JArrayTest
     @Test
     public final void insertBlock_EmptyElemFilledReceivingArray()
     {
-    	String[] before = {null, null, null, null, null};
-    	String[] after = {"Gravitational slingshot", "Cassini", null, null, null};
-    	
-    	insertBlock(before, null, 0, "Gravitational slingshot", "Cassini");
-    	assertThat(before, is(equalTo(after)));
+      String[] before = {null, null, null, null, null};
+      String[] after = {"Gravitational slingshot", "Cassini", null, null, null};
+      
+      insertBlock(before, null, 0, "Gravitational slingshot", "Cassini");
+      assertThat(before, is(equalTo(after)));
     }
     
     @Test
@@ -439,7 +440,8 @@ public final class JArrayTest
     @Test
     public final void isSorted_Natural_Ordered_NullHoles()
     {
-      String[] arr = {"Akatsuki Arrival", "Dancer in the Dark", "Love is War", null, null, "World is Mine", null};
+      String[] arr = {"Akatsuki Arrival", "Dancer in the Dark", "Love is War", null, null, "World is Mine",
+          null};
       assertThat(isSorted(arr), is(true));
     }
     
@@ -475,7 +477,8 @@ public final class JArrayTest
     @Test
     public final void isSorted_Total_Unordered()
     {
-      String[] arr = {"Hoshi ga Matataku", "Tsugai Kogarashi", "Shineba ii no ni", "Guren no Yumiya", "Harumodoki"};
+      String[] arr = {"Hoshi ga Matataku", "Tsugai Kogarashi", "Shineba ii no ni", "Guren no Yumiya",
+          "Harumodoki"};
       Comparator<String> comp = String.CASE_INSENSITIVE_ORDER;
       assertThat(isSorted(arr, comp), is(false));
     }

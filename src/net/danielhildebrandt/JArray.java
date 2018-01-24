@@ -5,18 +5,12 @@ import java.util.Comparator;
 
 /**
  * <p>
- * This class contains various methods designed to ease the implementation of
- * array-backed data structures, lists especially. It also has methods to
- * convert between arrays of the eight primitive types and their corresponding
- * wrapper array types; a check for an array's completeness, in the sense that
- * the term applies to the array backing a binary heap; and checks which return
- * whether an array's elements are sorted, either by natural or a total
- * ordering.
- * <p>
- * All methods in this class expect to be passed an array, for obvious reasons,
- * and all will throw a {@code NullPointerException} if they are given a null
- * reference instead.
+ * This class contains various methods with the aim of facilitating similar
+ * behavior in arrays as in {@link java.util.ArrayList ArrayList}. These utility
+ * methods can thought of as an extension of those in {@link java.util.Arrays
+ * Arrays}.
  * 
+ * @see java.util.ArrayList
  * @see java.util.Arrays
  */
 public final class JArray
@@ -47,6 +41,7 @@ public final class JArray
    * its execution. Completeness is defined by the array in question having all
    * instances of the empty element placed only at its trailing end. Refer also
    * to {@link #isComplete(Object[], Object)}.
+   * 
    * @param arr the array inserted into; the receiving array
    * @param emptyElem the element representing "nothing" in the array
    * @param index the index at which to insert
@@ -72,10 +67,10 @@ public final class JArray
    * Inserts one or more elements into the array provided, moving subsequent
    * elements out of the way to make room. The index provided signifies the
    * point at which the first element in the varargs-array will be inserted;
-   * subsequent elements will be placed in the following spaces. The
-   * "empty element" is the element used in the array to represent an empty spot
-   * - this is often simply {@code null}, but can also be a pseudo-empty element
-   * if {@code null} is to be considered a valid element.
+   * subsequent elements will be placed in the following spaces. The "empty
+   * element" is the element used in the array to represent an empty spot - this
+   * is often simply {@code null}, but can also be a pseudo-empty element if
+   * {@code null} is to be considered a valid element.
    * <p>
    * This method will not reallocate the array if there is insufficient space to
    * store the new elements in it; the user must check its capacity prior to
@@ -88,6 +83,7 @@ public final class JArray
    * its execution. Completeness is defined by the array in question having all
    * instances of the empty element placed only at its trailing end. Refer also
    * to {@link #isComplete(Object[], Object)}.
+   * 
    * @param arr the array inserted into; the receiving array
    * @param emptyElem the element representing "nothing" in the array
    * @param index the index where the first element will be inserted
@@ -117,15 +113,15 @@ public final class JArray
     else if(!isComplete(arr, emptyElem))
       throw new IncompleteArrayException(arr, emptyElem);
     else if(!containsX(arr, emptyElem, newElems.length))
-      throw new ArrayStoreException("The receiving array has insufficient empty space to hold the new element(s).");
+      throw new ArrayStoreException(
+          "The receiving array has insufficient empty space to hold the new element(s).");
     else if(index < 0 || index > indexOf(arr, emptyElem))
-      throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <%d> disobeys bounds: [0, indexOf(arr, emptyElem)], currently [0, %d].",
-          index, indexOf(arr, emptyElem)));
+      throw new ArrayIndexOutOfBoundsException(
+          String.format("Index <%d> disobeys bounds: [0, indexOf(arr, emptyElem)], currently [0, %d].", index,
+              indexOf(arr, emptyElem)));
     else if(contains(newElems, emptyElem))
       throw new ArrayStoreException("Cannot insert the empty element into the array; this could create a hole.");
-    else
-    {
+    else {
       for(int i = arr.length - 1; i >= index + newElems.length; --i)
         arr[i] = arr[i - newElems.length];
       for(int i = index; i < index + newElems.length; ++i)
@@ -145,6 +141,7 @@ public final class JArray
    * its execution. Completeness is defined by the array in question having all
    * instances of the empty element placed only at its trailing end. Refer also
    * to {@link #isComplete(Object[], Object)}.
+   * 
    * @param arr the array from which remove an element
    * @param emptyElem the element representing "nothing" in the array
    * @param index the index of the element to be removed
@@ -182,6 +179,7 @@ public final class JArray
    * its execution. Completeness is defined by the array in question having all
    * instances of the empty element placed only at its trailing end. Refer also
    * to {@link #isComplete(Object[], Object)}.
+   * 
    * @param arr the array from which to remove one or more elements
    * @param emptyElem the element representing "nothing" in the array
    * @param fromIndex the index of the first removed element, inclusive
@@ -207,8 +205,7 @@ public final class JArray
       throw new IllegalArgumentException("The array removed from must be non-empty.");
     else if(!isComplete(arr, emptyElem))
       throw new IncompleteArrayException(arr, emptyElem);
-    else
-    {
+    else {
       int firstEmptyIndex = indexOf(arr, emptyElem);
       if(fromIndex < 0 || fromIndex >= ((firstEmptyIndex >= 0) ? firstEmptyIndex : arr.length))
         throw new ArrayIndexOutOfBoundsException(String.format(
@@ -222,18 +219,15 @@ public final class JArray
             toIndex, contains(arr, emptyElem) ? indexOf(arr, emptyElem) : arr.length));
       else if(fromIndex > toIndex)
         throw new IllegalArgumentException("Out-of-order indices: fromIndex must be no greater than toIndex.");
-      else
-      {
-        if(fromIndex == toIndex)
-        {
+      else {
+        if(fromIndex == toIndex) {
           T[] removed = Arrays.copyOfRange(arr, fromIndex, fromIndex + 1);
           for(int i = fromIndex; i < arr.length - 1; ++i)
             arr[i] = arr[i + 1];
           arr[arr.length - 1] = emptyElem;
           return removed;
         }
-        else
-        {
+        else {
           T[] removed = Arrays.copyOfRange(arr, fromIndex, toIndex);
           for(int i = fromIndex; i < arr.length - (toIndex - fromIndex); ++i)
             arr[i] = arr[i + (toIndex - fromIndex)];
@@ -256,6 +250,7 @@ public final class JArray
    * would be the value {@code null}. This could alternatively be taken as
    * saying that the complete array has no holes in its midst. An empty array is
    * considered as complete.
+   * 
    * @param arr the array checked for completeness
    * @param emptyElem the element representing "nothing" in the array
    * @return {@code true}: the array is "complete," having the empty-element
@@ -269,12 +264,11 @@ public final class JArray
     int firstEmptyIndex = indexOf(arr, emptyElem);
     if(firstEmptyIndex < 0)
       return true;
-    else
-    {
+    else {
       for(int i = firstEmptyIndex + 1; i < arr.length; ++i)
         if((emptyElem == null) ? arr[i] != null : !arr[i].equals(emptyElem))
           return false;
-      
+        
       return true;
     }
   }
@@ -290,6 +284,7 @@ public final class JArray
    * <p>
    * An empty array, or one with but a single element, is considered to be
    * sorted.
+   * 
    * @param arr the array checked for ordering
    * @return {@code true}: the array is sorted (in ascending order), according
    * to the natural ordering of its elements
@@ -301,15 +296,12 @@ public final class JArray
       throw new NullPointerException("The array provided must be non-null");
     else if(arr.length <= 1)
       return true;
-    else
-    {
-      for(int i = 0; i < arr.length - 1; ++i)
-      {
+    else {
+      for(int i = 0; i < arr.length - 1; ++i) {
         int offset = 1;
         if(arr[i] == null)
           continue;
-        while(arr[i + offset] == null)
-        {
+        while(arr[i + offset] == null) {
           offset++;
           if(i + offset >= arr.length)
             return true;
@@ -334,6 +326,7 @@ public final class JArray
    * <p>
    * An empty array, or one with but a single element, is considered to be
    * sorted.
+   * 
    * @param arr the array checked for ordering
    * @param comp the comparator which specifies the array's imposed ordering
    * @return {@code true}: the array is sorted, according to the total ordering
@@ -348,18 +341,18 @@ public final class JArray
       throw new NullPointerException("The comparator must be non-null.");
     else if(arr.length <= 1)
       return true;
-    else
-    {
+    else {
       for(int i = 0; i < arr.length - 1; ++i)
         if(comp.compare(arr[i], arr[i + 1]) > 0)
           return false;
-      
+        
       return true;
     }
   }
   
   /**
    * Swaps two {@code byte} values in an array, given their indices.
+   * 
    * @param arr the array within which the objects are to be swapped
    * @param i the index of the first {@code byte} value
    * @param j the index of the second {@code byte} value
@@ -373,16 +366,13 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(i < 0 || i >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <i> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          i, arr.length));
+          "Index <i> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", i, arr.length));
     else if(j < 0 || j >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <j> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          j, arr.length));
+          "Index <j> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", j, arr.length));
     else if(i == j)
       return;
-    else
-    {
+    else {
       arr[i] ^= arr[j];
       arr[j] ^= arr[i];
       arr[i] ^= arr[j];
@@ -391,6 +381,7 @@ public final class JArray
   
   /**
    * Swaps two {@code short} values in an array, given their indices.
+   * 
    * @param arr the array within which the objects are to be swapped
    * @param i the index of the first {@code short} value
    * @param j the index of the second {@code short} value
@@ -404,16 +395,13 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(i < 0 || i >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <i> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          i, arr.length));
+          "Index <i> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", i, arr.length));
     else if(j < 0 || j >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <j> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          j, arr.length));
+          "Index <j> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", j, arr.length));
     else if(i == j)
       return;
-    else
-    {
+    else {
       arr[i] ^= arr[j];
       arr[j] ^= arr[i];
       arr[i] ^= arr[j];
@@ -422,6 +410,7 @@ public final class JArray
   
   /**
    * Swaps two {@code int} values in an array, given their indices.
+   * 
    * @param arr the array within which the objects are to be swapped
    * @param i the index of the first {@code int} value
    * @param j the index of the second {@code int} value
@@ -435,16 +424,13 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(i < 0 || i >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <i> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          i, arr.length));
+          "Index <i> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", i, arr.length));
     else if(j < 0 || j >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <j> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          j, arr.length));
+          "Index <j> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", j, arr.length));
     else if(i == j)
       return;
-    else
-    {
+    else {
       arr[i] ^= arr[j];
       arr[j] ^= arr[i];
       arr[i] ^= arr[j];
@@ -453,6 +439,7 @@ public final class JArray
   
   /**
    * Swaps two {@code long} values in an array, given their indices.
+   * 
    * @param arr the array within which the objects are to be swapped
    * @param i the index of the first {@code long} value
    * @param j the index of the second {@code long} value
@@ -466,16 +453,13 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(i < 0 || i >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <i> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          i, arr.length));
+          "Index <i> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", i, arr.length));
     else if(j < 0 || j >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <j> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          j, arr.length));
+          "Index <j> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", j, arr.length));
     else if(i == j)
       return;
-    else
-    {
+    else {
       arr[i] ^= arr[j];
       arr[j] ^= arr[i];
       arr[i] ^= arr[j];
@@ -484,6 +468,7 @@ public final class JArray
   
   /**
    * Swaps two {@code float} values in an array, given their indices.
+   * 
    * @param arr the array within which the objects are to be swapped
    * @param i the index of the first {@code float} value
    * @param j the index of the second {@code float} value
@@ -497,16 +482,13 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(i < 0 || i >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <i> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          i, arr.length));
+          "Index <i> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", i, arr.length));
     else if(j < 0 || j >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <j> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          j, arr.length));
+          "Index <j> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", j, arr.length));
     else if(i == j)
       return;
-    else
-    {
+    else {
       float temp = arr[i];
       arr[i] = arr[j];
       arr[j] = temp;
@@ -515,6 +497,7 @@ public final class JArray
   
   /**
    * Swaps two {@code double} values in an array, given their indices.
+   * 
    * @param arr the array within which the objects are to be swapped
    * @param i the index of the first {@code double} value
    * @param j the index of the second {@code double} value
@@ -528,16 +511,13 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(i < 0 || i >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <i> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          i, arr.length));
+          "Index <i> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", i, arr.length));
     else if(j < 0 || j >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <j> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          j, arr.length));
+          "Index <j> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", j, arr.length));
     else if(i == j)
       return;
-    else
-    {
+    else {
       double temp = arr[i];
       arr[i] = arr[j];
       arr[j] = temp;
@@ -546,6 +526,7 @@ public final class JArray
   
   /**
    * Swaps two boolean values in an array, given their indices.
+   * 
    * @param arr the array within which the objects are to be swapped
    * @param i the index of the first boolean value
    * @param j the index of the second boolean value
@@ -559,16 +540,13 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(i < 0 || i >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <i> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          i, arr.length));
+          "Index <i> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", i, arr.length));
     else if(j < 0 || j >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <j> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          j, arr.length));
+          "Index <j> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", j, arr.length));
     else if(i == j || arr[i] == arr[j])
       return;
-    else
-    {
+    else {
       arr[i] = !arr[i];
       arr[j] = !arr[j];
     }
@@ -576,6 +554,7 @@ public final class JArray
   
   /**
    * Swaps two characters in an array, given their indices.
+   * 
    * @param arr the array within which the objects are to be swapped
    * @param i the index of the first character
    * @param j the index of the second character
@@ -589,16 +568,13 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(i < 0 || i >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <i> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          i, arr.length));
+          "Index <i> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", i, arr.length));
     else if(j < 0 || j >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <j> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          j, arr.length));
+          "Index <j> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", j, arr.length));
     else if(i == j)
       return;
-    else
-    {
+    else {
       arr[i] ^= arr[j];
       arr[j] ^= arr[i];
       arr[i] ^= arr[j];
@@ -607,6 +583,7 @@ public final class JArray
   
   /**
    * Swaps two objects in an array, given their indices.
+   * 
    * @param arr the array within which the objects are to be swapped
    * @param i the index of the first object
    * @param j the index of the second object
@@ -620,16 +597,13 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(i < 0 || i >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <i> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          i, arr.length));
+          "Index <i> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", i, arr.length));
     else if(j < 0 || j >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <j> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          j, arr.length));
+          "Index <j> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", j, arr.length));
     else if(i == j)
       return;
-    else
-    {
+    else {
       Object temp = arr[i];
       arr[i] = arr[j];
       arr[j] = temp;
@@ -639,6 +613,7 @@ public final class JArray
   /**
    * Moves the element at {@code fromIndex} to {@code toIndex}, shifting over
    * any elements between the two to make room.
+   * 
    * @param arr the array within which the movement is to take place
    * @param fromIndex the original index of the element moved
    * @param toIndex the index to which the element should be shifted
@@ -652,23 +627,21 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(fromIndex < 0 || fromIndex >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <fromIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          fromIndex, arr.length));
+          "Index <fromIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", fromIndex,
+          arr.length));
     else if(toIndex < 0 || toIndex >= arr.length)
-      throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <toIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          toIndex, arr.length));
+      throw new ArrayIndexOutOfBoundsException(
+          String.format("Index <toIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
+              toIndex, arr.length));
     else if(Math.abs(fromIndex - toIndex) == 1)
       internalSwap(arr, fromIndex, toIndex);
-    else if(fromIndex < toIndex)
-    {
+    else if(fromIndex < toIndex) {
       byte temp = arr[fromIndex];
       for(int i = fromIndex; i < toIndex; ++i)
         arr[i] = arr[i + 1];
       arr[toIndex] = temp;
     }
-    else if(fromIndex > toIndex)
-    {
+    else if(fromIndex > toIndex) {
       byte temp = arr[fromIndex];
       for(int i = fromIndex; i > toIndex; --i)
         arr[i] = arr[i - 1];
@@ -679,6 +652,7 @@ public final class JArray
   /**
    * Moves the element at {@code fromIndex} to {@code toIndex}, shifting over
    * any elements between the two to make room.
+   * 
    * @param arr the array within which the movement is to take place
    * @param fromIndex the original index of the element moved
    * @param toIndex the index to which the element should be shifted
@@ -692,23 +666,21 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(fromIndex < 0 || fromIndex >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <fromIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          fromIndex, arr.length));
+          "Index <fromIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", fromIndex,
+          arr.length));
     else if(toIndex < 0 || toIndex >= arr.length)
-      throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <toIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          toIndex, arr.length));
+      throw new ArrayIndexOutOfBoundsException(
+          String.format("Index <toIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
+              toIndex, arr.length));
     else if(Math.abs(fromIndex - toIndex) == 1)
       internalSwap(arr, fromIndex, toIndex);
-    else if(fromIndex < toIndex)
-    {
+    else if(fromIndex < toIndex) {
       short temp = arr[fromIndex];
       for(int i = fromIndex; i < toIndex; ++i)
         arr[i] = arr[i + 1];
       arr[toIndex] = temp;
     }
-    else if(fromIndex > toIndex)
-    {
+    else if(fromIndex > toIndex) {
       short temp = arr[fromIndex];
       for(int i = fromIndex; i > toIndex; --i)
         arr[i] = arr[i - 1];
@@ -719,6 +691,7 @@ public final class JArray
   /**
    * Moves the element at {@code fromIndex} to {@code toIndex}, shifting over
    * any elements between the two to make room.
+   * 
    * @param arr the array within which the movement is to take place
    * @param fromIndex the original index of the element moved
    * @param toIndex the index to which the element should be shifted
@@ -732,23 +705,21 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(fromIndex < 0 || fromIndex >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <fromIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          fromIndex, arr.length));
+          "Index <fromIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", fromIndex,
+          arr.length));
     else if(toIndex < 0 || toIndex >= arr.length)
-      throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <toIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          toIndex, arr.length));
+      throw new ArrayIndexOutOfBoundsException(
+          String.format("Index <toIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
+              toIndex, arr.length));
     else if(Math.abs(fromIndex - toIndex) == 1)
       internalSwap(arr, fromIndex, toIndex);
-    else if(fromIndex < toIndex)
-    {
+    else if(fromIndex < toIndex) {
       int temp = arr[fromIndex];
       for(int i = fromIndex; i < toIndex; ++i)
         arr[i] = arr[i + 1];
       arr[toIndex] = temp;
     }
-    else if(fromIndex > toIndex)
-    {
+    else if(fromIndex > toIndex) {
       int temp = arr[fromIndex];
       for(int i = fromIndex; i > toIndex; --i)
         arr[i] = arr[i - 1];
@@ -759,6 +730,7 @@ public final class JArray
   /**
    * Moves the element at {@code fromIndex} to {@code toIndex}, shifting over
    * any elements between the two to make room.
+   * 
    * @param arr the array within which the movement is to take place
    * @param fromIndex the original index of the element moved
    * @param toIndex the index to which the element should be shifted
@@ -772,23 +744,21 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(fromIndex < 0 || fromIndex >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <fromIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          fromIndex, arr.length));
+          "Index <fromIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", fromIndex,
+          arr.length));
     else if(toIndex < 0 || toIndex >= arr.length)
-      throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <toIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          toIndex, arr.length));
+      throw new ArrayIndexOutOfBoundsException(
+          String.format("Index <toIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
+              toIndex, arr.length));
     else if(Math.abs(fromIndex - toIndex) == 1)
       internalSwap(arr, fromIndex, toIndex);
-    else if(fromIndex < toIndex)
-    {
+    else if(fromIndex < toIndex) {
       long temp = arr[fromIndex];
       for(int i = fromIndex; i < toIndex; ++i)
         arr[i] = arr[i + 1];
       arr[toIndex] = temp;
     }
-    else if(fromIndex > toIndex)
-    {
+    else if(fromIndex > toIndex) {
       long temp = arr[fromIndex];
       for(int i = fromIndex; i > toIndex; --i)
         arr[i] = arr[i - 1];
@@ -799,6 +769,7 @@ public final class JArray
   /**
    * Moves the element at {@code fromIndex} to {@code toIndex}, shifting over
    * any elements between the two to make room.
+   * 
    * @param arr the array within which the movement is to take place
    * @param fromIndex the original index of the element moved
    * @param toIndex the index to which the element should be shifted
@@ -812,23 +783,21 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(fromIndex < 0 || fromIndex >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <fromIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          fromIndex, arr.length));
+          "Index <fromIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", fromIndex,
+          arr.length));
     else if(toIndex < 0 || toIndex >= arr.length)
-      throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <toIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          toIndex, arr.length));
+      throw new ArrayIndexOutOfBoundsException(
+          String.format("Index <toIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
+              toIndex, arr.length));
     else if(Math.abs(fromIndex - toIndex) == 1)
       internalSwap(arr, fromIndex, toIndex);
-    else if(fromIndex < toIndex)
-    {
+    else if(fromIndex < toIndex) {
       float temp = arr[fromIndex];
       for(int i = fromIndex; i < toIndex; ++i)
         arr[i] = arr[i + 1];
       arr[toIndex] = temp;
     }
-    else if(fromIndex > toIndex)
-    {
+    else if(fromIndex > toIndex) {
       float temp = arr[fromIndex];
       for(int i = fromIndex; i > toIndex; --i)
         arr[i] = arr[i - 1];
@@ -839,6 +808,7 @@ public final class JArray
   /**
    * Moves the element at {@code fromIndex} to {@code toIndex}, shifting over
    * any elements between the two to make room.
+   * 
    * @param arr the array within which the movement is to take place
    * @param fromIndex the original index of the element moved
    * @param toIndex the index to which the element should be shifted
@@ -852,23 +822,21 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(fromIndex < 0 || fromIndex >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <fromIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          fromIndex, arr.length));
+          "Index <fromIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", fromIndex,
+          arr.length));
     else if(toIndex < 0 || toIndex >= arr.length)
-      throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <toIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          toIndex, arr.length));
+      throw new ArrayIndexOutOfBoundsException(
+          String.format("Index <toIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
+              toIndex, arr.length));
     else if(Math.abs(fromIndex - toIndex) == 1)
       internalSwap(arr, fromIndex, toIndex);
-    else if(fromIndex < toIndex)
-    {
+    else if(fromIndex < toIndex) {
       double temp = arr[fromIndex];
       for(int i = fromIndex; i < toIndex; ++i)
         arr[i] = arr[i + 1];
       arr[toIndex] = temp;
     }
-    else if(fromIndex > toIndex)
-    {
+    else if(fromIndex > toIndex) {
       double temp = arr[fromIndex];
       for(int i = fromIndex; i > toIndex; --i)
         arr[i] = arr[i - 1];
@@ -879,6 +847,7 @@ public final class JArray
   /**
    * Moves the element at {@code fromIndex} to {@code toIndex}, shifting over
    * any elements between the two to make room.
+   * 
    * @param arr the array within which the movement is to take place
    * @param fromIndex the original index of the element moved
    * @param toIndex the index to which the element should be shifted
@@ -892,23 +861,21 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(fromIndex < 0 || fromIndex >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <fromIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          fromIndex, arr.length));
+          "Index <fromIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", fromIndex,
+          arr.length));
     else if(toIndex < 0 || toIndex >= arr.length)
-      throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <toIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          toIndex, arr.length));
+      throw new ArrayIndexOutOfBoundsException(
+          String.format("Index <toIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
+              toIndex, arr.length));
     else if(Math.abs(fromIndex - toIndex) == 1)
       internalSwap(arr, fromIndex, toIndex);
-    else if(fromIndex < toIndex)
-    {
+    else if(fromIndex < toIndex) {
       boolean temp = arr[fromIndex];
       for(int i = fromIndex; i < toIndex; ++i)
         arr[i] = arr[i + 1];
       arr[toIndex] = temp;
     }
-    else if(fromIndex > toIndex)
-    {
+    else if(fromIndex > toIndex) {
       boolean temp = arr[fromIndex];
       for(int i = fromIndex; i > toIndex; --i)
         arr[i] = arr[i - 1];
@@ -919,6 +886,7 @@ public final class JArray
   /**
    * Moves the element at {@code fromIndex} to {@code toIndex}, shifting over
    * any elements between the two to make room.
+   * 
    * @param arr the array within which the movement is to take place
    * @param fromIndex the original index of the element moved
    * @param toIndex the index to which the element should be shifted
@@ -932,23 +900,21 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(fromIndex < 0 || fromIndex >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <fromIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          fromIndex, arr.length));
+          "Index <fromIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", fromIndex,
+          arr.length));
     else if(toIndex < 0 || toIndex >= arr.length)
-      throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <toIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          toIndex, arr.length));
+      throw new ArrayIndexOutOfBoundsException(
+          String.format("Index <toIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
+              toIndex, arr.length));
     else if(Math.abs(fromIndex - toIndex) == 1)
       internalSwap(arr, fromIndex, toIndex);
-    else if(fromIndex < toIndex)
-    {
+    else if(fromIndex < toIndex) {
       char temp = arr[fromIndex];
       for(int i = fromIndex; i < toIndex; ++i)
         arr[i] = arr[i + 1];
       arr[toIndex] = temp;
     }
-    else if(fromIndex > toIndex)
-    {
+    else if(fromIndex > toIndex) {
       char temp = arr[fromIndex];
       for(int i = fromIndex; i > toIndex; --i)
         arr[i] = arr[i - 1];
@@ -959,6 +925,7 @@ public final class JArray
   /**
    * Moves the element at {@code fromIndex} to {@code toIndex}, shifting over
    * any elements between the two to make room.
+   * 
    * @param arr the array within which the movement is to take place
    * @param fromIndex the original index of the element moved
    * @param toIndex the index to which the element should be shifted
@@ -972,23 +939,21 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(fromIndex < 0 || fromIndex >= arr.length)
       throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <fromIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          fromIndex, arr.length));
+          "Index <fromIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).", fromIndex,
+          arr.length));
     else if(toIndex < 0 || toIndex >= arr.length)
-      throw new ArrayIndexOutOfBoundsException(String.format(
-          "Index <toIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
-          toIndex, arr.length));
+      throw new ArrayIndexOutOfBoundsException(
+          String.format("Index <toIndex> currently <%d> disobeys bounds: [0, arr.length), currently [0, %d).",
+              toIndex, arr.length));
     else if(Math.abs(fromIndex - toIndex) == 1)
       internalSwap(arr, fromIndex, toIndex);
-    else if(fromIndex < toIndex)
-    {
+    else if(fromIndex < toIndex) {
       Object temp = arr[fromIndex];
       for(int i = fromIndex; i < toIndex; ++i)
         arr[i] = arr[i + 1];
       arr[toIndex] = temp;
     }
-    else if(fromIndex > toIndex)
-    {
+    else if(fromIndex > toIndex) {
       Object temp = arr[fromIndex];
       for(int i = fromIndex; i > toIndex; --i)
         arr[i] = arr[i - 1];
@@ -998,6 +963,7 @@ public final class JArray
   
   /**
    * Returns whether the given array contains the specified value.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return {@code true}: the array contains the value specified
@@ -1010,6 +976,7 @@ public final class JArray
   
   /**
    * Returns whether the given array contains the specified value.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return {@code true}: the array contains the value specified
@@ -1022,6 +989,7 @@ public final class JArray
   
   /**
    * Returns whether the given array contains the specified value.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return {@code true}: the array contains the value specified
@@ -1034,6 +1002,7 @@ public final class JArray
   
   /**
    * Returns whether the given array contains the specified value.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return {@code true}: the array contains the value specified
@@ -1046,6 +1015,7 @@ public final class JArray
   
   /**
    * Returns whether the given array contains the specified value.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return {@code true}: the array contains the value specified
@@ -1058,6 +1028,7 @@ public final class JArray
   
   /**
    * Returns whether the given array contains the specified value.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return {@code true}: the array contains the value specified
@@ -1070,6 +1041,7 @@ public final class JArray
   
   /**
    * Returns whether the given array contains the specified boolean value.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return {@code true}: the array contains the value specified
@@ -1082,6 +1054,7 @@ public final class JArray
   
   /**
    * Returns whether the given array contains the specified character.
+   * 
    * @param arr the array through which to search
    * @param key the character searched for
    * @return {@code true}: the array contains the character specified
@@ -1094,6 +1067,7 @@ public final class JArray
   
   /**
    * Returns whether the given array contains the object specified.
+   * 
    * @param arr the array through which to search
    * @param key the object searched for
    * @return {@code true}: the array contains the given object
@@ -1110,6 +1084,7 @@ public final class JArray
    * instead return whether the provided array contains no instances of the
    * given element. If {@code x} is negative, an
    * {@code IllegalArgumentException} will be thrown.
+   * 
    * @param arr the array searched through
    * @param key the value searched for
    * @param x the number of occurrences expected
@@ -1120,7 +1095,8 @@ public final class JArray
   public static final boolean containsX(byte[] arr, byte key, int x)
   {
     if(x < 0)
-      throw new IllegalArgumentException("X must be nonnegative: an array cannot contain negative many instances.");
+      throw new IllegalArgumentException(
+          "X must be nonnegative: an array cannot contain negative many instances.");
     else if(x == 0)
       return !contains(arr, key);
     else
@@ -1133,6 +1109,7 @@ public final class JArray
    * instead return whether the provided array contains no instances of the
    * given element. If {@code x} is negative, an
    * {@code IllegalArgumentException} will be thrown.
+   * 
    * @param arr the array searched through
    * @param key the value searched for
    * @param x the number of occurrences expected
@@ -1143,7 +1120,8 @@ public final class JArray
   public static final boolean containsX(short[] arr, short key, int x)
   {
     if(x < 0)
-      throw new IllegalArgumentException("X must be nonnegative: an array cannot contain negative many instances.");
+      throw new IllegalArgumentException(
+          "X must be nonnegative: an array cannot contain negative many instances.");
     else if(x == 0)
       return !contains(arr, key);
     else
@@ -1156,6 +1134,7 @@ public final class JArray
    * instead return whether the provided array contains no instances of the
    * given element. If {@code x} is negative, an
    * {@code IllegalArgumentException} will be thrown.
+   * 
    * @param arr the array searched through
    * @param key the value searched for
    * @param x the number of occurrences expected
@@ -1166,7 +1145,8 @@ public final class JArray
   public static final boolean containsX(int[] arr, int key, int x)
   {
     if(x < 0)
-      throw new IllegalArgumentException("X must be nonnegative: an array cannot contain negative many instances.");
+      throw new IllegalArgumentException(
+          "X must be nonnegative: an array cannot contain negative many instances.");
     else if(x == 0)
       return !contains(arr, key);
     else
@@ -1179,6 +1159,7 @@ public final class JArray
    * instead return whether the provided array contains no instances of the
    * given element. If {@code x} is negative, an
    * {@code IllegalArgumentException} will be thrown.
+   * 
    * @param arr the array searched through
    * @param key the value searched for
    * @param x the number of occurrences expected
@@ -1189,7 +1170,8 @@ public final class JArray
   public static final boolean containsX(long[] arr, long key, int x)
   {
     if(x < 0)
-      throw new IllegalArgumentException("X must be nonnegative: an array cannot contain negative many instances.");
+      throw new IllegalArgumentException(
+          "X must be nonnegative: an array cannot contain negative many instances.");
     else if(x == 0)
       return !contains(arr, key);
     else
@@ -1202,6 +1184,7 @@ public final class JArray
    * instead return whether the provided array contains no instances of the
    * given element. If {@code x} is negative, an
    * {@code IllegalArgumentException} will be thrown.
+   * 
    * @param arr the array searched through
    * @param key the value searched for
    * @param x the number of occurrences expected
@@ -1212,7 +1195,8 @@ public final class JArray
   public static final boolean containsX(float[] arr, float key, int x)
   {
     if(x < 0)
-      throw new IllegalArgumentException("X must be nonnegative: an array cannot contain negative many instances.");
+      throw new IllegalArgumentException(
+          "X must be nonnegative: an array cannot contain negative many instances.");
     else if(x == 0)
       return !contains(arr, key);
     else
@@ -1225,6 +1209,7 @@ public final class JArray
    * instead return whether the provided array contains no instances of the
    * given element. If {@code x} is negative, an
    * {@code IllegalArgumentException} will be thrown.
+   * 
    * @param arr the array searched through
    * @param key the value searched for
    * @param x the number of occurrences expected
@@ -1235,7 +1220,8 @@ public final class JArray
   public static final boolean containsX(double[] arr, double key, int x)
   {
     if(x < 0)
-      throw new IllegalArgumentException("X must be nonnegative: an array cannot contain negative many instances.");
+      throw new IllegalArgumentException(
+          "X must be nonnegative: an array cannot contain negative many instances.");
     else if(x == 0)
       return !contains(arr, key);
     else
@@ -1248,6 +1234,7 @@ public final class JArray
    * return whether the provided array contains no instances of the given
    * element. If {@code x} is negative, an {@code IllegalArgumentException} will
    * be thrown.
+   * 
    * @param arr the array searched through
    * @param key the value searched for
    * @param x the number of occurrences expected
@@ -1258,7 +1245,8 @@ public final class JArray
   public static final boolean containsX(boolean[] arr, boolean key, int x)
   {
     if(x < 0)
-      throw new IllegalArgumentException("X must be nonnegative: an array cannot contain negative many instances.");
+      throw new IllegalArgumentException(
+          "X must be nonnegative: an array cannot contain negative many instances.");
     else if(x == 0)
       return !contains(arr, key);
     else
@@ -1271,6 +1259,7 @@ public final class JArray
    * return whether the provided array contains no instances of the given
    * element. If {@code x} is negative, an {@code IllegalArgumentException} will
    * be thrown.
+   * 
    * @param arr the array searched through
    * @param key the character searched for
    * @param x the number of occurrences expected
@@ -1281,7 +1270,8 @@ public final class JArray
   public static final boolean containsX(char[] arr, char key, int x)
   {
     if(x < 0)
-      throw new IllegalArgumentException("X must be nonnegative: an array cannot contain negative many instances.");
+      throw new IllegalArgumentException(
+          "X must be nonnegative: an array cannot contain negative many instances.");
     else if(x == 0)
       return !contains(arr, key);
     else
@@ -1293,6 +1283,7 @@ public final class JArray
    * object. If {@code x} is equal to {@code 0}, the method will instead return
    * whether the provided array contains no instances of the given element. If
    * {@code x} is negative, an {@code IllegalArgumentException} will be thrown.
+   * 
    * @param arr the array searched through
    * @param key the object searched for
    * @param x the number of occurrences expected
@@ -1304,7 +1295,8 @@ public final class JArray
   public static final boolean containsX(Object[] arr, Object key, int x)
   {
     if(x < 0)
-      throw new IllegalArgumentException("X must be nonnegative: an array cannot contain negative many instances.");
+      throw new IllegalArgumentException(
+          "X must be nonnegative: an array cannot contain negative many instances.");
     else if(x == 0)
       return !contains(arr, key);
     else
@@ -1314,6 +1306,7 @@ public final class JArray
   /**
    * Returns the index of the first equivalent value encountered, or {@code -1}
    * if none exists.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return the index of the first equivalent value, or {@code -1} if none
@@ -1324,12 +1317,11 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       for(int i = 0; i < arr.length; ++i)
         if(arr[i] == key)
           return i;
-      
+        
       return -1;
     }
   }
@@ -1337,6 +1329,7 @@ public final class JArray
   /**
    * Returns the index of the first equivalent value encountered, or {@code -1}
    * if none exists.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return the index of the first equivalent value, or {@code -1} if none
@@ -1347,12 +1340,11 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       for(int i = 0; i < arr.length; ++i)
         if(arr[i] == key)
           return i;
-      
+        
       return -1;
     }
   }
@@ -1360,6 +1352,7 @@ public final class JArray
   /**
    * Returns the index of the first equivalent value encountered, or {@code -1}
    * if none exists.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return the index of the first equivalent value, or {@code -1} if none
@@ -1370,12 +1363,11 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       for(int i = 0; i < arr.length; ++i)
         if(arr[i] == key)
           return i;
-      
+        
       return -1;
     }
   }
@@ -1383,6 +1375,7 @@ public final class JArray
   /**
    * Returns the index of the first equivalent value encountered, or {@code -1}
    * if none exists.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return the index of the first equivalent value, or {@code -1} if none
@@ -1393,12 +1386,11 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       for(int i = 0; i < arr.length; ++i)
         if(arr[i] == key)
           return i;
-      
+        
       return -1;
     }
   }
@@ -1406,6 +1398,7 @@ public final class JArray
   /**
    * Returns the index of the first equivalent value encountered, or {@code -1}
    * if none exists.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return the index of the first equivalent value, or {@code -1} if none
@@ -1416,12 +1409,11 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       for(int i = 0; i < arr.length; ++i)
         if(arr[i] == key)
           return i;
-      
+        
       return -1;
     }
   }
@@ -1429,6 +1421,7 @@ public final class JArray
   /**
    * Returns the index of the first equivalent value encountered, or {@code -1}
    * if none exists.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return the index of the first equivalent value, or {@code -1} if none
@@ -1439,12 +1432,11 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       for(int i = 0; i < arr.length; ++i)
         if(arr[i] == key)
           return i;
-      
+        
       return -1;
     }
   }
@@ -1452,6 +1444,7 @@ public final class JArray
   /**
    * Returns the index of the first equivalent value encountered, or {@code -1}
    * if none exists.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return the index of the first equivalent value, or {@code -1} if none
@@ -1462,12 +1455,11 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       for(int i = 0; i < arr.length; ++i)
         if(arr[i] == key)
           return i;
-      
+        
       return -1;
     }
   }
@@ -1475,6 +1467,7 @@ public final class JArray
   /**
    * Returns the index of the first equivalent character encountered, or
    * {@code -1} if none exists.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return the index of the first equivalent character, or {@code -1} if none
@@ -1485,12 +1478,11 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       for(int i = 0; i < arr.length; ++i)
         if(arr[i] == key)
           return i;
-      
+        
       return -1;
     }
   }
@@ -1498,6 +1490,7 @@ public final class JArray
   /**
    * Returns the index of the first equivalent object encountered, or {@code -1}
    * if none exists.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return the index of the first equivalent object, or {@code -1} if none
@@ -1508,12 +1501,11 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       for(int i = 0; i < arr.length; ++i)
         if((arr[i] != null) ? arr[i].equals(key) : key == null)
           return i;
-      
+        
       return -1;
     }
   }
@@ -1521,6 +1513,7 @@ public final class JArray
   /**
    * Returns the index of the array's last equivalent value, or {@code -1} if it
    * has none.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return the index of the last equivalent value, or {@code -1} if there is
@@ -1531,12 +1524,11 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       for(int i = arr.length - 1; i >= 0; --i)
         if(arr[i] == key)
           return i;
-      
+        
       return -1;
     }
   }
@@ -1544,6 +1536,7 @@ public final class JArray
   /**
    * Returns the index of the array's last equivalent value, or {@code -1} if it
    * has none.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return the index of the last equivalent value, or {@code -1} if there is
@@ -1554,12 +1547,11 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       for(int i = arr.length - 1; i >= 0; --i)
         if(arr[i] == key)
           return i;
-      
+        
       return -1;
     }
   }
@@ -1567,6 +1559,7 @@ public final class JArray
   /**
    * Returns the index of the array's last equivalent value, or {@code -1} if it
    * has none.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return the index of the last equivalent value, or {@code -1} if there is
@@ -1577,12 +1570,11 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       for(int i = arr.length - 1; i >= 0; --i)
         if(arr[i] == key)
           return i;
-      
+        
       return -1;
     }
   }
@@ -1590,6 +1582,7 @@ public final class JArray
   /**
    * Returns the index of the array's last equivalent value, or {@code -1} if it
    * has none.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return the index of the last equivalent value, or {@code -1} if there is
@@ -1600,12 +1593,11 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       for(int i = arr.length - 1; i >= 0; --i)
         if(arr[i] == key)
           return i;
-      
+        
       return -1;
     }
   }
@@ -1613,6 +1605,7 @@ public final class JArray
   /**
    * Returns the index of the array's last equivalent value, or {@code -1} if it
    * has none.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return the index of the last equivalent value, or {@code -1} if there is
@@ -1623,12 +1616,11 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       for(int i = arr.length - 1; i >= 0; --i)
         if(arr[i] == key)
           return i;
-      
+        
       return -1;
     }
   }
@@ -1636,6 +1628,7 @@ public final class JArray
   /**
    * Returns the index of the array's last equivalent value, or {@code -1} if it
    * has none.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return the index of the last equivalent value, or {@code -1} if there is
@@ -1646,12 +1639,11 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       for(int i = arr.length - 1; i >= 0; --i)
         if(arr[i] == key)
           return i;
-      
+        
       return -1;
     }
   }
@@ -1659,6 +1651,7 @@ public final class JArray
   /**
    * Returns the index of the array's last equivalent value, or {@code -1} if it
    * has none.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return the index of the last equivalent value, or {@code -1} if there is
@@ -1669,12 +1662,11 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       for(int i = arr.length - 1; i >= 0; --i)
         if(arr[i] == key)
           return i;
-      
+        
       return -1;
     }
   }
@@ -1682,6 +1674,7 @@ public final class JArray
   /**
    * Returns the index of the array's last equivalent character, or {@code -1}
    * if it has none.
+   * 
    * @param arr the array through which to search
    * @param key the value searched for
    * @return the index of the last equivalent character, or {@code -1} if there
@@ -1692,12 +1685,11 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       for(int i = arr.length - 1; i >= 0; --i)
         if(arr[i] == key)
           return i;
-      
+        
       return -1;
     }
   }
@@ -1705,6 +1697,7 @@ public final class JArray
   /**
    * Returns the index of the array's last equivalent object, or {@code -1} if
    * it has none.
+   * 
    * @param arr the array through which to search
    * @param key the object searched for
    * @return the index of the last equivalent object, or {@code -1} if there is
@@ -1715,12 +1708,11 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       for(int i = arr.length - 1; i >= 0; --i)
         if((arr[i] != null) ? arr[i].equals(key) : key == null)
           return i;
-      
+        
       return -1;
     }
   }
@@ -1752,13 +1744,12 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(n <= 0)
       throw new IllegalArgumentException("The value of n must be a positive number.");
-    else
-    {
+    else {
       int i, reps;
       for(i = 0, reps = 0; i < arr.length && reps < n; ++i)
         if(arr[i] == key)
           reps++;
-      
+        
       return (reps >= n) ? i - 1 : -(reps) - 1;
     }
   }
@@ -1790,13 +1781,12 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(n <= 0)
       throw new IllegalArgumentException("The value of n must be a positive number.");
-    else
-    {
+    else {
       int i, reps;
       for(i = 0, reps = 0; i < arr.length && reps < n; ++i)
         if(arr[i] == key)
           reps++;
-      
+        
       return (reps >= n) ? i - 1 : -(reps) - 1;
     }
   }
@@ -1828,13 +1818,12 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(n <= 0)
       throw new IllegalArgumentException("The value of n must be a positive number.");
-    else
-    {
+    else {
       int i, reps;
       for(i = 0, reps = 0; i < arr.length && reps < n; ++i)
         if(arr[i] == key)
           reps++;
-      
+        
       return (reps >= n) ? i - 1 : -(reps) - 1;
     }
   }
@@ -1866,13 +1855,12 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(n <= 0)
       throw new IllegalArgumentException("The value of n must be a positive number.");
-    else
-    {
+    else {
       int i, reps;
       for(i = 0, reps = 0; i < arr.length && reps < n; ++i)
         if(arr[i] == key)
           reps++;
-      
+        
       return (reps >= n) ? i - 1 : -(reps) - 1;
     }
   }
@@ -1904,13 +1892,12 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(n <= 0)
       throw new IllegalArgumentException("The value of n must be a positive number.");
-    else
-    {
+    else {
       int i, reps;
       for(i = 0, reps = 0; i < arr.length && reps < n; ++i)
         if(arr[i] == key)
           reps++;
-      
+        
       return (reps >= n) ? i - 1 : -(reps) - 1;
     }
   }
@@ -1942,13 +1929,12 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(n <= 0)
       throw new IllegalArgumentException("The value of n must be a positive number.");
-    else
-    {
+    else {
       int i, reps;
       for(i = 0, reps = 0; i < arr.length && reps < n; ++i)
         if(arr[i] == key)
           reps++;
-      
+        
       return (reps >= n) ? i - 1 : -(reps) - 1;
     }
   }
@@ -1980,13 +1966,12 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(n <= 0)
       throw new IllegalArgumentException("The value of n must be a positive number.");
-    else
-    {
+    else {
       int i, reps;
       for(i = 0, reps = 0; i < arr.length && reps < n; ++i)
         if(arr[i] == key)
           reps++;
-      
+        
       return (reps >= n) ? i - 1 : -(reps) - 1;
     }
   }
@@ -2018,13 +2003,12 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(n <= 0)
       throw new IllegalArgumentException("The value of n must be a positive number.");
-    else
-    {
+    else {
       int i, reps;
       for(i = 0, reps = 0; i < arr.length && reps < n; ++i)
         if(arr[i] == key)
           reps++;
-      
+        
       return (reps >= n) ? i - 1 : -(reps) - 1;
     }
   }
@@ -2056,19 +2040,19 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(n <= 0)
       throw new IllegalArgumentException("The value of n must be a positive number.");
-    else
-    {
+    else {
       int i, reps;
       for(i = 0, reps = 0; i < arr.length && reps < n; ++i)
         if((arr[i] != null) ? arr[i].equals(key) : key == null)
           reps++;
-      
+        
       return (reps == n) ? i - 1 : -(reps) - 1;
     }
   }
   
   /**
    * Returns an array containing all indices at which the given key occurs.
+   * 
    * @param arr the array searched through
    * @param key the {@code byte} value searched for
    * @return an array containing all indices at which the key was found
@@ -2080,13 +2064,10 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(arr.length == 0)
       return new int[0];
-    else
-    {
+    else {
       int[] indices = new int[numberOf(arr, key)];
-      for(int i = 0, n = 0; i < arr.length; ++i)
-      {
-        if(arr[i] == key)
-        {
+      for(int i = 0, n = 0; i < arr.length; ++i) {
+        if(arr[i] == key) {
           indices[n++] = i;
         }
       }
@@ -2097,6 +2078,7 @@ public final class JArray
   
   /**
    * Returns an array containing all indices at which the given key occurs.
+   * 
    * @param arr the array searched through
    * @param key the {@code short} value searched for
    * @return an array containing all indices at which the key was found
@@ -2108,13 +2090,10 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(arr.length == 0)
       return new int[0];
-    else
-    {
+    else {
       int[] indices = new int[numberOf(arr, key)];
-      for(int i = 0, n = 0; i < arr.length; ++i)
-      {
-        if(arr[i] == key)
-        {
+      for(int i = 0, n = 0; i < arr.length; ++i) {
+        if(arr[i] == key) {
           indices[n++] = i;
         }
       }
@@ -2125,6 +2104,7 @@ public final class JArray
   
   /**
    * Returns an array containing all indices at which the given key occurs.
+   * 
    * @param arr the array searched through
    * @param key the {@code int} value searched for
    * @return an array containing all indices at which the key was found
@@ -2136,13 +2116,10 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(arr.length == 0)
       return new int[0];
-    else
-    {
+    else {
       int[] indices = new int[numberOf(arr, key)];
-      for(int i = 0, n = 0; i < arr.length; ++i)
-      {
-        if(arr[i] == key)
-        {
+      for(int i = 0, n = 0; i < arr.length; ++i) {
+        if(arr[i] == key) {
           indices[n++] = i;
         }
       }
@@ -2153,6 +2130,7 @@ public final class JArray
   
   /**
    * Returns an array containing all indices at which the given key occurs.
+   * 
    * @param arr the array searched through
    * @param key the {@code long} value searched for
    * @return an array containing all indices at which the key was found
@@ -2164,13 +2142,10 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(arr.length == 0)
       return new int[0];
-    else
-    {
+    else {
       int[] indices = new int[numberOf(arr, key)];
-      for(int i = 0, n = 0; i < arr.length; ++i)
-      {
-        if(arr[i] == key)
-        {
+      for(int i = 0, n = 0; i < arr.length; ++i) {
+        if(arr[i] == key) {
           indices[n++] = i;
         }
       }
@@ -2181,6 +2156,7 @@ public final class JArray
   
   /**
    * Returns an array containing all indices at which the given key occurs.
+   * 
    * @param arr the array searched through
    * @param key the {@code float} value searched for
    * @return an array containing all indices at which the key was found
@@ -2192,13 +2168,10 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(arr.length == 0)
       return new int[0];
-    else
-    {
+    else {
       int[] indices = new int[numberOf(arr, key)];
-      for(int i = 0, n = 0; i < arr.length; ++i)
-      {
-        if(arr[i] == key)
-        {
+      for(int i = 0, n = 0; i < arr.length; ++i) {
+        if(arr[i] == key) {
           indices[n++] = i;
         }
       }
@@ -2209,6 +2182,7 @@ public final class JArray
   
   /**
    * Returns an array containing all indices at which the given key occurs.
+   * 
    * @param arr the array searched through
    * @param key the {@code double} value searched for
    * @return an array containing all indices at which the key was found
@@ -2220,13 +2194,10 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(arr.length == 0)
       return new int[0];
-    else
-    {
+    else {
       int[] indices = new int[numberOf(arr, key)];
-      for(int i = 0, n = 0; i < arr.length; ++i)
-      {
-        if(arr[i] == key)
-        {
+      for(int i = 0, n = 0; i < arr.length; ++i) {
+        if(arr[i] == key) {
           indices[n++] = i;
         }
       }
@@ -2237,6 +2208,7 @@ public final class JArray
   
   /**
    * Returns an array containing all indices at which the given key occurs.
+   * 
    * @param arr the array searched through
    * @param key the {@code boolean} value searched for
    * @return an array containing all indices at which the key was found
@@ -2248,13 +2220,10 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(arr.length == 0)
       return new int[0];
-    else
-    {
+    else {
       int[] indices = new int[numberOf(arr, key)];
-      for(int i = 0, n = 0; i < arr.length; ++i)
-      {
-        if(arr[i] == key)
-        {
+      for(int i = 0, n = 0; i < arr.length; ++i) {
+        if(arr[i] == key) {
           indices[n++] = i;
         }
       }
@@ -2265,6 +2234,7 @@ public final class JArray
   
   /**
    * Returns an array containing all indices at which the given key occurs.
+   * 
    * @param arr the array searched through
    * @param key the {@code char} value searched for
    * @return an array containing all indices at which the key was found
@@ -2276,13 +2246,10 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(arr.length == 0)
       return new int[0];
-    else
-    {
+    else {
       int[] indices = new int[numberOf(arr, key)];
-      for(int i = 0, n = 0; i < arr.length; ++i)
-      {
-        if(arr[i] == key)
-        {
+      for(int i = 0, n = 0; i < arr.length; ++i) {
+        if(arr[i] == key) {
           indices[n++] = i;
         }
       }
@@ -2293,6 +2260,7 @@ public final class JArray
   
   /**
    * Returns an array containing all indices at which the given key occurs.
+   * 
    * @param arr the array searched through
    * @param key the object searched for
    * @return an array containing all indices at which the key was found
@@ -2304,13 +2272,10 @@ public final class JArray
       throw new NullPointerException("Cannot work with a null array.");
     else if(arr.length == 0)
       return new int[0];
-    else
-    {
+    else {
       int[] indices = new int[numberOf(arr, key)];
-      for(int i = 0, n = 0; i < arr.length; ++i)
-      {
-        if((arr[i] != null) ? arr[i].equals(key) : key == null)
-        {
+      for(int i = 0, n = 0; i < arr.length; ++i) {
+        if((arr[i] != null) ? arr[i].equals(key) : key == null) {
           indices[n++] = i;
         }
       }
@@ -2322,6 +2287,7 @@ public final class JArray
   /**
    * Returns the number of {@code byte} values equal to the given key found in
    * the array provided.
+   * 
    * @param arr the array searched through.
    * @param key the {@code byte} value searched for
    * @return the number of equivalent values found in the array
@@ -2331,14 +2297,13 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       int n = 0;
       
       for(byte b : arr)
         if(b == key)
           ++n;
-      
+        
       return n;
     }
   }
@@ -2346,6 +2311,7 @@ public final class JArray
   /**
    * Returns the number of {@code short} values equal to the given key found in
    * the array provided.
+   * 
    * @param arr the array searched through.
    * @param key the {@code short} value searched for
    * @return the number of equivalent values found in the array
@@ -2355,14 +2321,13 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       int n = 0;
       
       for(short s : arr)
         if(s == key)
           ++n;
-      
+        
       return n;
     }
   }
@@ -2370,6 +2335,7 @@ public final class JArray
   /**
    * Returns the number of {@code int} values equal to the given key found in
    * the array provided.
+   * 
    * @param arr the array searched through.
    * @param key the {@code int} value searched for
    * @return the number of equivalent values found in the array
@@ -2379,14 +2345,13 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       int n = 0;
       
       for(int i : arr)
         if(i == key)
           ++n;
-      
+        
       return n;
     }
   }
@@ -2394,6 +2359,7 @@ public final class JArray
   /**
    * Returns the number of {@code long} values equal to the given key found in
    * the array provided.
+   * 
    * @param arr the array searched through.
    * @param key the {@code long} value searched for
    * @return the number of equivalent values found in the array
@@ -2403,14 +2369,13 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       int n = 0;
       
       for(long l : arr)
         if(l == key)
           ++n;
-      
+        
       return n;
     }
   }
@@ -2418,6 +2383,7 @@ public final class JArray
   /**
    * Returns the number of {@code float} values equal to the given key found in
    * the array provided.
+   * 
    * @param arr the array searched through.
    * @param key the {@code float} value searched for
    * @return the number of equivalent values found in the array
@@ -2427,14 +2393,13 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       int n = 0;
       
       for(float f : arr)
         if(f == key)
           ++n;
-      
+        
       return n;
     }
   }
@@ -2442,6 +2407,7 @@ public final class JArray
   /**
    * Returns the number of {@code double} values equal to the given key found in
    * the array provided.
+   * 
    * @param arr the array searched through.
    * @param key the {@code double} value searched for
    * @return the number of equivalent values found in the array
@@ -2451,14 +2417,13 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       int n = 0;
       
       for(double d : arr)
         if(d == key)
           ++n;
-      
+        
       return n;
     }
   }
@@ -2466,6 +2431,7 @@ public final class JArray
   /**
    * Returns the number of {@code boolean} values equal to the given key found
    * in the array provided.
+   * 
    * @param arr the array searched through.
    * @param key the {@code boolean} value searched for
    * @return the number of equivalent values found in the array
@@ -2475,14 +2441,13 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       int n = 0;
       
       for(boolean b : arr)
         if(b == key)
           ++n;
-      
+        
       return n;
     }
   }
@@ -2490,6 +2455,7 @@ public final class JArray
   /**
    * Returns the number of characters equal to the given key found in the array
    * provided.
+   * 
    * @param arr the array searched through.
    * @param key the character searched for
    * @return the number of equivalent values found in the array
@@ -2499,14 +2465,13 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       int n = 0;
       
       for(char c : arr)
         if(c == key)
           ++n;
-      
+        
       return n;
     }
   }
@@ -2514,6 +2479,7 @@ public final class JArray
   /**
    * Returns the number of objects equal to the given key found in the array
    * provided. This is as according to their {@code equals} method.
+   * 
    * @param arr the array searched through.
    * @param key the object searched for
    * @return the number of equivalent objects found in the array
@@ -2523,14 +2489,13 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       int n = 0;
       
       for(Object o : arr)
         if((o != null) ? o.equals(key) : key == null)
           ++n;
-      
+        
       return n;
     }
   }
@@ -2538,6 +2503,7 @@ public final class JArray
   /**
    * Returns an array of primitive {@code byte} values equal to the instances of
    * type {@code Byte} contained in the given array.
+   * 
    * @param arr the wrapper-type array to be converted
    * @return a primitive array with identical contents to that provided
    * @throws ArrayStoreException if the wrapper-type array contains {@code null}
@@ -2548,8 +2514,7 @@ public final class JArray
   {
     if(contains(arr, null))
       throw new ArrayStoreException("The array contains null: this cannot be converted into a primitive value.");
-    else
-    {
+    else {
       byte[] primitive = new byte[arr.length];
       
       for(int i = 0; i < arr.length; ++i)
@@ -2562,6 +2527,7 @@ public final class JArray
   /**
    * Returns an array of primitive {@code short} values equal to the instances
    * of type {@code Short} contained in the given array.
+   * 
    * @param arr the wrapper-type array to be converted
    * @return a primitive array with identical contents to that provided
    * @throws ArrayStoreException if the wrapper-type array contains {@code null}
@@ -2572,8 +2538,7 @@ public final class JArray
   {
     if(contains(arr, null))
       throw new ArrayStoreException("The array contains null: this cannot be converted into a primitive value.");
-    else
-    {
+    else {
       short[] primitive = new short[arr.length];
       
       for(int i = 0; i < arr.length; ++i)
@@ -2586,6 +2551,7 @@ public final class JArray
   /**
    * Returns an array of primitive {@code int} values equal to the instances of
    * type {@code Integer} contained in the given array.
+   * 
    * @param arr the wrapper-type array to be converted
    * @return a primitive array with identical contents to that provided
    * @throws ArrayStoreException if the wrapper-type array contains {@code null}
@@ -2596,8 +2562,7 @@ public final class JArray
   {
     if(contains(arr, null))
       throw new ArrayStoreException("The array contains null: this cannot be converted into a primitive value.");
-    else
-    {
+    else {
       int[] primitive = new int[arr.length];
       
       for(int i = 0; i < arr.length; ++i)
@@ -2610,6 +2575,7 @@ public final class JArray
   /**
    * Returns an array of primitive {@code long} values equal to the instances of
    * type {@code Long} contained in the given array.
+   * 
    * @param arr the wrapper-type array to be converted
    * @return a primitive array with identical contents to that provided
    * @throws ArrayStoreException if the wrapper-type array contains {@code null}
@@ -2620,8 +2586,7 @@ public final class JArray
   {
     if(contains(arr, null))
       throw new ArrayStoreException("The array contains null: this cannot be converted into a primitive value.");
-    else
-    {
+    else {
       long[] primitive = new long[arr.length];
       
       for(int i = 0; i < arr.length; ++i)
@@ -2634,6 +2599,7 @@ public final class JArray
   /**
    * Returns an array of primitive {@code float} values equal to the instances
    * of type {@code Float} contained in the given array.
+   * 
    * @param arr the wrapper-type array to be converted
    * @return a primitive array with identical contents to that provided
    * @throws ArrayStoreException if the wrapper-type array contains {@code null}
@@ -2644,8 +2610,7 @@ public final class JArray
   {
     if(contains(arr, null))
       throw new ArrayStoreException("The array contains null: this cannot be converted into a primitive value.");
-    else
-    {
+    else {
       float[] primitive = new float[arr.length];
       
       for(int i = 0; i < arr.length; ++i)
@@ -2658,6 +2623,7 @@ public final class JArray
   /**
    * Returns an array of primitive {@code double} values equal to the instances
    * of type {@code Double} contained in the given array.
+   * 
    * @param arr the wrapper-type array to be converted
    * @return a primitive array with identical contents to that provided
    * @throws ArrayStoreException if the wrapper-type array contains {@code null}
@@ -2668,8 +2634,7 @@ public final class JArray
   {
     if(contains(arr, null))
       throw new ArrayStoreException("The array contains null: this cannot be converted into a primitive value.");
-    else
-    {
+    else {
       double[] primitive = new double[arr.length];
       
       for(int i = 0; i < arr.length; ++i)
@@ -2682,6 +2647,7 @@ public final class JArray
   /**
    * Returns an array of primitive {@code boolean} values equal to the instances
    * of type {@code Boolean} contained in the given array.
+   * 
    * @param arr the wrapper-type array to be converted
    * @return a primitive array with identical contents to that provided
    * @throws ArrayStoreException if the wrapper-type array contains {@code null}
@@ -2692,8 +2658,7 @@ public final class JArray
   {
     if(contains(arr, null))
       throw new ArrayStoreException("The array contains null: this cannot be converted into a primitive value.");
-    else
-    {
+    else {
       boolean[] primitive = new boolean[arr.length];
       
       for(int i = 0; i < arr.length; ++i)
@@ -2706,6 +2671,7 @@ public final class JArray
   /**
    * Returns an array of primitive {@code char} values equal to the instances of
    * type {@code Character} contained in the given array.
+   * 
    * @param arr the wrapper-type array to be converted
    * @return a primitive array with identical contents to that provided
    * @throws ArrayStoreException if the wrapper-type array contains {@code null}
@@ -2716,8 +2682,7 @@ public final class JArray
   {
     if(contains(arr, null))
       throw new ArrayStoreException("The array contains null: this cannot be converted into a primitive value.");
-    else
-    {
+    else {
       char[] primitive = new char[arr.length];
       
       for(int i = 0; i < arr.length; ++i)
@@ -2730,6 +2695,7 @@ public final class JArray
   /**
    * Returns an array of {@code Byte}s whose contents wrap the same values
    * contained in the provided array of primitive values.
+   * 
    * @param arr the array to be converted into its equivalent wrapper type array
    * @return an array of the type which wraps the contents of that provided
    * @throws NullPointerException if the array provided is a null reference
@@ -2738,8 +2704,7 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       Byte[] wrapper = new Byte[arr.length];
       
       for(int i = 0; i < arr.length; ++i)
@@ -2752,6 +2717,7 @@ public final class JArray
   /**
    * Returns an array of {@code Short}s whose contents wrap the same values
    * contained in the provided array of primitive values.
+   * 
    * @param arr the array to be converted into its equivalent wrapper type array
    * @return an array of the type which wraps the contents of that provided
    * @throws NullPointerException if the array provided is a null reference
@@ -2760,8 +2726,7 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       Short[] wrapper = new Short[arr.length];
       
       for(int i = 0; i < arr.length; ++i)
@@ -2774,6 +2739,7 @@ public final class JArray
   /**
    * Returns an array of {@code Integer}s whose contents wrap the same values
    * contained in the provided array of primitive values.
+   * 
    * @param arr the array to be converted into its equivalent wrapper type array
    * @return an array of the type which wraps the contents of that provided
    * @throws NullPointerException if the array provided is a null reference
@@ -2782,8 +2748,7 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       Integer[] wrapper = new Integer[arr.length];
       
       for(int i = 0; i < arr.length; ++i)
@@ -2796,6 +2761,7 @@ public final class JArray
   /**
    * Returns an array of {@code Long}s whose contents wrap the same values
    * contained in the provided array of primitive values.
+   * 
    * @param arr the array to be converted into its equivalent wrapper type array
    * @return an array of the type which wraps the contents of that provided
    * @throws NullPointerException if the array provided is a null reference
@@ -2804,8 +2770,7 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       Long[] wrapper = new Long[arr.length];
       
       for(int i = 0; i < arr.length; ++i)
@@ -2818,6 +2783,7 @@ public final class JArray
   /**
    * Returns an array of {@code Float}s whose contents wrap the same values
    * contained in the provided array of primitive values.
+   * 
    * @param arr the array to be converted into its equivalent wrapper type array
    * @return an array of the type which wraps the contents of that provided
    * @throws NullPointerException if the array provided is a null reference
@@ -2826,8 +2792,7 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       Float[] wrapper = new Float[arr.length];
       
       for(int i = 0; i < arr.length; ++i)
@@ -2840,6 +2805,7 @@ public final class JArray
   /**
    * Returns an array of {@code Double}s whose contents wrap the same values
    * contained in the provided array of primitive values.
+   * 
    * @param arr the array to be converted into its equivalent wrapper type array
    * @return an array of the type which wraps the contents of that provided
    * @throws NullPointerException if the array provided is a null reference
@@ -2848,8 +2814,7 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       Double[] primitive = new Double[arr.length];
       
       for(int i = 0; i < arr.length; ++i)
@@ -2862,6 +2827,7 @@ public final class JArray
   /**
    * Returns an array of {@code Boolean}s whose contents wrap the same values
    * contained in the provided array of primitive values.
+   * 
    * @param arr the array to be converted into its equivalent wrapper type array
    * @return an array of the type which wraps the contents of that provided
    * @throws NullPointerException if the array provided is a null reference
@@ -2870,8 +2836,7 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       Boolean[] wrapper = new Boolean[arr.length];
       
       for(int i = 0; i < arr.length; ++i)
@@ -2884,6 +2849,7 @@ public final class JArray
   /**
    * Returns an array of {@code Character}s whose contents wrap the same values
    * contained in the provided array of primitive values.
+   * 
    * @param arr the array to be converted into its equivalent wrapper type array
    * @return an array of the type which wraps the contents of that provided
    * @throws NullPointerException if the array provided is a null reference
@@ -2892,8 +2858,7 @@ public final class JArray
   {
     if(arr == null)
       throw new NullPointerException("Cannot work with a null array.");
-    else
-    {
+    else {
       Character[] wrapper = new Character[arr.length];
       
       for(int i = 0; i < arr.length; ++i)
