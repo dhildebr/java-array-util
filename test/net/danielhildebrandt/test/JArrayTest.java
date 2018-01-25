@@ -22,7 +22,11 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
@@ -110,7 +114,7 @@ public final class JArrayTest
     }
     
     @Test(expected = ArrayStoreException.class)
-    public final void insert_EmptyInsertion()
+    public final void insert_EmptyElemInsertion()
     {
       String[] arr = {"Weasley", "Granger", "Riddle", "Potter", null, null, null};
       insert(arr, null, 0, null);
@@ -120,7 +124,7 @@ public final class JArrayTest
   public static final class InsertBlockTest
   {
     @Test
-    public final void insertBlock_NullEmptyElement()
+    public final void insertBlock_Varargs_NullEmptyElement()
     {
       String[] before = {"Mercury", "Venus", "Earth", "Mars", null, null, null};
       String[] after = {"Ceres", "Luna", "Sol", "Mercury", "Venus", "Earth", "Mars"};
@@ -130,7 +134,7 @@ public final class JArrayTest
     }
     
     @Test
-    public final void insertBlock_NonNullEmptyElement()
+    public final void insertBlock_Varargs_NonNullEmptyElement()
     {
       Object[] before = {"Jupiter", "Saturn", "Uranus", "Neptune", "", "", ""};
       Object[] after = {"Jupiter", "Saturn", "Europa", "Io", "Uranus", "Neptune", ""};
@@ -140,7 +144,7 @@ public final class JArrayTest
     }
     
     @Test
-    public final void insertBlock_EmptyElemFilledReceivingArray()
+    public final void insertBlock_Varargs_EmptyElemFilledReceivingArray()
     {
       String[] before = {null, null, null, null, null};
       String[] after = {"Gravitational slingshot", "Cassini", null, null, null};
@@ -150,7 +154,7 @@ public final class JArrayTest
     }
     
     @Test
-    public final void insertBlock_EmptyInsertionArray()
+    public final void insertBlock_Varargs_EmptyInsertionArray()
     {
       String[] before = {"Betelgeuse", "Sirius", "Proxima Centauri", "", ""};
       String[] after = {"Betelgeuse", "Sirius", "Proxima Centauri", "", ""};
@@ -160,59 +164,193 @@ public final class JArrayTest
     }
     
     @Test(expected = NullPointerException.class)
-    public final void insertBlock_NullReceivingArray()
+    public final void insertBlock_Varargs_NullReceivingArray()
     {
       Object[] arr = null;
       insertBlock(arr, null, 0, "Hydrogen");
     }
     
     @Test(expected = NullPointerException.class)
-    public final void insertBlock_NullInsertionArray()
+    public final void insertBlock_Varargs_NullInsertionArray()
     {
       Object[] arr = {"Fusion", "Fission", ""};
       insertBlock(arr, "", 1, (Object[]) null);
     }
     
     @Test(expected = IllegalArgumentException.class)
-    public final void insertBlock_EmptyReceivingArray()
+    public final void insertBlock_Varargs_EmptyReceivingArray()
     {
       Object[] arr = {};
       insertBlock(arr, null, 0, "Stardust", "Relativity", "Gravitation");
     }
     
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public final void insertBlock_IndexBelowBounds()
+    public final void insertBlock_Varargs_IndexBelowBounds()
     {
       String[] arr = {"Asteroids", "Kuiper Belt", "Oort Cloud", null, null};
       insertBlock(arr, null, -1, "Comets", "67P");
     }
     
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public final void insertBlock_IndexAboveBounds()
+    public final void insertBlock_Varargs_IndexAboveBounds()
     {
       Object[] arr = {"Light-years", "Parsecs", "Warp bubble", "Galatic Core", null, null, null};
       insertBlock(arr, null, 5, "Supermassive Black Hole", "Barred Spiral", "Bent Light");
     }
     
     @Test(expected = IncompleteArrayException.class)
-    public final void insertBlock_IncompleteArray()
+    public final void insertBlock_Varargs_IncompleteArray()
     {
       Object[] arr = {"Rosetta", "", "Philae", "Churyumov-Gerasimenko", ""};
       insertBlock(arr, "", 1, "67P");
     }
     
     @Test(expected = ArrayStoreException.class)
-    public final void insertBlock_InsufficientSpace()
+    public final void insertBlock_Varargs_InsufficientSpace()
     {
       Object[] arr = {"Atlas", "Redstone", "Saturn", "V-2", "R-7"};
       insertBlock(arr, null, 2, "Cosmos", "Proton");
     }
     
     @Test(expected = ArrayStoreException.class)
-    public final void insertBlock_EmptyInsertion()
+    public final void insertBlock_Varargs_EmptyElemInsertion()
     {
       Object[] arr = {"Perceus", "Saggitarius", null, null, null};
       insertBlock(arr, null, 2, "Andromeda", null, "Nemesis");
+    }
+    
+    @Test
+    public final void insertBlock_Collection_NullEmptyElement()
+    {
+      String[] before = {"Neutron star", "Blazar", null, null, null};
+      String[] after = {"Neutron star", "Oodles of empty space!", "Gemini", "Blazar", null};
+      
+      List<String> insertion = new ArrayList<String>(2);
+      insertion.add("Oodles of empty space!");
+      insertion.add("Gemini");
+      
+      insertBlock(before, null, 1, insertion);
+      assertThat(before, is(equalTo(after)));
+    }
+    
+    @Test
+    public final void insertBlock_Collection_NonNullEmptyElement()
+    {
+      Object[] before = {"Planets!", "Stars!", "Space!", "Space!", "Space!"};
+      Object[] after = {"Planets!", "Nebulae!", "Scary black holes!", "Galaxies!", "Stars!"};
+      
+      List<String> insertion = new LinkedList<String>();
+      insertion.add("Nebulae!");
+      insertion.add("Scary black holes!");
+      insertion.add("Galaxies!");
+      
+      insertBlock(before, "Space!", 1, insertion);
+      assertThat(before, is(equalTo(after)));
+    }
+    
+    @Test
+    public final void insertBlock_Collection_EmptyElemFilledReceivingArray()
+    {
+      String[] before = {"", "", ""};
+      String[] after = {"Pisces", "", ""};
+      
+      Collection<String> insertion = new ArrayList<String>(1);
+      insertion.add("Pisces");
+      
+      insertBlock(before, "", 0, insertion);
+      assertThat(before, is(equalTo(after)));
+    }
+    
+    @Test
+    public final void insertBlock_Collection_EmptyInsertionCollection()
+    {
+      String[] before = {"Redstone rocket", "Hyperbolic orbit", "Escape velocity", "Dosvedanya", null};
+      String[] after = {"Redstone rocket", "Hyperbolic orbit", "Escape velocity", "Dosvedanya", null};
+      
+      List<String> insertion = new ArrayList<String>(0);
+      
+      insertBlock(before, null, 2, insertion);
+      assertThat(before, is(equalTo(after)));
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public final void insertBlock_Collection_NullReceivingArray()
+    {
+      Object[] arr = null;
+      Collection<Object> insertion = new ArrayList<Object>(1);
+      insertion.add("Cosmonauts");
+      
+      insertBlock(arr, null, 0, insertion);
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public final void insertBlock_Collection_NullInsertionCollection()
+    {
+      String[] arr = {"Astronauts", "", ""};
+      List<String> insertion = null;
+      
+      insertBlock(arr, "", 1, insertion);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public final void insertBlock_Collection_EmptyReceivingArray()
+    {
+      String[] arr = {};
+      List<Object> insertion = new ArrayList<Object>(2);
+      insertion.add("Constellations");
+      insertion.add("Retrograde");
+      
+      insertBlock(arr, null, 0, insertion);
+    }
+    
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public final void insertBlock_Collection_IndexBelowBounds()
+    {
+      String[] arr = {"Gravity", "Electromagnetism", ""};
+      Collection<String> insertion = new LinkedList<String>();
+      insertion.add("Strong force");
+      
+      insertBlock(arr, "", -1, insertion);
+    }
+    
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public final void insertBlock_Collection_IndexAboveBounds()
+    {
+      String[] arr = {"Electromagnetism", "Gravity", ""};
+      Collection<String> insertion = new LinkedList<String>();
+      insertion.add("Weak force");
+      
+      insertBlock(arr, "", 3, insertion);
+    }
+    
+    @Test(expected = IncompleteArrayException.class)
+    public final void insertBlock_Collection_IncompleteArray()
+    {
+      Object[] arr = {"Micro-meteors", null, "Airlock", "Pressurization", null};
+      ArrayList<String> insertion = new ArrayList<String>(1);
+      insertion.add("Asphyxiation");
+      
+      insertBlock(arr, null, 1, insertion);
+    }
+    
+    @Test(expected = ArrayStoreException.class)
+    public final void insertBlock_Collection_InsufficientSpace()
+    {
+      String[] arr = {"Radio burst"};
+      Collection<String> insertion = new LinkedList<String>();
+      insertion.add("Spacesuit");
+      
+      insertBlock(arr, "", 0, insertion);
+    }
+    
+    @Test(expected = ArrayStoreException.class)
+    public final void insertBlock_Collection_EmptyElemInsertion()
+    {
+      Object[] arr = {"Solar wind", "", ""};
+      List<Object> insertion = new LinkedList<Object>();
+      insertion.add("");
+      
+      insertBlock(arr, "", 0, insertion);
     }
   }
   

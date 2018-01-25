@@ -1,7 +1,9 @@
 package net.danielhildebrandt;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 
 /**
  * <p>
@@ -24,7 +26,6 @@ public final class JArray
   }
   
   /**
-   * <p>
    * Inserts the given element at the provided index, moving subsequent elements
    * out of the way to make room. The "empty element" is the element used in the
    * array to represent an empty spot - this is often simply {@code null}, but
@@ -56,13 +57,12 @@ public final class JArray
    * 
    * @see #isComplete(Object[], Object)
    */
-  public static final <T> void insert(T[] arr, T emptyElem, int index, T newElem)
+  public static final <E> void insert(E[] arr, E emptyElem, int index, E newElem)
   {
     insertBlock(arr, emptyElem, index, newElem);
   }
   
   /**
-   * <p>
    * Inserts zero or more elements into the array provided, moving subsequent
    * elements out of the way to make room. The index provided signifies the
    * point at which the first element in the varargs-array will be inserted;
@@ -102,10 +102,12 @@ public final class JArray
    * @see #isComplete(Object[], Object)
    */
   @SafeVarargs
-  public static final <T> void insertBlock(T[] arr, T emptyElem, int index, T ... newElems)
+  public static final <E> void insertBlock(E[] arr, E emptyElem, int index, E ... newElems)
   {
-    if(arr == null || newElems == null)
-      throw new NullPointerException("The receiving array (and the array of new elements) must be non-null.");
+    if(arr == null)
+      throw new NullPointerException("The receiving array must be non-null.");
+    else if(newElems == null)
+      throw new NullPointerException("The array of new elements must be non-null.");
     else if(arr.length == 0)
       throw new IllegalArgumentException("The receiving array must be non-empty.");
     else if(newElems.length == 0)
@@ -130,7 +132,68 @@ public final class JArray
   }
   
   /**
+   * Inserts the contents of the provided {@link java.util.Collection
+   * Collection} into an array at the given index, moving subsequent elements
+   * out of the way. The index provided signifies the point at which the first
+   * element in the collection will be inserted; subsequent elements will be
+   * placed in the following spaces. Elements are inserted in the order returned
+   * by the collection's {@link java.util.Iterator Iterator}. The "empty
+   * element" is the element used in the array to represent an empty spot - this
+   * is often simply {@code null}, but can also be a pseudo-empty element if
+   * {@code null} is to be considered a valid element. If the collection of
+   * inserted elements is of zero length, this method will return without
+   * modification nor error.
    * <p>
+   * This method will not reallocate the array if there is insufficient space to
+   * store the new elements in it; the user must check its capacity prior to
+   * calling. If insufficient space is detected, an {@code ArrayStoreException}
+   * will be thrown. One will also be thrown if the elements to be inserted
+   * include one or more instances of the empty element, as this could create
+   * holes in the array.
+   * <p>
+   * This method ensures that the receiving array is complete both before and
+   * after its execution. Completeness is defined by the array in question
+   * having all instances of the empty element placed only at its trailing end.
+   * Refer also to {@link #isComplete(Object[], Object) isComplete}.
+   * 
+   * @param arr the array inserted into; the receiving array
+   * @param emptyElem the element representing "nothing" in the array
+   * @param index the index where the first element will be inserted
+   * @param newElems a {@code Collection} of new elements to insert
+   * 
+   * @see #isComplete(Object[], Object)
+   */
+  public static final <E> void insertBlock(E[] arr, E emptyElem, int index, Collection<? extends E> newElems)
+  {
+    if(arr == null)
+      throw new NullPointerException("The receiving array must be non-null.");
+    else if(newElems == null)
+      throw new NullPointerException("The collection of new elements cannot be a null reference.");
+    else if(arr.length == 0)
+      throw new IllegalArgumentException("The receiving array must be non-empty.");
+    else if(newElems.size() == 0)
+      return;
+    else if(!isComplete(arr, emptyElem))
+      throw new IncompleteArrayException(arr, emptyElem);
+    else if(!containsX(arr, emptyElem, newElems.size()))
+      throw new ArrayStoreException(
+          "The receiving array has insufficient empty space to hold the new element(s).");
+    else if(index < 0 || index > indexOf(arr, emptyElem))
+      throw new ArrayIndexOutOfBoundsException(
+          String.format("Index <%d> disobeys bounds: [0, indexOf(arr, emptyElem)], currently [0, %d].", index,
+              indexOf(arr, emptyElem)));
+    else if(newElems.contains(emptyElem))
+      throw new ArrayStoreException("Cannot insert the empty element into the array; this could create a hole.");
+    else {
+      Iterator<? extends E> newElemsIter = newElems.iterator();
+      for(int i = arr.length - 1; i >= index + newElems.size(); --i)
+        arr[i] = arr[i - newElems.size()];
+      for(int i = index; i < index + newElems.size(); ++i)
+        arr[i] = newElemsIter.next();
+    }
+  }
+  
+  /**
    * Removes the element at the given index from the provided array, shifting
    * subsequent elements into the gap. This method then also returns the element
    * removed. The "empty element" is the element used in the array to represent
@@ -161,7 +224,6 @@ public final class JArray
   }
   
   /**
-   * <p>
    * Removes all elements from {@code fromIndex}, inclusive, to {@code toIndex},
    * exclusive, shifting subsequent elements into the gap. This method then also
    * returns an array containing the removed elements, in the order in which
@@ -238,7 +300,6 @@ public final class JArray
   }
   
   /**
-   * <p>
    * Returns whether the array provided is "complete," in the sense that the
    * word is also used to describe the array backing a binary heap.
    * <p>
@@ -283,7 +344,6 @@ public final class JArray
   }
   
   /**
-   * <p>
    * Returns whether the given array is sorted, in line with the natural
    * ordering of its elements. This method will ignore any instances of
    * {@code null} within the array - as the contract of the
@@ -327,7 +387,6 @@ public final class JArray
   }
   
   /**
-   * <p>
    * Returns whether the given array is sorted, in line with the total ordering
    * of the comparator provided. No special behavior is applied for null
    * elements within the array: if the comparator supplied throws an exception
