@@ -218,7 +218,7 @@ public final class JArray
    * 
    * @see #isComplete(Object[], Object)
    */
-  public static final <T> T remove(T[] arr, T emptyElem, int index)
+  public static final <E> E remove(E[] arr, E emptyElem, int index)
   {
     return removeRange(arr, emptyElem, index, index)[0];
   }
@@ -257,7 +257,7 @@ public final class JArray
    * 
    * @see #isComplete(Object[], Object)
    */
-  public static final <T> T[] removeRange(T[] arr, T emptyElem, int fromIndex, int toIndex)
+  public static final <E> E[] removeRange(E[] arr, E emptyElem, int fromIndex, int toIndex)
   {
     if(arr == null)
       throw new NullPointerException("The array removed from cannot be a null reference.");
@@ -281,14 +281,14 @@ public final class JArray
         throw new IllegalArgumentException("Out-of-order indices: fromIndex must be no greater than toIndex.");
       else {
         if(fromIndex == toIndex) {
-          T[] removed = Arrays.copyOfRange(arr, fromIndex, fromIndex + 1);
+          E[] removed = Arrays.copyOfRange(arr, fromIndex, fromIndex + 1);
           for(int i = fromIndex; i < arr.length - 1; ++i)
             arr[i] = arr[i + 1];
           arr[arr.length - 1] = emptyElem;
           return removed;
         }
         else {
-          T[] removed = Arrays.copyOfRange(arr, fromIndex, toIndex);
+          E[] removed = Arrays.copyOfRange(arr, fromIndex, toIndex);
           for(int i = fromIndex; i < arr.length - (toIndex - fromIndex); ++i)
             arr[i] = arr[i + (toIndex - fromIndex)];
           for(int i = arr.length - (toIndex - fromIndex); i < arr.length; ++i)
@@ -296,6 +296,74 @@ public final class JArray
           return removed;
         }
       }
+    }
+  }
+  
+  /**
+   * Removes the first instance of the specified value from the array. This is
+   * the element equal to that provided which has the lowest index in the array.
+   * This method then also returns the element removed.
+   * <p>
+   * If the element to be removed is the same as the empty element or the
+   * removal array does not contain any instances to take out, this method will
+   * return the empty element without changing nor modifying the array. The
+   * "empty element" is the element used in the array to represent an empty spot
+   * - this is often simply {@code null}, but can also be a pseudo-empty element
+   * if {@code null} is to be considered a valid element.
+   * <p>
+   * This method ensures that the array is complete both before and after its
+   * execution. Completeness is defined by the array in question having all
+   * instances of the empty element placed only at its trailing end. Refer also
+   * to {@link #isComplete(Object[], Object) isComplete}.
+   * 
+   * @param arr the array from which to remove one or more elements
+   * @param emptyElem the element representing "nothing" in the array
+   * @param removed the element to remove
+   */
+  public static final <E> E removeFirst(E[] arr, E emptyElem, E removed)
+  {
+    if(removed.equals(emptyElem))
+      return emptyElem;
+    else {
+      int firstOccurrenceIndex = indexOf(arr, removed);
+      if(firstOccurrenceIndex < 0)
+        return emptyElem;
+      else
+        return remove(arr, emptyElem, firstOccurrenceIndex);
+    }
+  }
+  
+  /**
+   * Removes the last instance of the specified value from the array. This is
+   * the element equal to that provided which has the highest index in the
+   * array. This method then also returns the element removed.
+   * <p>
+   * If the element to be removed is the same as the empty element or the
+   * removal array does not contain any instances to take out, this method will
+   * return the empty element without changing nor modifying the array. The
+   * "empty element" is the element used in the array to represent an empty spot
+   * - this is often simply {@code null}, but can also be a pseudo-empty element
+   * if {@code null} is to be considered a valid element.
+   * <p>
+   * This method ensures that the array is complete both before and after its
+   * execution. Completeness is defined by the array in question having all
+   * instances of the empty element placed only at its trailing end. Refer also
+   * to {@link #isComplete(Object[], Object) isComplete}.
+   * 
+   * @param arr the array from which to remove one or more elements
+   * @param emptyElem the element representing "nothing" in the array
+   * @param removed the element to remove
+   */
+  public static final <E> E removeLast(E[] arr, E emptyElem, E removed)
+  {
+    if(removed.equals(emptyElem))
+      return emptyElem;
+    else {
+      int lastOccurrenceIndex = lastIndexOf(arr, removed);
+      if(lastOccurrenceIndex < 0)
+        return emptyElem;
+      else
+        return remove(arr, emptyElem, lastOccurrenceIndex);
     }
   }
   
@@ -329,7 +397,7 @@ public final class JArray
    * 
    * @see IncompleteArrayException
    */
-  public static final <T> boolean isComplete(T[] arr, T emptyElem)
+  public static final <E> boolean isComplete(E[] arr, E emptyElem)
   {
     int firstEmptyIndex = indexOf(arr, emptyElem);
     if(firstEmptyIndex < 0)
@@ -359,7 +427,7 @@ public final class JArray
    * to the natural ordering of its elements
    * @throws NullPointerException is the array provided is a null reference
    */
-  public static final <T extends Comparable<? super T>> boolean isSorted(T[] arr)
+  public static final <E extends Comparable<? super E>> boolean isSorted(E[] arr)
   {
     if(arr == null)
       throw new NullPointerException("The array provided must be non-null");
@@ -401,7 +469,7 @@ public final class JArray
    * imposed by the comparator
    * @throws NullPointerException if the array or comparator is a null reference
    */
-  public static final <T> boolean isSorted(T[] arr, Comparator<? super T> comp)
+  public static final <E> boolean isSorted(E[] arr, Comparator<? super E> comp)
   {
     if(arr == null)
       throw new NullPointerException("The array provided must be non-null");
