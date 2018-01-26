@@ -319,6 +319,11 @@ public final class JArray
    * @param arr the array from which to remove one or more elements
    * @param emptyElem the element representing "nothing" in the array
    * @param removed the element to remove
+   * @throws IllegalArgumentException if the array provided is empty
+   * @throws IncompleteArrayException if the array removed from is not complete
+   * @throws NullPointerException if the array provided is a null reference
+   * 
+   * @see #isComplete(Object[], Object)
    */
   public static final <E> E removeFirst(E[] arr, E emptyElem, E removed)
   {
@@ -353,6 +358,11 @@ public final class JArray
    * @param arr the array from which to remove one or more elements
    * @param emptyElem the element representing "nothing" in the array
    * @param removed the element to remove
+   * @throws IllegalArgumentException if the array provided is empty
+   * @throws IncompleteArrayException if the array removed from is not complete
+   * @throws NullPointerException if the array provided is a null reference
+   * 
+   * @see #isComplete(Object[], Object)
    */
   public static final <E> E removeLast(E[] arr, E emptyElem, E removed)
   {
