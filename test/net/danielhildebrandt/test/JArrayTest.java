@@ -14,12 +14,14 @@ import static net.danielhildebrandt.JArray.lastIndexOf;
 import static net.danielhildebrandt.JArray.nthIndexOf;
 import static net.danielhildebrandt.JArray.numberOf;
 import static net.danielhildebrandt.JArray.remove;
+import static net.danielhildebrandt.JArray.removeFirst;
 import static net.danielhildebrandt.JArray.removeRange;
 import static net.danielhildebrandt.JArray.toPrimitiveArray;
 import static net.danielhildebrandt.JArray.toWrapperArray;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+
 import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
@@ -377,7 +379,7 @@ public final class JArrayTest
     }
     
     @Test
-    public final void remove_Return()
+    public final void remove_ReturnValue()
     {
       Object[] arr = {Math.E, Math.PI, 'i', 1, null};
       Object removed = Math.PI;
@@ -528,6 +530,115 @@ public final class JArrayTest
     }
   }
   
+  public static final class RemoveFirstTest
+  {
+    @Test
+    public final void removeFirst_NullEmptyElement()
+    {
+      Object[] before = {"Jas", "Ful", "Wen", "Bik", "Mah"};
+      Object[] after = {"Jas", "Ful", "Wen", "Bik", null};
+      
+      removeFirst(before, null, "Mah");
+      assertThat(before, is(equalTo(after)));
+    }
+    
+    @Test
+    public final void removeFirst_NonNullEmptyElement()
+    {
+      String[] before = {"Renmark", "Teragard", "Abbinah", "Teragard", "Hallow", "Tarddiad", "Iaia"};
+      String[] after = {"Renmark", "Abbinah", "Teragard", "Hallow", "Tarddiad", "Iaia", ""};
+      
+      removeFirst(before, "", "Teragard");
+      assertThat(before, is(equalTo(after)));
+    }
+    
+    @Test
+    public final void removeFirst_RemoveEmptyElement()
+    {
+      String[] before = {"Gielinor", "Abyss", "Leng", "Abyss", "Infernus"};
+      String[] after = {"Gielinor", "Abyss", "Leng", "Abyss", "Infernus"};
+      
+      removeFirst(before, "Abyss", "Abyss");
+      assertThat(before, is(equalTo(after)));
+    }
+    
+    @Test
+    public final void removeFirst_RemoveNonExistent()
+    {
+      String[] before = {"Crwys", "Iorworth", "Cadarn", "Ithell", "Amlodd"};
+      String[] after = {"Crwys", "Iorworth", "Cadarn", "Ithell", "Amlodd"};
+      
+      removeFirst(before, null, "Cywir");
+      assertThat(before, is(equalTo(after)));
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public final void removeFirst_NullArray()
+    {
+      Object[] arr = null;
+      removeFirst(arr, "", "Lord Lowerniel Vergidyad Drakan");
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public final void removeFirst_EmptyArray()
+    {
+      String[] arr = {};
+      removeFirst(arr, null, "Haricanto");
+    }
+    
+    @Test(expected = IncompleteArrayException.class)
+    public final void removeFirst_IncompleteArray()
+    {
+      String[] arr = {"Infernus", "Pandemonium", "", "Dis", "Hostilius the Autocrat"};
+      removeFirst(arr, "", "Hostilius the Autocrat");
+    }
+  }
+  
+  public static final class RemoveLastTest
+  {
+    @Test
+    public final void removeLast_NullEmptyElement()
+    {
+      
+    }
+    
+    @Test
+    public final void removeLast_NonNullEmptyElement()
+    {
+      
+    }
+    
+    @Test
+    public final void removeLast_RemoveEmptyElement()
+    {
+      
+    }
+    
+    @Test
+    public final void removeLast_RemoveNonExistent()
+    {
+      
+    }
+    
+    @Test
+    public final void removeLast_NullArray()
+    {
+      
+    }
+    
+    @Test
+    public final void removeLast_EmptyArray()
+    {
+      
+    }
+    
+    @Test
+    public final void removeLast_IncompleteArray()
+    {
+      
+    }
+  }
+  
   public static final class IsCompleteTest
   {
     @Test
@@ -664,7 +775,7 @@ public final class JArrayTest
       byte[] before = {0, 1, 127, 42, 1, 2, 1};
       byte[] after = {0, 1, 127, 42, 1, 2, 1};
       
-      for(int i = 0; i < before.length; i++)
+      for(int i = 0; i < before.length; ++i)
         internalSwap(before, i, i);
       assertThat(before, is(equalTo(after)));
     }
@@ -721,7 +832,7 @@ public final class JArrayTest
       short[] before = {0, 1, 127, 42, 1, 2, 1};
       short[] after = {0, 1, 127, 42, 1, 2, 1};
       
-      for(int i = 0; i < before.length; i++)
+      for(int i = 0; i < before.length; ++i)
         internalSwap(before, i, i);
       assertThat(before, is(equalTo(after)));
     }
@@ -778,7 +889,7 @@ public final class JArrayTest
       int[] before = {0, 1, 127, 42, 1, 2, 1};
       int[] after = {0, 1, 127, 42, 1, 2, 1};
       
-      for(int i = 0; i < before.length; i++)
+      for(int i = 0; i < before.length; ++i)
         internalSwap(before, i, i);
       assertThat(before, is(equalTo(after)));
     }
@@ -835,7 +946,7 @@ public final class JArrayTest
       long[] before = {0, 1, 127, 42, 1, 2, 1};
       long[] after = {0, 1, 127, 42, 1, 2, 1};
       
-      for(int i = 0; i < before.length; i++)
+      for(int i = 0; i < before.length; ++i)
         internalSwap(before, i, i);
       assertThat(before, is(equalTo(after)));
     }
@@ -892,7 +1003,7 @@ public final class JArrayTest
       float[] before = {42F, 42F, 1F, 0.5F, 42F, 14.25F, 19F};
       float[] after = {42F, 42F, 1F, 0.5F, 42F, 14.25F, 19F};
       
-      for(int i = 0; i < before.length; i++)
+      for(int i = 0; i < before.length; ++i)
         internalSwap(before, i, i);
       assertThat(before, is(equalTo(after)));
     }
@@ -949,7 +1060,7 @@ public final class JArrayTest
       double[] before = {42D, 42D, 1D, 0.5D, 42D, 14.25D, 19D};
       double[] after = {42D, 42D, 1D, 0.5D, 42D, 14.25D, 19D};
       
-      for(int i = 0; i < before.length; i++)
+      for(int i = 0; i < before.length; ++i)
         internalSwap(before, i, i);
       assertThat(before, is(equalTo(after)));
     }
@@ -1006,7 +1117,7 @@ public final class JArrayTest
       boolean[] before = {true, false, true, false, true};
       boolean[] after = {true, false, true, false, true};
       
-      for(int i = 0; i < before.length; i++)
+      for(int i = 0; i < before.length; ++i)
         internalSwap(before, i, i);
       assertThat(before, is(equalTo(after)));
     }
@@ -1063,7 +1174,7 @@ public final class JArrayTest
       char[] before = {'C', 'E', 'P', 'H', 'O', 'R', 'U', 'S', ' ', 'I'};
       char[] after = {'C', 'E', 'P', 'H', 'O', 'R', 'U', 'S', ' ', 'I'};
       
-      for(int i = 0; i < before.length; i++)
+      for(int i = 0; i < before.length; ++i)
         internalSwap(before, i, i);
       assertThat(before, is(equalTo(after)));
     }
@@ -1120,7 +1231,7 @@ public final class JArrayTest
       Object[] before = {"Order of the Black Worm", null, null, "Lichdom", "King of Worms"};
       Object[] after = {"Order of the Black Worm", null, null, "Lichdom", "King of Worms"};
       
-      for(int i = 0; i < before.length; i++)
+      for(int i = 0; i < before.length; ++i)
         internalSwap(before, i, i);
       assertThat(before, is(equalTo(after)));
     }
@@ -1191,7 +1302,7 @@ public final class JArrayTest
       byte[] before = {0, 1, 127, 42, 1, 2, 1};
       byte[] after = {0, 1, 127, 42, 1, 2, 1};
       
-      for(int i = 0; i < before.length; i++)
+      for(int i = 0; i < before.length; ++i)
         internalInsert(before, i, i);
       assertThat(before, is(equalTo(after)));
     }
@@ -1259,7 +1370,7 @@ public final class JArrayTest
       short[] before = {0, 1, 127, 42, 1, 2, 1};
       short[] after = {0, 1, 127, 42, 1, 2, 1};
       
-      for(int i = 0; i < before.length; i++)
+      for(int i = 0; i < before.length; ++i)
         internalInsert(before, i, i);
       assertThat(before, is(equalTo(after)));
     }
@@ -1327,7 +1438,7 @@ public final class JArrayTest
       int[] before = {0, 1, 127, 42, 1, 2, 1};
       int[] after = {0, 1, 127, 42, 1, 2, 1};
       
-      for(int i = 0; i < before.length; i++)
+      for(int i = 0; i < before.length; ++i)
         internalInsert(before, i, i);
       assertThat(before, is(equalTo(after)));
     }
@@ -1395,7 +1506,7 @@ public final class JArrayTest
       long[] before = {0, 1, 127, 42, 1, 2, 1};
       long[] after = {0, 1, 127, 42, 1, 2, 1};
       
-      for(int i = 0; i < before.length; i++)
+      for(int i = 0; i < before.length; ++i)
         internalInsert(before, i, i);
       assertThat(before, is(equalTo(after)));
     }
@@ -1463,7 +1574,7 @@ public final class JArrayTest
       float[] before = {42F, 42F, 1F, 0.5F, 42F, 14.25F, 19F};
       float[] after = {42F, 42F, 1F, 0.5F, 42F, 14.25F, 19F};
       
-      for(int i = 0; i < before.length; i++)
+      for(int i = 0; i < before.length; ++i)
         internalInsert(before, i, i);
       assertThat(before, is(equalTo(after)));
     }
@@ -1531,7 +1642,7 @@ public final class JArrayTest
       double[] before = {42D, 42D, 1D, 0.5D, 42D, 14.25D, 19D};
       double[] after = {42D, 42D, 1D, 0.5D, 42D, 14.25D, 19D};
       
-      for(int i = 0; i < before.length; i++)
+      for(int i = 0; i < before.length; ++i)
         internalInsert(before, i, i);
       assertThat(before, is(equalTo(after)));
     }
@@ -1599,7 +1710,7 @@ public final class JArrayTest
       boolean[] before = {true, false, true, false, true};
       boolean[] after = {true, false, true, false, true};
       
-      for(int i = 0; i < before.length; i++)
+      for(int i = 0; i < before.length; ++i)
         internalInsert(before, i, i);
       assertThat(before, is(equalTo(after)));
     }
@@ -1667,7 +1778,7 @@ public final class JArrayTest
       char[] before = {'S', 'I', 'L', 'M', 'A', 'R', 'I', 'L', 'L', 'I', 'O', 'N'};
       char[] after = {'S', 'I', 'L', 'M', 'A', 'R', 'I', 'L', 'L', 'I', 'O', 'N'};
       
-      for(int i = 0; i < before.length; i++)
+      for(int i = 0; i < before.length; ++i)
         internalInsert(before, i, i);
       assertThat(before, is(equalTo(after)));
     }
@@ -1735,7 +1846,7 @@ public final class JArrayTest
       Object[] before = {"Aman", "Arda", null, "Silpion", "Saruman the White", null, null};
       Object[] after = {"Aman", "Arda", null, "Silpion", "Saruman the White", null, null};
       
-      for(int i = 0; i < before.length; i++)
+      for(int i = 0; i < before.length; ++i)
         internalInsert(before, i, i);
       assertThat(before, is(equalTo(after)));
     }

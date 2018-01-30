@@ -306,10 +306,10 @@ public final class JArray
    * <p>
    * If the element to be removed is the same as the empty element or the
    * removal array does not contain any instances to take out, this method will
-   * return the empty element without changing nor modifying the array. The
-   * "empty element" is the element used in the array to represent an empty spot
-   * - this is often simply {@code null}, but can also be a pseudo-empty element
-   * if {@code null} is to be considered a valid element.
+   * return the empty element without modification nor error. The "empty
+   * element" is the element used in the array to represent an empty spot - this
+   * is often simply {@code null}, but can also be a pseudo-empty element if
+   * {@code null} is to be considered a valid element.
    * <p>
    * This method ensures that the array is complete both before and after its
    * execution. Completeness is defined by the array in question having all
@@ -331,7 +331,7 @@ public final class JArray
       return emptyElem;
     else {
       int firstOccurrenceIndex = indexOf(arr, removed);
-      if(firstOccurrenceIndex < 0)
+      if(firstOccurrenceIndex < 0 && arr.length > 0)
         return emptyElem;
       else
         return remove(arr, emptyElem, firstOccurrenceIndex);
@@ -345,10 +345,10 @@ public final class JArray
    * <p>
    * If the element to be removed is the same as the empty element or the
    * removal array does not contain any instances to take out, this method will
-   * return the empty element without changing nor modifying the array. The
-   * "empty element" is the element used in the array to represent an empty spot
-   * - this is often simply {@code null}, but can also be a pseudo-empty element
-   * if {@code null} is to be considered a valid element.
+   * return the empty element without modification nor error. The "empty
+   * element" is the element used in the array to represent an empty spot - this
+   * is often simply {@code null}, but can also be a pseudo-empty element if
+   * {@code null} is to be considered a valid element.
    * <p>
    * This method ensures that the array is complete both before and after its
    * execution. Completeness is defined by the array in question having all
