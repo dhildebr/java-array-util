@@ -15,6 +15,7 @@ import static net.danielhildebrandt.JArray.nthIndexOf;
 import static net.danielhildebrandt.JArray.numberOf;
 import static net.danielhildebrandt.JArray.remove;
 import static net.danielhildebrandt.JArray.removeFirst;
+import static net.danielhildebrandt.JArray.removeLast;
 import static net.danielhildebrandt.JArray.removeRange;
 import static net.danielhildebrandt.JArray.toPrimitiveArray;
 import static net.danielhildebrandt.JArray.toWrapperArray;
@@ -599,43 +600,62 @@ public final class JArrayTest
     @Test
     public final void removeLast_NullEmptyElement()
     {
+      String[] before = {"Lorkhan", "Doom-Drum", "Doom-Drum", "Shor", "Shezarr", null, null};
+      String[] after = {"Lorkhan", "Doom-Drum", "Shor", "Shezarr", null, null, null};
       
+      removeLast(before, null, "Doom-Drum");
+      assertThat(before, is(equalTo(after)));
     }
     
     @Test
     public final void removeLast_NonNullEmptyElement()
     {
+      Object[] before = {"Cyrodiil", "Argonia", "Resdayn", "Argonia", "Elsweyr", "Skyrim", ""};
+      Object[] after = {"Cyrodiil", "Argonia", "Resdayn", "Elsweyr", "Skyrim", "", ""};
       
+      removeLast(before, "", "Argonia");
+      assertThat(before, is(equalTo(after)));
     }
     
     @Test
     public final void removeLast_RemoveEmptyElement()
     {
+      String[] before = {"Coldharbor", "Infernace", "Ashpit", "Fourth Sinus of Takubar", ""};
+      String[] after = {"Coldharbor", "Infernace", "Ashpit", "Fourth Sinus of Takubar", ""};
       
+      removeLast(before, "", "");
+      assertThat(before, is(equalTo(after)));
     }
     
     @Test
     public final void removeLast_RemoveNonExistent()
     {
+      String[] before = {"Vokun", "Morokei", "Nahkriin", "Hevnoraak", null};
+      String[] after = {"Vokun", "Morokei", "Nahkriin", "Hevnoraak", null};
       
+      removeLast(before, null, "Konahriik");
+      assertThat(before, is(equalTo(after)));
     }
     
-    @Test
+    @Test(expected = NullPointerException.class)
     public final void removeLast_NullArray()
     {
-      
+      Object[] arr = null;
+      removeLast(arr, null, "Magna-ge");
     }
     
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public final void removeLast_EmptyArray()
     {
-      
+      String[] arr = {};
+      removeLast(arr, "", "Aetherius");
     }
     
-    @Test
+    @Test(expected = IncompleteArrayException.class)
     public final void removeLast_IncompleteArray()
     {
-      
+      String[] arr = {"Yol Tor Shuul", "", "Fus Ro Dah", "Lok Vah Koor", ""};
+      removeLast(arr, "", "Fus Ro Dah");
     }
   }
   

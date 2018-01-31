@@ -370,7 +370,7 @@ public final class JArray
       return emptyElem;
     else {
       int lastOccurrenceIndex = lastIndexOf(arr, removed);
-      if(lastOccurrenceIndex < 0)
+      if(lastOccurrenceIndex < 0 && arr.length > 0)
         return emptyElem;
       else
         return remove(arr, emptyElem, lastOccurrenceIndex);
