@@ -449,7 +449,7 @@ public final class JArray
         if(arr[i] == null)
           continue;
         while(arr[i + offset] == null) {
-          offset++;
+          ++offset;
           if(i + offset >= arr.length)
             return true;
         }
