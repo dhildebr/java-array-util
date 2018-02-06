@@ -14,6 +14,7 @@ import static net.danielhildebrandt.JArray.lastIndexOf;
 import static net.danielhildebrandt.JArray.nthIndexOf;
 import static net.danielhildebrandt.JArray.numberOf;
 import static net.danielhildebrandt.JArray.remove;
+import static net.danielhildebrandt.JArray.removeAll;
 import static net.danielhildebrandt.JArray.removeFirst;
 import static net.danielhildebrandt.JArray.removeLast;
 import static net.danielhildebrandt.JArray.removeRange;
@@ -656,6 +657,29 @@ public final class JArrayTest
     {
       String[] arr = {"Yol Tor Shuul", "", "Fus Ro Dah", "Lok Vah Koor", ""};
       removeLast(arr, "", "Fus Ro Dah");
+    }
+  }
+  
+  public static final class RemoveAllTest
+  {
+    @Test
+    public final void removeAll_Varargs_NullEmptyElement()
+    {
+      String[] before = {"River Running", "Legolas", "Barad Dûr", "Gondor", "Palantir"};
+      String[] after = {"River Running", "Barad Dûr", "Gondor", null, null};
+      
+      removeAll(before, null, "Legolas", "Palantir");
+      assertThat(before, is(equalTo(after)));
+    }
+    
+    @Test
+    public final void removeAll_Varargs_NonNullEmptyElement()
+    {
+      Object[] before = {"Lothlórien", "Minas Morgul", "Saruman the White", "Peregrin Took", ""};
+      Object[] after = {"Lothlórien", "Peregrin Took", "", "", ""};
+      
+      removeAll(before, "", "Saruman the White", "Minas Morgul");
+      assertThat(before, is(equalTo(after)));
     }
   }
   

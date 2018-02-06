@@ -1,12 +1,15 @@
 package net.danielhildebrandt;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 /**
- * <p>
  * This class contains various methods with the aim of facilitating similar
  * behavior in arrays as in {@link java.util.ArrayList ArrayList}. These utility
  * methods can thought of as an extension of those in {@link java.util.Arrays
@@ -102,7 +105,7 @@ public final class JArray
    * @see #isComplete(Object[], Object)
    */
   @SafeVarargs
-  public static final <E> void insertBlock(E[] arr, E emptyElem, int index, E ... newElems)
+  public static final <E> void insertBlock(E[] arr, E emptyElem, int index, E... newElems)
   {
     if(arr == null)
       throw new NullPointerException("The receiving array must be non-null.");
@@ -374,6 +377,77 @@ public final class JArray
         return emptyElem;
       else
         return remove(arr, emptyElem, lastOccurrenceIndex);
+    }
+  }
+  
+  /**
+   * 
+   * 
+   * @param arr
+   * @param emptyElem
+   * @param removed
+   * @return
+   */
+  @SafeVarargs
+  public static final <E> E[] removeAll(E[] arr, E emptyElem, E... removed)
+  {
+    if(arr == null)
+      throw new NullPointerException("The array removed from cannot be a null reference.");
+    else if(removed == null)
+      throw new NullPointerException("The array of removed elements cannot be a null reference.");
+    else if(arr.length == 0)
+      throw new IllegalArgumentException("The array removed from must be non-empty.");
+    else if(removed.length == 0)
+      return Arrays.copyOf(removed, 0);
+    else if(!isComplete(arr, emptyElem))
+      throw new IncompleteArrayException(arr, emptyElem);
+    else {
+      Set<E> removalSet = new HashSet<E>(Arrays.asList(removed));
+      
+      // For each element set to be removed (except empty)...
+      for(E elem: removalSet) {
+        if(!elem.equals(emptyElem)) {
+          // Write over each instance of elem, dragging over subsequent elements
+          for(int i = 0; i < arr.length; ++i) {
+            if((emptyElem == null && arr[i] == emptyElem) || (emptyElem != null && arr[i].equals(emptyElem)))
+              break;
+            else if((elem != null && arr[i].equals(elem)) || (elem == null && arr[i] == elem)) {
+              for(int j = i; j < arr.length - 1; ++j)
+                arr[j] = arr[j + 1];
+              arr[arr.length - 1] = emptyElem;
+              --i;
+            }
+          }
+        }
+      }
+      
+      return null;
+    }
+  }
+  
+  /**
+   * 
+   * 
+   * @param arr
+   * @param emptyElem
+   * @param removed
+   * @return
+   */
+  public static final <E> List<E> removeAll(E[] arr, E emptyElem, Collection<? extends E> removed)
+  {
+    if(arr == null)
+      throw new NullPointerException("The array removed from cannot be a null reference.");
+    else if(removed == null)
+      throw new NullPointerException("The collection of removed elements cannot be a null reference.");
+    else if(arr.length == 0)
+      throw new IllegalArgumentException("The array removed from must be non-empty.");
+    else if(removed.size() == 0)
+      return new ArrayList<E>(0);
+    else if(!isComplete(arr, emptyElem))
+      throw new IncompleteArrayException(arr, emptyElem);
+    else {
+      // Set<E> removalSet = new HashSet<E>(removed);
+      return null;
     }
   }
   
@@ -2446,7 +2520,7 @@ public final class JArray
     else {
       int n = 0;
       
-      for(byte b : arr)
+      for(byte b: arr)
         if(b == key)
           ++n;
         
@@ -2470,7 +2544,7 @@ public final class JArray
     else {
       int n = 0;
       
-      for(short s : arr)
+      for(short s: arr)
         if(s == key)
           ++n;
         
@@ -2494,7 +2568,7 @@ public final class JArray
     else {
       int n = 0;
       
-      for(int i : arr)
+      for(int i: arr)
         if(i == key)
           ++n;
         
@@ -2518,7 +2592,7 @@ public final class JArray
     else {
       int n = 0;
       
-      for(long l : arr)
+      for(long l: arr)
         if(l == key)
           ++n;
         
@@ -2542,7 +2616,7 @@ public final class JArray
     else {
       int n = 0;
       
-      for(float f : arr)
+      for(float f: arr)
         if(f == key)
           ++n;
         
@@ -2566,7 +2640,7 @@ public final class JArray
     else {
       int n = 0;
       
-      for(double d : arr)
+      for(double d: arr)
         if(d == key)
           ++n;
         
@@ -2590,7 +2664,7 @@ public final class JArray
     else {
       int n = 0;
       
-      for(boolean b : arr)
+      for(boolean b: arr)
         if(b == key)
           ++n;
         
@@ -2614,7 +2688,7 @@ public final class JArray
     else {
       int n = 0;
       
-      for(char c : arr)
+      for(char c: arr)
         if(c == key)
           ++n;
         
@@ -2638,7 +2712,7 @@ public final class JArray
     else {
       int n = 0;
       
-      for(Object o : arr)
+      for(Object o: arr)
         if((o != null) ? o.equals(key) : key == null)
           ++n;
         
