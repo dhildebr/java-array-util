@@ -681,6 +681,72 @@ public final class JArrayTest
       removeAll(before, "", "Saruman the White", "Minas Morgul");
       assertThat(before, is(equalTo(after)));
     }
+    
+    @Test
+    public final void removeAll_Varargs_RemoveIncludesEmptyElement()
+    {
+      String[] before = {"Eru Illúvatar", "Valar", "Melkor", "Arda", ""};
+      String[] after = {"Eru Illúvatar", "Valar", "Arda", "", ""};
+      
+      removeAll(before, "", "Melkor", "");
+      assertThat(before, is(equalTo(after)));
+    }
+    
+    @Test
+    public final void removeAll_Varargs_RemovalDuplicates()
+    {
+      Object[] before = {"Weathertop", "Sarn Gebir", "Bree", "Weathertop", "Sarn Gebir"};
+      Object[] after = {"Sarn Gebir", "Bree", "Sarn Gebir", null, null};
+      
+      removeAll(before, null, "Weathertop", "Weathertop", "Weathertop");
+      assertThat(before, is(equalTo(after)));
+    }
+    
+    @Test
+    public final void removeAll_Varargs_RemoveNonExistent()
+    {
+      String[] before = {"Orthanc", "Osgiliath", "Dol Amroth", "Minas Tirith", ""};
+      String[] after = {"Orthanc", "Osgiliath", "Dol Amroth", "Minas Tirith", ""};
+      
+      removeAll(before, "", "Near Harad", "Far Harad");
+      assertThat(before, is(equalTo(after)));
+    }
+    
+    @Test
+    public final void removeAll_Varargs_ReturnValue()
+    {
+      String[] arr = {"Music of the Ainur", "Plateau of Gorgoroth", "Utumno", "Dol Guldur", null, null, null};
+      Object[] removed = removeAll(arr, null, "Utumno", "Angband", null);
+      assertThat(removed, is(equalTo(new Object[] {"Utumno"})));
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public final void removeAll_Varargs_NullRemovalArray()
+    {
+      Object[] arr = null;
+      removeAll(arr, "", "Balrog");
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public final void removeAll_Varargs_NullRemovedArray()
+    {
+      String[] arr = null;
+      removeAll(arr, null, "Sauron");
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public final void removeAll_Varargs_EmptyRemovalArray()
+    {
+      String[] arr = {};
+      removeAll(arr, null, "Tom Bombadil");
+    }
+    
+    @Test(expected = IncompleteArrayException.class)
+    public final void removeAll_Varargs_IncompletelArray()
+    {
+      String[] arr = {"Moria", "", "Isengard", "Fangorn", "Aragorn", "", ""};
+      removeAll(arr, "", "Moria");
+    }
   }
   
   public static final class IsCompleteTest

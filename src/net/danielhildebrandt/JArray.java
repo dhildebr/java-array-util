@@ -1,12 +1,10 @@
 package net.danielhildebrandt;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -381,15 +379,38 @@ public final class JArray
   }
   
   /**
+   * Removes all instances of each listed item from the array. Returns an array
+   * of all elements successfully removed - this will be a subset of
+   * {@code removed}, in no particular order.
+   * <p>
+   * If the array of elements to be removed is empty, this method will return an
+   * empty array, having removed nothing and throwing no exceptions. If any of
+   * the elements of the removal array are the empty element, this method will
+   * behave as though they weren't there. Inlcusion of the same element many
+   * times will have no additional effect. The "empty element" is the element
+   * used in the array to represent an empty spot - this is often simply
+   * {@code null}, but can also be a pseudo-empty element if {@code null} is to
+   * be considered a valid element.
+   * <p>
+   * This method ensures that the array is complete both before and after its
+   * execution. Completeness is defined by the array in question having all
+   * instances of the empty element placed only at its trailing end. Refer also
+   * to {@link #isComplete(Object[], Object) isComplete}.
    * 
+   * @param arr the array from which to remove zero or more elements
+   * @param emptyElem the element representing "nothing" in the array
+   * @param removed an array of elements to remove
+   * @return an array of the elements successfully removed (a subset of
+   * {@code removed})
+   * @throws IllegalArgumentException if the array to remove from is null
+   * @throws IncompleteArrayException if the array to remove from is incomplete
+   * @throws NullPointerException if the array from which to remove or the array
+   * of element to take out is a null reference
    * 
-   * @param arr
-   * @param emptyElem
-   * @param removed
-   * @return
+   * @see #isComplete(Object[], Object)
    */
   @SafeVarargs
-  public static final <E> E[] removeAll(E[] arr, E emptyElem, E... removed)
+  public static final <E> Object[] removeAll(E[] arr, E emptyElem, E... removed)
   {
     if(arr == null)
       throw new NullPointerException("The array removed from cannot be a null reference.");
@@ -403,37 +424,56 @@ public final class JArray
       throw new IncompleteArrayException(arr, emptyElem);
     else {
       Set<E> removalSet = new HashSet<E>(Arrays.asList(removed));
+      Set<E> removedElemSet = new HashSet<E>();
       
-      // For each element set to be removed (except empty)...
       for(E elem: removalSet) {
-        if(!elem.equals(emptyElem)) {
-          // Write over each instance of elem, dragging over subsequent elements
+        if(((elem != null) ? (!elem.equals(emptyElem)) : (elem != emptyElem)) && !removedElemSet.contains(elem)) {
           for(int i = 0; i < arr.length; ++i) {
-            if((emptyElem == null && arr[i] == emptyElem) || (emptyElem != null && arr[i].equals(emptyElem)))
+            if((emptyElem == null) ? (arr[i] == emptyElem) : (arr[i].equals(emptyElem)))
               break;
-            else if((elem != null && arr[i].equals(elem)) || (elem == null && arr[i] == elem)) {
+            else if((elem != null) ? (arr[i].equals(elem)) : (arr[i] == elem)) {
               for(int j = i; j < arr.length - 1; ++j)
                 arr[j] = arr[j + 1];
               arr[arr.length - 1] = emptyElem;
+              removedElemSet.add(elem);
               --i;
             }
           }
         }
       }
       
-      return null;
+      return removedElemSet.toArray();
     }
   }
   
   /**
+   * Removes all instances of each listed item from the array. Returns a
+   * collection of all elements successfully removed - this will be a subset of
+   * {@code removed}, in no particular order.
+   * <p>
+   * If the collection of elements to be removed is empty, this method will
+   * return an empty collection, having removed nothing and throwing no
+   * exceptions. If any of the elements of the removal collection are the empty
+   * element, this method will behave as though they weren't there. Inlcusion of
+   * the same element many times will have no additional effect. The "empty
+   * element" is the element used in the array to represent an empty spot - this
+   * is often simply {@code null}, but can also be a pseudo-empty element if
+   * {@code null} is to be considered a valid element.
+   * <p>
+   * This method ensures that the array is complete both before and after its
+   * execution. Completeness is defined by the array in question having all
+   * instances of the empty element placed only at its trailing end. Refer also
+   * to {@link #isComplete(Object[], Object) isComplete}.
    * 
+   * @param arr arr the array from which to remove zero or more elements
+   * @param emptyElem the element representing "nothing" in the array
+   * @param removed a collection of elements to remove
+   * @return a {@code Collection} of the elements successfully removed (a subset
+   * of {@code removed})
    * 
-   * @param arr
-   * @param emptyElem
-   * @param removed
-   * @return
+   * @see #isComplete(Object[], Object)
    */
-  public static final <E> List<E> removeAll(E[] arr, E emptyElem, Collection<? extends E> removed)
+  public static final <E> Collection<E> removeAll(E[] arr, E emptyElem, Collection<? extends E> removed)
   {
     if(arr == null)
       throw new NullPointerException("The array removed from cannot be a null reference.");
@@ -442,11 +482,10 @@ public final class JArray
     else if(arr.length == 0)
       throw new IllegalArgumentException("The array removed from must be non-empty.");
     else if(removed.size() == 0)
-      return new ArrayList<E>(0);
+      return new HashSet<E>();
     else if(!isComplete(arr, emptyElem))
       throw new IncompleteArrayException(arr, emptyElem);
     else {
-      // Set<E> removalSet = new HashSet<E>(removed);
       return null;
     }
   }
