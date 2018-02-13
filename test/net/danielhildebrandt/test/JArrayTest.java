@@ -27,6 +27,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -753,9 +754,7 @@ public final class JArrayTest
     {
       String[] before = {"Alatar", "Pallando", "Istari", "Maiar", null};
       String[] after = {"Alatar", "Pallando", null, null, null};
-      Collection<String> removed = new ArrayList<String>(2);
-      removed.add("Istari");
-      removed.add("Maiar");
+      Collection<String> removed = Arrays.asList("Istari", "Maiar");
       
       removeAll(before, null, removed);
       assertThat(before, is(equalTo(after)));
@@ -766,9 +765,7 @@ public final class JArrayTest
     {
       Object[] before = {"Mithrandir", "Nenya", "Elrond", "Narya", "Rivendell"};
       Object[] after = {"Mithrandir", "Elrond", "Rivendell", "", ""};
-      List<String> removed = new LinkedList<String>();
-      removed.add("Narya");
-      removed.add("Nenya");
+      List<String> removed = Arrays.asList("Narya", "Nenya");
       
       removeAll(before, "", removed);
       assertThat(before, is(equalTo(after)));
@@ -777,49 +774,82 @@ public final class JArrayTest
     @Test
     public final void removeAll_Collection_RemoveIncludesEmptyElement()
     {
+      String[] before = {"Halls of Mandos", "Angainor", "Morgoth", "Tulkas", "Doors of Night"};
+      String[] after = {"Halls of Mandos", "Tulkas", "Doors of Night", "", ""};
+      Collection<String> removed = Arrays.asList("Angainor", "Morgoth", "");
       
+      removeAll(before, "", removed);
+      assertThat(before, is(equalTo(after)));
     }
     
     @Test
     public final void removeAll_Collection_RemovalDuplicates()
     {
+      String[] before = {"Aragorn, son of Arathorn", "Gimli, son of Glóin", "Legloas Greenleaf"};
+      String[] after = {"Gimli, son of Glóin", "Legloas Greenleaf", null};
+      List<String> removed = Arrays.asList("Aragorn, son of Arathorn", "Aragorn, son of Arathorn");
       
+      removeAll(before, null, removed);
+      assertThat(before, is(equalTo(after)));
     }
     
     @Test
     public final void removeAll_Collection_RemoveNonExistent()
     {
+      Object[] before = {"Samwise Gamgee", "Meriadoc Brandybuck", "Peregrin Took"};
+      Object[] after = {"Samwise Gamgee", "Meriadoc Brandybuck", "Peregrin Took"};
+      List<String> removed = Arrays.asList("Frodo Baggins");
       
+      removeAll(before, null, removed);
+      assertThat(before, is(equalTo(after)));
     }
     
     @Test
     public final void removeAll_Collection_ReturnValue()
     {
+      String[] arr = {"Sarn Gebir", "Dagorlad", "Ered Lithui", "Oroduin", ""};
       
+      Collection<String> attemptedRemoval = new ArrayList<String>(3);
+      attemptedRemoval.add("Ered Lithui");
+      attemptedRemoval.add("Sarn Gebir");
+      attemptedRemoval.add("Emyn Muil");
+      
+      Collection<String> successfulRemoval = new ArrayList<String>(2);
+      successfulRemoval.add("Sarn Gebir");
+      successfulRemoval.add("Ered Lithui");
+      
+      Collection<String> removed = new ArrayList<String>(removeAll(arr, "", attemptedRemoval));
+      assertThat(removed, is(equalTo(successfulRemoval)));
     }
     
-    @Test
+    @Test(expected = NullPointerException.class)
     public final void removeAll_Collection_NullRemovalArray()
     {
-      
+      Object[] arr = null;
+      removeAll(arr, null, "Manwë Súlimo");
     }
     
-    @Test
+    @Test(expected = NullPointerException.class)
     public final void removeAll_Collection_NullRemovedCollect()
     {
-      
+      String[] arr = {"Curumo", "Olórin", ""};
+      removeAll(arr, "", (Collection<String>) null);
     }
     
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public final void removeAll_Collection_EmptyRemovalArray()
     {
-      
+      String[] arr = {};
+      List<String> removed = Arrays.asList("Treebeard", "Quickbeam");
+      removeAll(arr, null, removed);
     }
     
-    @Test
+    @Test(expected = IncompleteArrayException.class)
     public final void removeAll_Collection_IncompleteArray()
     {
-      
+      String[] arr = {"Erebor", "", "Moria", "Ered Mithrin", ""};
+      List<String> removed = Arrays.asList("Ered Mithrin");
+      removeAll(arr, "", removed);
     }
   }
   
