@@ -486,7 +486,26 @@ public final class JArray
     else if(!isComplete(arr, emptyElem))
       throw new IncompleteArrayException(arr, emptyElem);
     else {
-      return null;
+      Set<E> removalSet = new HashSet<E>(removed);
+      Set<E> removedElemSet = new HashSet<E>();
+      
+      for(E elem: removalSet) {
+        if(((elem != null) ? (!elem.equals(emptyElem)) : (elem != emptyElem)) && !removedElemSet.contains(elem)) {
+          for(int i = 0; i < arr.length; ++i) {
+            if((emptyElem == null) ? (arr[i] == emptyElem) : (arr[i].equals(emptyElem)))
+              break;
+            else if((elem != null) ? (arr[i].equals(elem)) : (arr[i] == elem)) {
+              for(int j = i; j < arr.length - 1; ++j)
+                arr[j] = arr[j + 1];
+              arr[arr.length - 1] = emptyElem;
+              removedElemSet.add(elem);
+              --i;
+            }
+          }
+        }
+      }
+      
+      return removedElemSet;
     }
   }
   

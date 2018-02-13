@@ -747,6 +747,80 @@ public final class JArrayTest
       String[] arr = {"Moria", "", "Isengard", "Fangorn", "Aragorn", "", ""};
       removeAll(arr, "", "Moria");
     }
+    
+    @Test
+    public final void removeAll_Collection_NullEmptyElement()
+    {
+      String[] before = {"Alatar", "Pallando", "Istari", "Maiar", null};
+      String[] after = {"Alatar", "Pallando", null, null, null};
+      Collection<String> removed = new ArrayList<String>(2);
+      removed.add("Istari");
+      removed.add("Maiar");
+      
+      removeAll(before, null, removed);
+      assertThat(before, is(equalTo(after)));
+    }
+    
+    @Test
+    public final void removeAll_Collection_NonNullEmptyElement()
+    {
+      Object[] before = {"Mithrandir", "Nenya", "Elrond", "Narya", "Rivendell"};
+      Object[] after = {"Mithrandir", "Elrond", "Rivendell", "", ""};
+      List<String> removed = new LinkedList<String>();
+      removed.add("Narya");
+      removed.add("Nenya");
+      
+      removeAll(before, "", removed);
+      assertThat(before, is(equalTo(after)));
+    }
+    
+    @Test
+    public final void removeAll_Collection_RemoveIncludesEmptyElement()
+    {
+      
+    }
+    
+    @Test
+    public final void removeAll_Collection_RemovalDuplicates()
+    {
+      
+    }
+    
+    @Test
+    public final void removeAll_Collection_RemoveNonExistent()
+    {
+      
+    }
+    
+    @Test
+    public final void removeAll_Collection_ReturnValue()
+    {
+      
+    }
+    
+    @Test
+    public final void removeAll_Collection_NullRemovalArray()
+    {
+      
+    }
+    
+    @Test
+    public final void removeAll_Collection_NullRemovedCollect()
+    {
+      
+    }
+    
+    @Test
+    public final void removeAll_Collection_EmptyRemovalArray()
+    {
+      
+    }
+    
+    @Test
+    public final void removeAll_Collection_IncompleteArray()
+    {
+      
+    }
   }
   
   public static final class IsCompleteTest
