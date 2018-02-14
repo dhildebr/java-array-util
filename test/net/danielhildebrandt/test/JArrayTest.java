@@ -714,6 +714,16 @@ public final class JArrayTest
     }
     
     @Test
+    public final void removeAll_Varargs_EmptyRemovedArray()
+    {
+      String[] before = {"Fili", "Kili", "Bifur", "Bofur", "Bombur"};
+      String[] after = {"Fili", "Kili", "Bifur", "Bofur", "Bombur"};
+      
+      removeAll(before, "");
+      assertThat(before, is(equalTo(after)));
+    }
+    
+    @Test
     public final void removeAll_Varargs_ReturnValue()
     {
       String[] arr = {"Music of the Ainur", "Plateau of Gorgoroth", "Utumno", "Dol Guldur", null, null, null};
@@ -801,6 +811,16 @@ public final class JArrayTest
       List<String> removed = Arrays.asList("Frodo Baggins");
       
       removeAll(before, null, removed);
+      assertThat(before, is(equalTo(after)));
+    }
+    
+    @Test
+    public final void removeAll_Collection_EmptyRemovedCollection()
+    {
+      String[] before = {"Óin", "Glóin", "Dwalin", "Balin", "Thorin Oakenshield"};
+      String[] after = {"Óin", "Glóin", "Dwalin", "Balin", "Thorin Oakenshield"};
+      
+      removeAll(before, "", Arrays.asList());
       assertThat(before, is(equalTo(after)));
     }
     
